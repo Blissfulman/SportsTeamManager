@@ -18,6 +18,9 @@ final class PlayerCell: UITableViewCell {
     @IBOutlet weak var playerPositionLabel: UILabel!
     @IBOutlet weak var playerAgeLabel: UILabel!
     
+    // MARK: - Properties
+    static let identifier = String(describing: PlayerCell.self)
+    
     // MARK: - Public methods
     func configure() {
         playerFullNameLabel.text = "Carles Puyol"

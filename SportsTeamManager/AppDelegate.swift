@@ -17,12 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let storyboard = UIStoryboard(name: "PlayersViewController", bundle: nil)
+        let storyboard = UIStoryboard(name: MainViewController.identifier, bundle: nil)
       
-        guard let mainVC = storyboard.instantiateViewController(withIdentifier: "PlayersViewController")
-                as? PlayersViewController else {
-            return false
-        }
+        guard let mainVC = storyboard.instantiateViewController(
+                withIdentifier: MainViewController.identifier
+        ) as? MainViewController else { return false }
+        
         mainVC.dataManager = dataManager
         
         window = UIWindow()

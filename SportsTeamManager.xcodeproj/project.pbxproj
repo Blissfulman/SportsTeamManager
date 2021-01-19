@@ -65,7 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */,
-				CE4883F325B5647600BCB7F9 /* CoreData */,
+				CE4883F325B5647600BCB7F9 /* Model */,
 				CE4883EE25B563F800BCB7F9 /* View Controllers */,
 				CE4883EB25B5636900BCB7F9 /* Resources */,
 				CE4883EC25B5638C00BCB7F9 /* Supporting Files */,
@@ -99,13 +99,13 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		CE4883F325B5647600BCB7F9 /* CoreData */ = {
+		CE4883F325B5647600BCB7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */,
 				CE4883DB25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld */,
 			);
-			path = CoreData;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		CE48840325B6029300BCB7F9 /* Main */ = {

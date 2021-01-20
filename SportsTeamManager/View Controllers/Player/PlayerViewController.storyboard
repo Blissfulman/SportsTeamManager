@@ -17,25 +17,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AIt-U0-AVK">
-                                <rect key="frame" x="28" y="318" width="319" height="202"/>
+                                <rect key="frame" x="28" y="318" width="319" height="216"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q3G-k7-mYh">
-                                        <rect key="frame" x="0.0" y="0.0" width="319" height="34"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q3G-k7-mYh">
+                                        <rect key="frame" x="0.0" y="0.0" width="319" height="48"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gcq-kf-ehO" id="iuP-TJ-ABw"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nationality" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Mv-CI-COT">
-                                        <rect key="frame" x="0.0" y="44" width="319" height="34"/>
+                                        <rect key="frame" x="0.0" y="58" width="319" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gcq-kf-ehO" id="Ywm-nz-Rx1"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Age" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="san-n0-b74">
-                                        <rect key="frame" x="0.0" y="88" width="319" height="34"/>
+                                        <rect key="frame" x="0.0" y="102" width="319" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gcq-kf-ehO" id="ab4-VA-Ote"/>
+                                        </connections>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="PqV-eO-8le">
-                                        <rect key="frame" x="0.0" y="132" width="319" height="30"/>
+                                        <rect key="frame" x="0.0" y="146" width="319" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Team:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0F4-g3-6uI">
                                                 <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="30"/>
@@ -60,7 +69,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4TE-sL-8tA">
-                                        <rect key="frame" x="0.0" y="172" width="319" height="30"/>
+                                        <rect key="frame" x="0.0" y="186" width="319" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Position:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mnm-Tc-oml">
                                                 <rect key="frame" x="0.0" y="0.0" width="59" height="30"/>
@@ -86,8 +95,12 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aHV-n1-KJ8">
-                                <rect key="frame" x="28" y="542" width="319" height="216"/>
+                            <pickerView hidden="YES" contentMode="scaleToFill" verticalHuggingPriority="240" translatesAutoresizingMaskIntoConstraints="NO" id="aHV-n1-KJ8">
+                                <rect key="frame" x="28" y="318" width="319" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gcq-kf-ehO" id="YbF-DR-m2E"/>
+                                    <outlet property="delegate" destination="gcq-kf-ehO" id="kHV-ZE-2vm"/>
+                                </connections>
                             </pickerView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7c2-dd-CVk">
                                 <rect key="frame" x="112.66666666666669" y="64" width="150" height="234"/>
@@ -113,6 +126,9 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="gcq-kf-ehO" id="Dgp-BU-UPq"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                             </stackView>
@@ -132,11 +148,12 @@
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="width" secondItem="0oN-hM-qBh" secondAttribute="width" multiplier="0.85" id="9sp-PU-1Ca"/>
                             <constraint firstItem="0oN-hM-qBh" firstAttribute="bottom" secondItem="d5q-3z-szv" secondAttribute="bottom" constant="20" id="BHN-gL-xDK"/>
                             <constraint firstItem="7c2-dd-CVk" firstAttribute="top" secondItem="0oN-hM-qBh" secondAttribute="top" constant="20" id="EeA-lo-wDb"/>
-                            <constraint firstItem="0oN-hM-qBh" firstAttribute="bottom" secondItem="aHV-n1-KJ8" secondAttribute="bottom" constant="20" id="FLl-PT-nOQ"/>
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="top" secondItem="7c2-dd-CVk" secondAttribute="bottom" constant="20" id="I9Q-vl-qxF"/>
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="Isa-B1-zqA"/>
                             <constraint firstItem="d5q-3z-szv" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="NdQ-xZ-Fil"/>
                             <constraint firstItem="7c2-dd-CVk" firstAttribute="width" secondItem="0oN-hM-qBh" secondAttribute="width" multiplier="0.4" id="PLh-gM-12v"/>
+                            <constraint firstItem="aHV-n1-KJ8" firstAttribute="top" secondItem="AIt-U0-AVK" secondAttribute="top" id="cHa-Y1-ETf"/>
+                            <constraint firstItem="aHV-n1-KJ8" firstAttribute="bottom" secondItem="AIt-U0-AVK" secondAttribute="bottom" id="drp-zk-M8y"/>
                             <constraint firstItem="aHV-n1-KJ8" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="lQb-bb-00P"/>
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="rk0-Bh-laF"/>
                             <constraint firstItem="7c2-dd-CVk" firstAttribute="centerX" secondItem="0oN-hM-qBh" secondAttribute="centerX" id="xip-Ky-7Op"/>
@@ -144,10 +161,15 @@
                     </view>
                     <connections>
                         <outlet property="ageTextField" destination="san-n0-b74" id="k5M-xd-942"/>
+                        <outlet property="centralStackView" destination="AIt-U0-AVK" id="lLf-ae-1wl"/>
                         <outlet property="nameTextField" destination="q3G-k7-mYh" id="ApK-VZ-PgL"/>
                         <outlet property="nationalityTextField" destination="2Mv-CI-COT" id="wdJ-US-rOk"/>
                         <outlet property="numberTextField" destination="MU9-SM-9yI" id="Sio-1Q-k41"/>
                         <outlet property="photoImageView" destination="Z7z-vt-0FU" id="Fgl-xh-BNj"/>
+                        <outlet property="pickerView" destination="aHV-n1-KJ8" id="7iR-KA-4q1"/>
+                        <outlet property="saveButton" destination="d5q-3z-szv" id="K7M-94-1ra"/>
+                        <outlet property="selectedPositionButton" destination="qGG-TQ-50X" id="2wJ-Qi-goJ"/>
+                        <outlet property="selectedTeamButton" destination="JQy-eP-rXM" id="Fa1-HY-LPa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="avm-VU-cje" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

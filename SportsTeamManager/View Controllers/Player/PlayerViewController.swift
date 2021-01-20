@@ -9,12 +9,28 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
+    private enum Constants {
+        static let teams = ["Real", "Barcelona", "Chelsea", "Roma", "CSKA", "Monaco",
+                            "Manchester Unated", "Liverpool", "Bavaria", "Juventus"]
+        static let positions = ["Defender", "Halfback", "Forward"]
+    }
+    
+    private enum PickerViewContentType {
+        case teams
+        case positions
+    }
+    
     // MARK: - Outlets
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nationalityTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
+    @IBOutlet weak var selectedTeamButton: UIButton!
+    @IBOutlet weak var selectedPositionButton: UIButton!
+    @IBOutlet weak var centralStackView: UIStackView!
+    @IBOutlet weak var pickerView: UIPickerView!
+    @IBOutlet weak var saveButton: UIButton!
     
     
     // MARK: - Properties
@@ -22,7 +38,11 @@ final class PlayerViewController: UIViewController {
     
     var dataManager: CoreDataManager!
     
-    private var chosenImage = #imageLiteral(resourceName: "some.player")
+    private var pickerViewContentType: PickerViewContentType = .teams
+    
+    private var chosenPhoto = #imageLiteral(resourceName: "some.player")
+    private var selectedTeam: String!
+    private var selectedPosition: String!
     private let imagePickerController = UIImagePickerController()
     
     // MARK: - Lifecycle methods
@@ -38,12 +58,30 @@ final class PlayerViewController: UIViewController {
     }
     
     @IBAction func teamSelectButtonTapped() {
+        pickerViewContentType = .teams
+        pickerView.reloadAllComponents()
+        centralStackView.isHidden = true
+        pickerView.isHidden = false
     }
     
     @IBAction func positionSelectButtonTapped() {
+        pickerViewContentType = .positions
+        pickerView.reloadAllComponents()
+        centralStackView.isHidden = true
+        pickerView.isHidden = false
     }
     
     @IBAction func saveButtonTapped() {
+        let context = dataManager.getContext()
+        
+        let team = dataManager.createObject(from: Team.self)
+        team.name = selectedTeam
+        
+        let player = dataManager.createObject(from: Player.self)
+        player.team = team
+        
+        player.photo = chosenPhoto
+        
         navigationController?.popViewController(animated: true)
     }
     // MARK: - Setup UI
@@ -52,6 +90,19 @@ final class PlayerViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    private func updateSaveButtonState() {
+        if let number = numberTextField.text, !number.isEmpty,
+           let name = nameTextField.text, !name.isEmpty,
+           let nationality = nationalityTextField.text, !nationality.isEmpty,
+           let age = ageTextField.text, !age.isEmpty,
+           let _ = selectedTeam,
+           let _ = selectedPosition {
+            saveButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = false
+        }
+           
+    }
 }
 
 extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -65,11 +116,43 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         
-        guard let image = info[convertFromUIImagePickerControllerInfoKey(.originalImage)] as? UIImage else {
+        guard let photo = info[convertFromUIImagePickerControllerInfoKey(.originalImage)] as? UIImage else {
             return
         }
-        chosenImage = image
-        photoImageView.image = image
+        chosenPhoto = photo
+        photoImageView.image = photo
+    }
+}
+
+extension PlayerViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        if pickerViewContentType == .teams {
+            selectedTeamButton.setTitle(Constants.teams[row], for: .normal)
+            selectedTeam = Constants.teams[row]
+        } else {
+            selectedPositionButton.setTitle(Constants.positions[row], for: .normal)
+            selectedPosition = Constants.positions[row]
+        }
+        pickerView.isHidden = true
+        centralStackView.isHidden = false
+        updateSaveButtonState()
+    }
+}
+
+extension PlayerViewController: UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        pickerViewContentType == .teams ? Constants.teams.count : Constants.positions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        pickerViewContentType == .teams ? Constants.teams[row] : Constants.positions[row]
     }
 }
 

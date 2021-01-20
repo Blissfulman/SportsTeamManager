@@ -47,6 +47,9 @@
                                                 <rect key="frame" x="47.333333333333329" y="0.0" width="103.99999999999999" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <state key="normal" title="Press to select"/>
+                                                <connections>
+                                                    <action selector="teamSelectButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="yQm-7t-S2L"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SHt-7i-6Ra">
                                                 <rect key="frame" x="157.33333333333337" y="0.0" width="161.66666666666663" height="30"/>
@@ -69,6 +72,9 @@
                                                 <rect key="frame" x="65" y="0.0" width="104" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                 <state key="normal" title="Press to select"/>
+                                                <connections>
+                                                    <action selector="positionSelectButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="vxC-EY-AlE"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="41h-tY-GFg">
                                                 <rect key="frame" x="175" y="0.0" width="144" height="30"/>
@@ -96,6 +102,9 @@
                                         <rect key="frame" x="27.333333333333329" y="160" width="95" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                         <state key="normal" title="Upload photo"/>
+                                        <connections>
+                                            <action selector="uploadPhotoButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="Sn8-AW-VgS"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="№" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MU9-SM-9yI">
                                         <rect key="frame" x="54.999999999999986" y="200" width="40" height="34"/>
@@ -107,10 +116,13 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5q-3z-szv">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5q-3z-szv">
                                 <rect key="frame" x="161" y="717" width="53" height="41"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="24"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="7N2-mr-IoU"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0oN-hM-qBh"/>
@@ -130,6 +142,13 @@
                             <constraint firstItem="7c2-dd-CVk" firstAttribute="centerX" secondItem="0oN-hM-qBh" secondAttribute="centerX" id="xip-Ky-7Op"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ageTextField" destination="san-n0-b74" id="k5M-xd-942"/>
+                        <outlet property="nameTextField" destination="q3G-k7-mYh" id="ApK-VZ-PgL"/>
+                        <outlet property="nationalityTextField" destination="2Mv-CI-COT" id="wdJ-US-rOk"/>
+                        <outlet property="numberTextField" destination="MU9-SM-9yI" id="Sio-1Q-k41"/>
+                        <outlet property="photoImageView" destination="Z7z-vt-0FU" id="Fgl-xh-BNj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="avm-VU-cje" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

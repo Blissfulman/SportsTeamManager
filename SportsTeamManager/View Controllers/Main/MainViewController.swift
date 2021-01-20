@@ -17,11 +17,20 @@ final class MainViewController: UIViewController {
     
     var dataManager: CoreDataManager!
     
+    private var players = [Player]()
+    
     // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchData()
+        tableView.reloadData()
     }
     
     // MARK: - Actions
@@ -48,6 +57,17 @@ final class MainViewController: UIViewController {
                                                  action: #selector(addPlayerAction))
         
         navigationItem.rightBarButtonItem = addPlayerBarButton
+    }
+    
+    // MARK: - Private methods
+    private func fetchData() {
+        players = dataManager.fetchData(for: Player.self)
+        
+//        if players.count > 0 {
+//            tableView.isHidden = false
+//        } else {
+//            tableView.isHidden = true
+//        }
     }
 }
 

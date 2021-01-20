@@ -32,7 +32,6 @@ final class PlayerViewController: UIViewController {
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var saveButton: UIButton!
     
-    
     // MARK: - Properties
     static let identifier = String(describing: PlayerViewController.self)
     
@@ -54,10 +53,12 @@ final class PlayerViewController: UIViewController {
     
     // MARK: Actions
     @IBAction func uploadPhotoButtonTapped() {
+        view.endEditing(true)
         present(imagePickerController, animated: true)
     }
     
     @IBAction func teamSelectButtonTapped() {
+        view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
         centralStackView.isHidden = true
@@ -65,6 +66,7 @@ final class PlayerViewController: UIViewController {
     }
     
     @IBAction func positionSelectButtonTapped() {
+        view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
         centralStackView.isHidden = true
@@ -72,18 +74,31 @@ final class PlayerViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped() {
-        let context = dataManager.getContext()
-        
-        let team = dataManager.createObject(from: Team.self)
-        team.name = selectedTeam
-        
-        let player = dataManager.createObject(from: Player.self)
-        player.team = team
-        
-        player.photo = chosenPhoto
+//        let context = dataManager.getContext()
+//
+//        let team = dataManager.createObject(from: Team.self)
+//        team.name = selectedTeam
+//
+//        let player = dataManager.createObject(from: Player.self)
+//        player.team = team
+//
+//        player.photo = chosenPhoto
         
         navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func textFieldsEditingChanged() {
+        updateSaveButtonState()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
+        view.endEditing(true)
+        pickerView.isHidden = true
+        centralStackView.isHidden = false
+    }
+    
     // MARK: - Setup UI
     private func setupUI() {
         imagePickerController.delegate = self
@@ -101,7 +116,6 @@ final class PlayerViewController: UIViewController {
         } else {
             saveButton.isEnabled = false
         }
-           
     }
 }
 
@@ -164,5 +178,30 @@ extension PlayerViewController {
         
     func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
         input.rawValue
+    }
+}
+
+// MARK: - Text Field Delegate
+extension PlayerViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        switch textField {
+        case numberTextField:
+            nameTextField.becomeFirstResponder()
+        case nameTextField:
+            nationalityTextField.becomeFirstResponder()
+        case nationalityTextField:
+            ageTextField.becomeFirstResponder()
+        default:
+            view.endEditing(true)
+        }
+        return true
+    }
+    
+    // Скрытие PickerView при начале ввода текста в текстовое поле
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        pickerView.isHidden = true
+        centralStackView.isHidden = false
     }
 }

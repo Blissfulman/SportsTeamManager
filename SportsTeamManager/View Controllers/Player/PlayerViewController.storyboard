@@ -24,6 +24,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
+                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="HJ7-dw-6Uo"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="iuP-TJ-ABw"/>
                                         </connections>
                                     </textField>
@@ -32,6 +33,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
+                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="F5G-4I-tTa"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="Ywm-nz-Rx1"/>
                                         </connections>
                                     </textField>
@@ -40,6 +42,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
+                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="WFt-Mj-oBb"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="ab4-VA-Ote"/>
                                         </connections>
                                     </textField>
@@ -127,6 +130,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
+                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="1ec-mh-L5g"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="Dgp-BU-UPq"/>
                                         </connections>
                                     </textField>

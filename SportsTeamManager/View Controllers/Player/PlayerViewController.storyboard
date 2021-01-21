@@ -128,7 +128,7 @@
                                             <constraint firstAttribute="width" constant="40" id="BXb-x1-iPY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
                                             <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="1ec-mh-L5g"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="Dgp-BU-UPq"/>

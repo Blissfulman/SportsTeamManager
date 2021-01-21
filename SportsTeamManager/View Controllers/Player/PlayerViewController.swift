@@ -21,6 +21,7 @@ final class PlayerViewController: UIViewController {
     }
     
     // MARK: - Outlets
+    
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
@@ -33,18 +34,20 @@ final class PlayerViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properties
+    
     static let identifier = String(describing: PlayerViewController.self)
     
     var dataManager: CoreDataManager!
     
     private var pickerViewContentType: PickerViewContentType = .teams
     
-    private var chosenPhoto = #imageLiteral(resourceName: "some.player")
+    private var selectedPhoto = #imageLiteral(resourceName: "some.player")
     private var selectedTeam: String!
     private var selectedPosition: String!
     private let imagePickerController = UIImagePickerController()
     
     // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,6 +55,7 @@ final class PlayerViewController: UIViewController {
     }
     
     // MARK: Actions
+    
     @IBAction func uploadPhotoButtonTapped() {
         view.endEditing(true)
         present(imagePickerController, animated: true)
@@ -74,16 +78,30 @@ final class PlayerViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped() {
-//        let context = dataManager.getContext()
-//
-//        let team = dataManager.createObject(from: Team.self)
-//        team.name = selectedTeam
-//
-//        let player = dataManager.createObject(from: Player.self)
-//        player.team = team
-//
-//        player.photo = chosenPhoto
         
+        guard let number = Int16(numberTextField.text ?? "0"),
+           let name = nameTextField.text,
+           let nationality = nationalityTextField.text,
+           let age = Int16(ageTextField.text ?? "0"),
+           let selectedTeam = selectedTeam,
+           let selectedPosition = selectedPosition else { return }
+        
+        let context = dataManager.getContext()
+        
+        let team = dataManager.createObject(from: Team.self)
+        team.name = selectedTeam
+        
+        let player = dataManager.createObject(from: Player.self)
+        player.team = team
+        
+        player.photo = selectedPhoto
+        player.number = number
+        player.fullName = name
+        player.nationality = nationality
+        player.age = age
+        player.position = selectedPosition
+        
+        dataManager.save(context: context)
         navigationController?.popViewController(animated: true)
     }
     
@@ -100,11 +118,13 @@ final class PlayerViewController: UIViewController {
     }
     
     // MARK: - Setup UI
+    
     private func setupUI() {
         imagePickerController.delegate = self
     }
     
     // MARK: - Private methods
+    
     private func updateSaveButtonState() {
         if let number = numberTextField.text, !number.isEmpty,
            let name = nameTextField.text, !name.isEmpty,
@@ -118,6 +138,8 @@ final class PlayerViewController: UIViewController {
         }
     }
 }
+
+// MARK: - Image picker controller delegate
 
 extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -133,10 +155,12 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
         guard let photo = info[convertFromUIImagePickerControllerInfoKey(.originalImage)] as? UIImage else {
             return
         }
-        chosenPhoto = photo
+        selectedPhoto = photo
         photoImageView.image = photo
     }
 }
+
+// MARK: - Picker view delegate
 
 extension PlayerViewController: UIPickerViewDelegate {
     
@@ -154,6 +178,8 @@ extension PlayerViewController: UIPickerViewDelegate {
         updateSaveButtonState()
     }
 }
+
+// MARK: - Picker view data source
 
 extension PlayerViewController: UIPickerViewDataSource {
     
@@ -181,7 +207,7 @@ extension PlayerViewController {
     }
 }
 
-// MARK: - Text Field Delegate
+// MARK: - Text field delegate
 extension PlayerViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

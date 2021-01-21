@@ -10,9 +10,11 @@ import UIKit
 final class MainViewController: UIViewController {
     
     // MARK: - Outlets
+    
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Properties
+    
     static let identifier = String(describing: MainViewController.self)
     
     var dataManager: CoreDataManager!
@@ -20,6 +22,7 @@ final class MainViewController: UIViewController {
     private var players = [Player]()
     
     // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,6 +37,7 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
     @objc private func addPlayerAction() {
 
         let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
@@ -48,6 +52,7 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Setup UI
+    
     private func setupUI() {
         title = "Team players"
         tableView.separatorInset = .zero
@@ -60,14 +65,10 @@ final class MainViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
     private func fetchData() {
         players = dataManager.fetchData(for: Player.self)
-        
-//        if players.count > 0 {
-//            tableView.isHidden = false
-//        } else {
-//            tableView.isHidden = true
-//        }
+        tableView.isHidden = players.count > 0 ? false : true
     }
 }
 
@@ -84,7 +85,7 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        cell.configure()
+        cell.configure(players[indexPath.row])
         
         return cell
     }

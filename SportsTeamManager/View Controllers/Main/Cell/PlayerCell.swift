@@ -10,6 +10,7 @@ import UIKit
 final class PlayerCell: UITableViewCell {
     
     // MARK: - Outlets
+    
     @IBOutlet weak var playerNumberLabel: UILabel!
     @IBOutlet weak var playerFullNameLabel: UILabel!
     @IBOutlet weak var playerPhotoImageView: UIImageView!
@@ -19,20 +20,20 @@ final class PlayerCell: UITableViewCell {
     @IBOutlet weak var playerAgeLabel: UILabel!
     
     // MARK: - Properties
+    
     static let identifier = String(describing: PlayerCell.self)
     
     // MARK: - Public methods
-    func configure() {
-        playerFullNameLabel.text = "Carles Puyol"
-        playerTeamLabel.text = "Barcelona"
-        playerNationalityLabel.text = "Spain"
-        playerPositionLabel.text = "Defender"
-        playerAgeLabel.text = "33"
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func configure(_ player: Player) {
+        if let photo = player.photo as? UIImage {
+            playerPhotoImageView.image = photo
+        }
+        playerNumberLabel.text = "\(player.number)"
+        playerFullNameLabel.text = player.fullName
+        playerTeamLabel.text = player.team?.name
+        playerNationalityLabel.text = player.nationality
+        playerPositionLabel.text = player.position
+        playerAgeLabel.text = "\(player.age)"
     }
 }

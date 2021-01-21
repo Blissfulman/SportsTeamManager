@@ -10,7 +10,7 @@
 		CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */; };
 		CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */; };
 		CE4883DA25B4ACE700BCB7F9 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4883D825B4ACE700BCB7F9 /* MainViewController.storyboard */; };
-		CE4883DD25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE4883DB25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld */; };
+		CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE4883DB25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld */; };
 		CE4883DF25B4ACEA00BCB7F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4883DE25B4ACEA00BCB7F9 /* Assets.xcassets */; };
 		CE4883E225B4ACEA00BCB7F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4883E025B4ACEA00BCB7F9 /* LaunchScreen.storyboard */; };
 		CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */; };
@@ -103,7 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */,
-				CE4883DB25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld */,
+				CE4883DB25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -210,7 +210,7 @@
 				CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */,
 				CE48840725B602E300BCB7F9 /* PlayerCell.swift in Sources */,
 				CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */,
-				CE4883DD25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld in Sources */,
+				CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */,
 				CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,13 +415,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		CE4883DB25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodeld */ = {
+		CE4883DB25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				CE4883DC25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodel */,
 			);
 			currentVersion = CE4883DC25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodel */;
-			path = SportsTeamManager.xcdatamodeld;
+			path = SportsTeam.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

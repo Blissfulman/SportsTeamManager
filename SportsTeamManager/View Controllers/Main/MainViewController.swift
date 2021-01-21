@@ -72,6 +72,8 @@ final class MainViewController: UIViewController {
     }
 }
 
+// MARK: - Table view data source
+
 extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,5 +90,24 @@ extension MainViewController: UITableViewDataSource {
         cell.configure(players[indexPath.row])
         
         return cell
+    }
+}
+
+// MARK: - Table view delegate
+
+extension MainViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+            [weak self] _, _, _  in
+            
+            guard let self = self else { return }
+
+            self.dataManager.delete(object: self.players[indexPath.row])
+            self.fetchData()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 }

@@ -14,14 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let dataManager = CoreDataManager(modelName: "SportsTeam")
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let storyboard = UIStoryboard(name: "MainViewController", bundle: nil)
+        let storyboard = UIStoryboard(name: MainViewController.identifier, bundle: nil)
       
-        guard let mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewController")
-                as? MainViewController else {
-            return false
-        }
+        guard let mainVC = storyboard.instantiateViewController(
+                withIdentifier: MainViewController.identifier
+        ) as? MainViewController else { return false }
+        
         mainVC.dataManager = dataManager
         
         window = UIWindow()

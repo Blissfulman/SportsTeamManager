@@ -9,12 +9,6 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
-    private enum Constants {
-        static let teams = ["Real", "Barcelona", "Chelsea", "Roma", "CSKA", "Monaco",
-                            "Manchester Unated", "Liverpool", "Bavaria", "Juventus"]
-        static let positions = ["Defender", "Halfback", "Forward"]
-    }
-    
     private enum PickerViewContentType {
         case teams
         case positions
@@ -45,6 +39,9 @@ final class PlayerViewController: UIViewController {
     private var selectedTeam: String!
     private var selectedPosition: String!
     private let imagePickerController = UIImagePickerController()
+    
+    private let teams = DataConstants.teams
+    private let positions = DataConstants.positions
     
     // MARK: - Lifecycle methods
     
@@ -121,6 +118,8 @@ final class PlayerViewController: UIViewController {
     
     private func setupUI() {
         imagePickerController.delegate = self
+        saveButton.layer.cornerRadius = 8
+        updateSaveButtonState()
     }
     
     // MARK: - Private methods
@@ -136,6 +135,7 @@ final class PlayerViewController: UIViewController {
         } else {
             saveButton.isEnabled = false
         }
+        saveButton.backgroundColor = saveButton.isEnabled ? .systemBlue : .systemGray3
     }
 }
 
@@ -149,12 +149,8 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
             imagePickerController.dismiss(animated: true)
         }
         
-        // Local variable inserted by Swift 4.2 migrator.
-        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        guard let photo = info[.originalImage] as? UIImage else { return }
         
-        guard let photo = info[convertFromUIImagePickerControllerInfoKey(.originalImage)] as? UIImage else {
-            return
-        }
         selectedPhoto = photo
         photoImageView.image = photo
     }
@@ -167,11 +163,11 @@ extension PlayerViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerViewContentType == .teams {
-            selectedTeamButton.setTitle(Constants.teams[row], for: .normal)
-            selectedTeam = Constants.teams[row]
+            selectedTeamButton.setTitle(teams[row], for: .normal)
+            selectedTeam = teams[row]
         } else {
-            selectedPositionButton.setTitle(Constants.positions[row], for: .normal)
-            selectedPosition = Constants.positions[row]
+            selectedPositionButton.setTitle(positions[row], for: .normal)
+            selectedPosition = positions[row]
         }
         pickerView.isHidden = true
         centralStackView.isHidden = false
@@ -188,26 +184,16 @@ extension PlayerViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        pickerViewContentType == .teams ? Constants.teams.count : Constants.positions.count
+        pickerViewContentType == .teams ? teams.count : positions.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        pickerViewContentType == .teams ? Constants.teams[row] : Constants.positions[row]
-    }
-}
-
-extension PlayerViewController {
-    
-    func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-        Dictionary(uniqueKeysWithValues: input.map { key, value in (key.rawValue, value) })
-    }
-        
-    func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-        input.rawValue
+        pickerViewContentType == .teams ? teams[row] : positions[row]
     }
 }
 
 // MARK: - Text field delegate
+
 extension PlayerViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

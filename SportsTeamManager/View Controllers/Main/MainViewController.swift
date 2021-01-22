@@ -39,7 +39,7 @@ final class MainViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func addPlayerAction() {
-
+        
         let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
       
         guard let playerVC = storyboard.instantiateViewController(
@@ -47,7 +47,6 @@ final class MainViewController: UIViewController {
         ) as? PlayerViewController else { return }
         
         playerVC.dataManager = dataManager
-        
         navigationController?.pushViewController(playerVC, animated: true)
     }
     
@@ -60,7 +59,6 @@ final class MainViewController: UIViewController {
         let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                                  target: self,
                                                  action: #selector(addPlayerAction))
-        
         navigationItem.rightBarButtonItem = addPlayerBarButton
     }
     
@@ -68,7 +66,7 @@ final class MainViewController: UIViewController {
     
     private func fetchData() {
         players = dataManager.fetchData(for: Player.self)
-        tableView.isHidden = players.count > 0 ? false : true
+        tableView.isHidden = players.isEmpty ? true : false
     }
 }
 
@@ -86,9 +84,7 @@ extension MainViewController: UITableViewDataSource {
                 withIdentifier: PlayerCell.identifier, for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
-        
         cell.configure(players[indexPath.row])
-        
         return cell
     }
 }
@@ -103,10 +99,12 @@ extension MainViewController: UITableViewDelegate {
             [weak self] _, _, _  in
             
             guard let self = self else { return }
-
+            
             self.dataManager.delete(object: self.players[indexPath.row])
             self.fetchData()
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            tableView.performBatchUpdates {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }

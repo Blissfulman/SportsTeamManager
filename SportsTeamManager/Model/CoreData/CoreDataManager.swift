@@ -77,7 +77,6 @@ final class CoreDataManager {
         
         do {
             fetchedResult = try context.fetch(request)
-            
         } catch {
             debugPrint("Could not fetch: \(error.localizedDescription)")
         }

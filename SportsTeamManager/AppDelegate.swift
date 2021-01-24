@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let dataManager = CoreDataManager(modelName: "SportsTeam")
+//    let dataManager = CoreDataManager(modelName: "SportsTeam")
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 withIdentifier: MainViewController.identifier
         ) as? MainViewController else { return false }
         
-        mainVC.dataManager = dataManager
+//        mainVC.dataManager = dataManager
         
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)

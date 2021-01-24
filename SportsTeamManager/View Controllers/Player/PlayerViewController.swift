@@ -31,7 +31,7 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
-    var dataManager: CoreDataManager!
+    var dataManager = CoreDataManager(modelName: "SportsTeam")
     
     private var pickerViewContentType: PickerViewContentType = .teams
     

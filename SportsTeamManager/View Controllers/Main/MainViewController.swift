@@ -19,7 +19,9 @@ final class MainViewController: UIViewController {
     
     var dataManager: CoreDataManager!
     
-    private var players = [Player]()
+//    private var players = [Player]()
+    
+    private let contentDataModel = ContentDataModelImpl()
     
     // MARK: - Lifecycle methods
     
@@ -32,8 +34,8 @@ final class MainViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchData()
         tableView.reloadData()
+        updateTableViewVisible()
     }
     
     // MARK: - Actions
@@ -46,7 +48,7 @@ final class MainViewController: UIViewController {
                 withIdentifier: PlayerViewController.identifier
         ) as? PlayerViewController else { return }
         
-        playerVC.dataManager = dataManager
+//        playerVC.dataManager = dataManager
         navigationController?.pushViewController(playerVC, animated: true)
     }
     
@@ -64,9 +66,9 @@ final class MainViewController: UIViewController {
     
     // MARK: - Private methods
     
-    private func fetchData() {
-        players = dataManager.fetchData(for: Player.self)
-        tableView.isHidden = players.isEmpty ? true : false
+    private func updateTableViewVisible() {
+//        players = dataManager.fetchData(for: Player.self)
+        tableView.isHidden = contentDataModel.getContent().isEmpty ? true : false
     }
 }
 
@@ -75,7 +77,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        players.count
+        contentDataModel.numberOfItems()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,7 +86,9 @@ extension MainViewController: UITableViewDataSource {
                 withIdentifier: PlayerCell.identifier, for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
-        cell.configure(players[indexPath.row])
+        if let item = contentDataModel.getItem(at: indexPath.row) {
+            cell.configure(item)
+        }
         return cell
     }
 }
@@ -94,16 +98,18 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
+
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
-            
+
             guard let self = self else { return }
-            
-            self.dataManager.delete(object: self.players[indexPath.row])
-            self.fetchData()
-            tableView.performBatchUpdates {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+
+//            self.dataManager.delete(object: self.players[indexPath.row])
+            self.contentDataModel.removeItem(at: indexPath.row) {
+                tableView.performBatchUpdates {
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
+                    self.updateTableViewVisible()
+                }
             }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])

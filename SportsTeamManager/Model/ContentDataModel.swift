@@ -24,36 +24,70 @@ protocol ContentDataModel {
     func getContent() -> [Item]
     func getItem(at index: Int) -> Item?
     func removeItem(at index: Int, completion: () -> Void)
+    func createPlayer(name: String, number: Int16, nationality: String,
+                      age: Int16, team: String, position: String, photo: Data?)
 }
 
 final class ContentDataModelImpl<Item: NSManagedObject>: ContentDataModel {
     
-    typealias Item = Player
+//    typealias Item = Player
     
     weak var delegate: ContentDataModelDelegate?
     
     let dataManager = CoreDataManager(modelName: "SportsTeam")
     
-    private lazy var items: [Player] = {
-        dataManager.fetchData(for: Player.self)
-    }()
+    private lazy var items = [Item]()
+    
+    init() {
+        updateDataOfContent()
+    }
+    
+    // MARK: - Public methods
     
     func numberOfItems() -> Int {
         items.count
     }
     
-    func getContent() -> [Player] {
+    func getContent() -> [Item] {
         items
     }
     
-    func getItem(at index: Int) -> Player? {
+    func getItem(at index: Int) -> Item? {
         items[index]
     }
 
     func removeItem(at index: Int, completion: () -> Void) {
-        if let deletingItem = getItem(at: index) {
-            dataManager.delete(object: deletingItem)
+        if let _ = getItem(at: index) {
+            dataManager.delete(object: items[index])
+            items.remove(at: index)
             completion()
         }
+    }
+    
+    func createPlayer(name: String, number: Int16, nationality: String,
+                      age: Int16, team: String, position: String, photo: Data?) {
+        
+        let context = dataManager.getContext()
+        let player = dataManager.createObject(from: Player.self)
+        let teamOfPlayer = dataManager.createObject(from: Team.self)
+        
+        teamOfPlayer.name = team
+        
+        player.fullName = name
+        player.number = number
+        player.nationality = nationality
+        player.age = age
+        player.team = teamOfPlayer
+        player.position = position
+        player.photo = photo
+        
+        dataManager.save(context: context)
+        updateDataOfContent()
+    }
+    
+    // MARK: - Private methods
+    
+    private func updateDataOfContent() {
+        items = dataManager.fetchData(for: Item.self)
     }
 }

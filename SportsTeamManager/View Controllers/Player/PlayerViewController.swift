@@ -31,7 +31,7 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
-    var dataManager = CoreDataManager(modelName: "SportsTeam")
+    var contentDataModel: ContentDataModelImpl<Player>!
     
     private var pickerViewContentType: PickerViewContentType = .teams
     
@@ -83,22 +83,14 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        let context = dataManager.getContext()
+        contentDataModel.createPlayer(name: name,
+                                      number: number,
+                                      nationality: nationality,
+                                      age: age,
+                                      team: selectedTeam,
+                                      position: selectedPosition,
+                                      photo: selectedPhoto.pngData())
         
-        let team = dataManager.createObject(from: Team.self)
-        team.name = selectedTeam
-        
-        let player = dataManager.createObject(from: Player.self)
-        player.team = team
-        
-        player.photo = selectedPhoto
-        player.number = number
-        player.fullName = name
-        player.nationality = nationality
-        player.age = age
-        player.position = selectedPosition
-        
-        dataManager.save(context: context)
         navigationController?.popViewController(animated: true)
     }
     

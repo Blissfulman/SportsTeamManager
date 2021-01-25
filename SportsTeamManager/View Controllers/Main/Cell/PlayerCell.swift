@@ -38,7 +38,7 @@ final class PlayerCell: UITableViewCell {
     // MARK: - Public methods
     
     func configure(_ player: Player) {
-        if let photo = player.photo as? UIImage {
+        if let photo = UIImage(data: player.photo ?? Data()) {
             playerPhotoImageView.image = photo
         }
         playerNumberLabel.text = "\(player.number)"

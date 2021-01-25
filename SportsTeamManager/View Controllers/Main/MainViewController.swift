@@ -17,11 +17,7 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
-    var dataManager: CoreDataManager!
-    
-//    private var players = [Player]()
-    
-    private let contentDataModel = ContentDataModelImpl()
+    var contentDataModel: ContentDataModelImpl<Player>!
     
     // MARK: - Lifecycle methods
     
@@ -48,7 +44,7 @@ final class MainViewController: UIViewController {
                 withIdentifier: PlayerViewController.identifier
         ) as? PlayerViewController else { return }
         
-//        playerVC.dataManager = dataManager
+        playerVC.contentDataModel = contentDataModel
         navigationController?.pushViewController(playerVC, animated: true)
     }
     
@@ -67,7 +63,6 @@ final class MainViewController: UIViewController {
     // MARK: - Private methods
     
     private func updateTableViewVisible() {
-//        players = dataManager.fetchData(for: Player.self)
         tableView.isHidden = contentDataModel.getContent().isEmpty ? true : false
     }
 }
@@ -86,6 +81,7 @@ extension MainViewController: UITableViewDataSource {
                 withIdentifier: PlayerCell.identifier, for: indexPath) as? PlayerCell else {
             return UITableViewCell()
         }
+        
         if let item = contentDataModel.getItem(at: indexPath.row) {
             cell.configure(item)
         }
@@ -104,7 +100,6 @@ extension MainViewController: UITableViewDelegate {
 
             guard let self = self else { return }
 
-//            self.dataManager.delete(object: self.players[indexPath.row])
             self.contentDataModel.removeItem(at: indexPath.row) {
                 tableView.performBatchUpdates {
                     tableView.deleteRows(at: [indexPath], with: .automatic)

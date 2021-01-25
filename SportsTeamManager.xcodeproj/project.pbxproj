@@ -19,7 +19,7 @@
 		CE48841325B60E1200BCB7F9 /* PlayerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */; };
 		CE48842425BB077300BCB7F9 /* DataConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48842325BB077300BCB7F9 /* DataConstants.swift */; };
 		CE48843225BD5CEA00BCB7F9 /* ContentTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48843125BD5CEA00BCB7F9 /* ContentTableViewManager.swift */; };
-		CEE04A4D25BDCF48004ACB57 /* ContentDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* ContentDataModel.swift */; };
+		CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,7 +37,7 @@
 		CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlayerViewController.storyboard; sourceTree = "<group>"; };
 		CE48842325BB077300BCB7F9 /* DataConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConstants.swift; sourceTree = "<group>"; };
 		CE48843125BD5CEA00BCB7F9 /* ContentTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewManager.swift; sourceTree = "<group>"; };
-		CEE04A4C25BDCF48004ACB57 /* ContentDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentDataModel.swift; sourceTree = "<group>"; };
+		CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +108,7 @@
 		CE4883F325B5647600BCB7F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CEE04A4C25BDCF48004ACB57 /* ContentDataModel.swift */,
+				CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */,
 				CEE04A4A25BDCF1C004ACB57 /* CoreData */,
 				CE48842F25BD5CC100BCB7F9 /* Managers */,
 				CE48842725BB077D00BCB7F9 /* Helpers */,
@@ -241,7 +241,7 @@
 			files = (
 				CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */,
 				CE48843225BD5CEA00BCB7F9 /* ContentTableViewManager.swift in Sources */,
-				CEE04A4D25BDCF48004ACB57 /* ContentDataModel.swift in Sources */,
+				CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */,
 				CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */,
 				CE48840725B602E300BCB7F9 /* PlayerCell.swift in Sources */,
 				CE48842425BB077300BCB7F9 /* DataConstants.swift in Sources */,

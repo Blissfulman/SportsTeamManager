@@ -17,7 +17,7 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
-    var contentDataModel: ContentDataModelImpl<Player>!
+    var playersDataModel: PlayersDataModelImpl!
     
     // MARK: - Lifecycle methods
     
@@ -31,7 +31,7 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
-        updateTableViewVisible()
+        updateTableViewVisibility()
     }
     
     // MARK: - Actions
@@ -44,7 +44,7 @@ final class MainViewController: UIViewController {
                 withIdentifier: PlayerViewController.identifier
         ) as? PlayerViewController else { return }
         
-        playerVC.contentDataModel = contentDataModel
+        playerVC.playersDataModel = playersDataModel
         navigationController?.pushViewController(playerVC, animated: true)
     }
     
@@ -62,8 +62,8 @@ final class MainViewController: UIViewController {
     
     // MARK: - Private methods
     
-    private func updateTableViewVisible() {
-        tableView.isHidden = contentDataModel.getContent().isEmpty ? true : false
+    private func updateTableViewVisibility() {
+        tableView.isHidden = playersDataModel.numberOfPlayers == 0 ? true : false
     }
 }
 
@@ -72,7 +72,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        contentDataModel.numberOfItems()
+        playersDataModel.numberOfPlayers
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,7 +82,7 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let item = contentDataModel.getItem(at: indexPath.row) {
+        if let item = playersDataModel.getPlayer(at: indexPath.row) {
             cell.configure(item)
         }
         return cell
@@ -100,11 +100,11 @@ extension MainViewController: UITableViewDelegate {
 
             guard let self = self else { return }
 
-            self.contentDataModel.removeItem(at: indexPath.row) {
+            self.playersDataModel.removePlayer(at: indexPath.row) {
                 tableView.performBatchUpdates {
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                    self.updateTableViewVisible()
                 }
+                self.updateTableViewVisibility()
             }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])

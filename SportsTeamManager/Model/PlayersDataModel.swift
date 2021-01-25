@@ -1,42 +1,46 @@
 //
-//  ContentDataModel.swift
+//  PlayersDataModel.swift
 //  SportsTeamManager
 //
 //  Created by User on 24.01.2021.
 //
 
 import Foundation
-import CoreData
 
-protocol ContentDataModelDelegate: AnyObject {
+protocol PlayersDataModelDelegate: AnyObject {
 //    func numberOfItemsChanged()
 //    func insertItem(at index: Int)
 //    func errorOccurred(error: String)
     func contentDidChanged()
 }
 
-protocol ContentDataModel {
-    associatedtype Item: NSManagedObject
+protocol PlayersDataModel {
     
-    var delegate: ContentDataModelDelegate? { get set }
+    var delegate: PlayersDataModelDelegate? { get set }
+    var numberOfPlayers: Int { get }
     
-    func numberOfItems() -> Int
-    func getContent() -> [Item]
-    func getItem(at index: Int) -> Item?
-    func removeItem(at index: Int, completion: () -> Void)
+    func getPlayers() -> [Player]
+    func getPlayer(at index: Int) -> Player?
+    func removePlayer(at index: Int, completion: () -> Void)
     func createPlayer(name: String, number: Int16, nationality: String,
                       age: Int16, team: String, position: String, photo: Data?)
 }
 
-final class ContentDataModelImpl<Item: NSManagedObject>: ContentDataModel {
+final class PlayersDataModelImpl: PlayersDataModel {
     
-//    typealias Item = Player
+    // MARK: - Properties
     
-    weak var delegate: ContentDataModelDelegate?
+    weak var delegate: PlayersDataModelDelegate?
     
     let dataManager = CoreDataManager(modelName: "SportsTeam")
     
-    private lazy var items = [Item]()
+    private var players = [Player]()
+    
+    var numberOfPlayers: Int {
+        players.count
+    }
+    
+    // MARK: - Initializators
     
     init() {
         updateDataOfContent()
@@ -44,22 +48,18 @@ final class ContentDataModelImpl<Item: NSManagedObject>: ContentDataModel {
     
     // MARK: - Public methods
     
-    func numberOfItems() -> Int {
-        items.count
+    func getPlayers() -> [Player] {
+        players
     }
     
-    func getContent() -> [Item] {
-        items
-    }
-    
-    func getItem(at index: Int) -> Item? {
-        items[index]
+    func getPlayer(at index: Int) -> Player? {
+        players[index]
     }
 
-    func removeItem(at index: Int, completion: () -> Void) {
-        if let _ = getItem(at: index) {
-            dataManager.delete(object: items[index])
-            items.remove(at: index)
+    func removePlayer(at index: Int, completion: () -> Void) {
+        if let _ = getPlayer(at: index) {
+            dataManager.delete(object: players[index])
+            players.remove(at: index)
             completion()
         }
     }
@@ -88,6 +88,6 @@ final class ContentDataModelImpl<Item: NSManagedObject>: ContentDataModel {
     // MARK: - Private methods
     
     private func updateDataOfContent() {
-        items = dataManager.fetchData(for: Item.self)
+        players = dataManager.fetchData(for: Player.self)
     }
 }

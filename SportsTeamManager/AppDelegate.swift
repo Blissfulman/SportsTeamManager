@@ -12,7 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let contentDataModel = ContentDataModelImpl<Player>()
+    let playersDataModel = PlayersDataModelImpl()
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 withIdentifier: MainViewController.identifier
         ) as? MainViewController else { return false }
         
-        mainVC.contentDataModel = contentDataModel
+        mainVC.playersDataModel = playersDataModel
         
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)

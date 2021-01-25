@@ -31,7 +31,7 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
-    var contentDataModel: ContentDataModelImpl<Player>!
+    var playersDataModel: PlayersDataModelImpl!
     
     private var pickerViewContentType: PickerViewContentType = .teams
     
@@ -83,7 +83,7 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        contentDataModel.createPlayer(name: name,
+        playersDataModel.createPlayer(name: name,
                                       number: number,
                                       nationality: nationality,
                                       age: age,

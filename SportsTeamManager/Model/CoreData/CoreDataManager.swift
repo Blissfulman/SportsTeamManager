@@ -67,7 +67,7 @@ final class CoreDataManager {
         let context = getContext()
         let request: NSFetchRequest<T>
         var fetchedResult = [T]()
-
+        
         if #available(iOS 10.0, *) {
             request = entity.fetchRequest() as! NSFetchRequest<T>
         } else {

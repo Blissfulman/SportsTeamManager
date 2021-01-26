@@ -23,10 +23,22 @@ final class PlayerCell: UITableViewCell {
     
     static let identifier = String(describing: PlayerCell.self)
     
+    // MARK: - Lyfecycle metods
+    
+    override func prepareForReuse() {
+        playerPhotoImageView.image = nil
+        playerNumberLabel.text = nil
+        playerFullNameLabel.text = nil
+        playerTeamLabel.text = nil
+        playerNationalityLabel.text = nil
+        playerPositionLabel.text = nil
+        playerAgeLabel.text = nil
+    }
+    
     // MARK: - Public methods
     
     func configure(_ player: Player) {
-        if let photo = player.photo as? UIImage {
+        if let photo = UIImage(data: player.photo ?? Data()) {
             playerPhotoImageView.image = photo
         }
         playerNumberLabel.text = "\(player.number)"

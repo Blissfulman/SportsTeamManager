@@ -7,16 +7,7 @@
 
 import Foundation
 
-protocol PlayersDataModelDelegate: AnyObject {
-//    func numberOfItemsChanged()
-//    func insertItem(at index: Int)
-//    func errorOccurred(error: String)
-    func contentDidChanged()
-}
-
 protocol PlayersDataModel {
-    
-    var delegate: PlayersDataModelDelegate? { get set }
     var numberOfPlayers: Int { get }
     
     func getPlayers() -> [Player]
@@ -32,7 +23,6 @@ final class PlayersDataModelImpl: PlayersDataModel {
     
     static let shared = PlayersDataModelImpl()
     
-    weak var delegate: PlayersDataModelDelegate?
     let dataManager = CoreDataManager(modelName: "SportsTeam")
     
     var numberOfPlayers: Int {
@@ -54,9 +44,9 @@ final class PlayersDataModelImpl: PlayersDataModel {
     }
     
     func getPlayer(at index: Int) -> Player? {
-        players[index]
+        players[safeIndex: index]
     }
-
+    
     func removePlayer(at index: Int, completion: () -> Void) {
         if let _ = getPlayer(at: index) {
             dataManager.delete(object: players[index])

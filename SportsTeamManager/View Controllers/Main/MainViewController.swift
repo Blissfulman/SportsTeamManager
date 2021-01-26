@@ -103,9 +103,9 @@ extension MainViewController: UITableViewDelegate {
 
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
-
+            
             guard let self = self else { return }
-
+            
             self.playersDataModel.removePlayer(at: indexPath.row) {
                 tableView.performBatchUpdates {
                     tableView.deleteRows(at: [indexPath], with: .automatic)

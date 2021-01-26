@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE019BB325C00AC10062EF3C /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE019BB225C00AC10062EF3C /* Collection+Extension.swift */; };
 		CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */; };
 		CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */; };
 		CE4883DA25B4ACE700BCB7F9 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4883D825B4ACE700BCB7F9 /* MainViewController.storyboard */; };
@@ -18,11 +19,11 @@
 		CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */; };
 		CE48841325B60E1200BCB7F9 /* PlayerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */; };
 		CE48842425BB077300BCB7F9 /* DataConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48842325BB077300BCB7F9 /* DataConstants.swift */; };
-		CE48843225BD5CEA00BCB7F9 /* ContentTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48843125BD5CEA00BCB7F9 /* ContentTableViewManager.swift */; };
 		CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE019BB225C00AC10062EF3C /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		CE4883CF25B4ACE700BCB7F9 /* SportsTeamManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsTeamManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -36,7 +37,6 @@
 		CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlayerViewController.storyboard; sourceTree = "<group>"; };
 		CE48842325BB077300BCB7F9 /* DataConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConstants.swift; sourceTree = "<group>"; };
-		CE48843125BD5CEA00BCB7F9 /* ContentTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewManager.swift; sourceTree = "<group>"; };
 		CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,6 +73,7 @@
 				CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */,
 				CE4883F325B5647600BCB7F9 /* Model */,
 				CE4883EE25B563F800BCB7F9 /* View Controllers */,
+				CE48842725BB077D00BCB7F9 /* Helpers and Extensions */,
 				CE4883EB25B5636900BCB7F9 /* Resources */,
 				CE4883EC25B5638C00BCB7F9 /* Supporting Files */,
 			);
@@ -110,8 +111,6 @@
 			children = (
 				CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */,
 				CEE04A4A25BDCF1C004ACB57 /* CoreData */,
-				CE48842F25BD5CC100BCB7F9 /* Managers */,
-				CE48842725BB077D00BCB7F9 /* Helpers */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -143,20 +142,13 @@
 			path = Player;
 			sourceTree = "<group>";
 		};
-		CE48842725BB077D00BCB7F9 /* Helpers */ = {
+		CE48842725BB077D00BCB7F9 /* Helpers and Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				CE48842325BB077300BCB7F9 /* DataConstants.swift */,
+				CE019BB225C00AC10062EF3C /* Collection+Extension.swift */,
 			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
-		CE48842F25BD5CC100BCB7F9 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				CE48843125BD5CEA00BCB7F9 /* ContentTableViewManager.swift */,
-			);
-			path = Managers;
+			path = "Helpers and Extensions";
 			sourceTree = "<group>";
 		};
 		CEE04A4A25BDCF1C004ACB57 /* CoreData */ = {
@@ -240,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */,
-				CE48843225BD5CEA00BCB7F9 /* ContentTableViewManager.swift in Sources */,
 				CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */,
 				CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */,
 				CE48840725B602E300BCB7F9 /* PlayerCell.swift in Sources */,
@@ -248,6 +239,7 @@
 				CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */,
 				CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */,
 				CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */,
+				CE019BB325C00AC10062EF3C /* Collection+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -404,7 +396,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.EvgenyNovgorodov.SportsTeamManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -423,7 +415,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.EvgenyNovgorodov.SportsTeamManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

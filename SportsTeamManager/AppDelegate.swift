@@ -12,8 +12,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    let dataManager = CoreDataManager(modelName: "SportsTeam")
-
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -22,9 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let mainVC = storyboard.instantiateViewController(
                 withIdentifier: MainViewController.identifier
         ) as? MainViewController else { return false }
-        
-        mainVC.dataManager = dataManager
-        
+                
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)
         window?.makeKeyAndVisible()

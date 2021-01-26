@@ -9,6 +9,8 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
+    // MARK: - Nested types
+    
     private enum PickerViewContentType {
         case teams
         case positions
@@ -31,10 +33,7 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
-    var dataManager: CoreDataManager!
-    
     private var pickerViewContentType: PickerViewContentType = .teams
-    
     private var selectedPhoto = #imageLiteral(resourceName: "some.player")
     private var selectedTeam: String!
     private var selectedPosition: String!
@@ -42,6 +41,15 @@ final class PlayerViewController: UIViewController {
     
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
+    
+    private var playersDataModel: PlayersDataModel!
+    
+    // MARK: - Initializers
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        playersDataModel = PlayersDataModelImpl.shared
+    }
     
     // MARK: - Lifecycle methods
     
@@ -83,22 +91,14 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        let context = dataManager.getContext()
+        playersDataModel.createPlayer(name: name,
+                                      number: number,
+                                      nationality: nationality,
+                                      age: age,
+                                      team: selectedTeam,
+                                      position: selectedPosition,
+                                      photo: selectedPhoto.pngData())
         
-        let team = dataManager.createObject(from: Team.self)
-        team.name = selectedTeam
-        
-        let player = dataManager.createObject(from: Player.self)
-        player.team = team
-        
-        player.photo = selectedPhoto
-        player.number = number
-        player.fullName = name
-        player.nationality = nationality
-        player.age = age
-        player.position = selectedPosition
-        
-        dataManager.save(context: context)
         navigationController?.popViewController(animated: true)
     }
     

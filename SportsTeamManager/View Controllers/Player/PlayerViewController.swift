@@ -9,6 +9,8 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
+    // MARK: - Nested types
+    
     private enum PickerViewContentType {
         case teams
         case positions
@@ -31,10 +33,7 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
-    var playersDataModel: PlayersDataModelImpl!
-    
     private var pickerViewContentType: PickerViewContentType = .teams
-    
     private var selectedPhoto = #imageLiteral(resourceName: "some.player")
     private var selectedTeam: String!
     private var selectedPosition: String!
@@ -42,6 +41,15 @@ final class PlayerViewController: UIViewController {
     
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
+    
+    private var playersDataModel: PlayersDataModel!
+    
+    // MARK: - Initializers
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        playersDataModel = PlayersDataModelImpl.shared
+    }
     
     // MARK: - Lifecycle methods
     

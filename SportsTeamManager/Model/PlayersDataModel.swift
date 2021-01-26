@@ -30,20 +30,21 @@ final class PlayersDataModelImpl: PlayersDataModel {
     
     // MARK: - Properties
     
+    static let shared = PlayersDataModelImpl()
+    
     weak var delegate: PlayersDataModelDelegate?
-    
     let dataManager = CoreDataManager(modelName: "SportsTeam")
-    
-    private var players = [Player]()
     
     var numberOfPlayers: Int {
         players.count
     }
     
+    private var players = [Player]()
+    
     // MARK: - Initializators
     
-    init() {
-        updateDataOfContent()
+    private init() {
+        updateData()
     }
     
     // MARK: - Public methods
@@ -82,12 +83,12 @@ final class PlayersDataModelImpl: PlayersDataModel {
         player.photo = photo
         
         dataManager.save(context: context)
-        updateDataOfContent()
+        updateData()
     }
     
     // MARK: - Private methods
     
-    private func updateDataOfContent() {
+    private func updateData() {
         players = dataManager.fetchData(for: Player.self)
     }
 }

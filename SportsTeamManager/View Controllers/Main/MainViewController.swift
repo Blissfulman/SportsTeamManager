@@ -17,7 +17,14 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
-    var playersDataModel: PlayersDataModelImpl!
+    private var playersDataModel: PlayersDataModel!
+    
+    // MARK: - Initializers
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        playersDataModel = PlayersDataModelImpl.shared
+    }
     
     // MARK: - Lifecycle methods
     
@@ -44,7 +51,6 @@ final class MainViewController: UIViewController {
                 withIdentifier: PlayerViewController.identifier
         ) as? PlayerViewController else { return }
         
-        playerVC.playersDataModel = playersDataModel
         navigationController?.pushViewController(playerVC, animated: true)
     }
     

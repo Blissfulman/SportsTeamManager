@@ -194,6 +194,7 @@
                                             <outlet property="playerNumberLabel" destination="rKP-2M-hTh" id="Jdo-RK-0vR"/>
                                             <outlet property="playerPhotoImageView" destination="Wh4-os-PMb" id="Wk3-G3-Qgb"/>
                                             <outlet property="playerPositionLabel" destination="Q9K-md-bcy" id="idE-WW-9Y7"/>
+                                            <outlet property="playerStateLabel" destination="E9Y-61-I7L" id="LVU-GV-v9s"/>
                                             <outlet property="playerTeamLabel" destination="4bt-Mh-nlQ" id="f8A-J9-93v"/>
                                         </connections>
                                     </tableViewCell>
@@ -205,6 +206,7 @@
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KbW-sV-Tsi">
                                 <rect key="frame" x="20" y="54" width="374" height="32"/>
+                                <color key="backgroundColor" red="0.89173258659999999" green="0.81224048100000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <segments>
                                     <segment title="All"/>
                                     <segment title="In play"/>

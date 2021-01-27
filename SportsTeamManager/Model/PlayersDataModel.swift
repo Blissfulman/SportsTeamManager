@@ -13,8 +13,8 @@ protocol PlayersDataModel {
     func getPlayers() -> [Player]
     func getPlayer(at index: Int) -> Player?
     func removePlayer(at index: Int, completion: () -> Void)
-    func createPlayer(name: String, number: Int16, nationality: String,
-                      age: Int16, team: String, position: String, photo: Data?)
+    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
+                      team: String, position: String, inPlay: Bool, photo: Data?)
 }
 
 final class PlayersDataModelImpl: PlayersDataModel {
@@ -55,8 +55,8 @@ final class PlayersDataModelImpl: PlayersDataModel {
         }
     }
     
-    func createPlayer(name: String, number: Int16, nationality: String,
-                      age: Int16, team: String, position: String, photo: Data?) {
+    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
+                      team: String, position: String, inPlay: Bool, photo: Data?) {
         
         let context = dataManager.getContext()
         let player = dataManager.createObject(from: Player.self)
@@ -70,6 +70,7 @@ final class PlayersDataModelImpl: PlayersDataModel {
         player.age = age
         player.team = teamOfPlayer
         player.position = position
+        player.inPlay = inPlay
         player.photo = photo
         
         dataManager.save(context: context)

@@ -18,6 +18,7 @@ final class PlayerViewController: UIViewController {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var stateSegmentedControl: UISegmentedControl!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var numberTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
@@ -43,6 +44,10 @@ final class PlayerViewController: UIViewController {
     private let positions = DataConstants.positions
     
     private var playersDataModel: PlayersDataModel!
+    
+    private lazy var inPlay: Bool = {
+        stateSegmentedControl.selectedSegmentIndex == 0 ? true : false
+    }()
     
     // MARK: - Initializers
     
@@ -97,6 +102,7 @@ final class PlayerViewController: UIViewController {
                                       age: age,
                                       team: selectedTeam,
                                       position: selectedPosition,
+                                      inPlay: inPlay,
                                       photo: selectedPhoto.pngData())
         
         navigationController?.popViewController(animated: true)
@@ -117,6 +123,7 @@ final class PlayerViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupUI() {
+        title = "New player"
         imagePickerController.delegate = self
         saveButton.layer.cornerRadius = 8
         updateSaveButtonState()

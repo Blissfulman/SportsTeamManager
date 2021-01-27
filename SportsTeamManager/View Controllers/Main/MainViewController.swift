@@ -43,6 +43,10 @@ final class MainViewController: UIViewController {
     
     // MARK: - Actions
     
+    @objc private func searchAction() {
+        
+    }
+    
     @objc private func addPlayerAction() {
         
         let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
@@ -59,11 +63,17 @@ final class MainViewController: UIViewController {
     private func setupUI() {
         title = "Team players"
         tableView.separatorInset = .zero
+        tableView.allowsSelection = false
         
         let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                                  target: self,
                                                  action: #selector(addPlayerAction))
         navigationItem.rightBarButtonItem = addPlayerBarButton
+        
+        let searchBarButton = UIBarButtonItem(barButtonSystemItem: .search,
+                                              target: self,
+                                              action: #selector(searchAction))
+        navigationItem.leftBarButtonItem = searchBarButton
     }
     
     // MARK: - Private methods

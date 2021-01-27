@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AIt-U0-AVK">
-                                <rect key="frame" x="28" y="321.66666666666669" width="319" height="194.00000000000006"/>
+                                <rect key="frame" x="28" y="311.66666666666669" width="319" height="194"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q3G-k7-mYh">
                                         <rect key="frame" x="0.0" y="0.0" width="319" height="34"/>
@@ -100,7 +100,7 @@
                                 </subviews>
                             </stackView>
                             <pickerView hidden="YES" contentMode="scaleToFill" verticalHuggingPriority="240" translatesAutoresizingMaskIntoConstraints="NO" id="aHV-n1-KJ8">
-                                <rect key="frame" x="28" y="310.66666666666669" width="319" height="216.00000000000006"/>
+                                <rect key="frame" x="28" y="300.66666666666669" width="319" height="216.00000000000006"/>
                                 <connections>
                                     <outlet property="dataSource" destination="gcq-kf-ehO" id="YbF-DR-m2E"/>
                                     <outlet property="delegate" destination="gcq-kf-ehO" id="kHV-ZE-2vm"/>
@@ -167,7 +167,7 @@
                             <constraint firstItem="aHV-n1-KJ8" firstAttribute="centerY" secondItem="AIt-U0-AVK" secondAttribute="centerY" id="7av-IK-Z4S"/>
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="width" secondItem="0oN-hM-qBh" secondAttribute="width" multiplier="0.85" id="9sp-PU-1Ca"/>
                             <constraint firstItem="0oN-hM-qBh" firstAttribute="bottom" secondItem="d5q-3z-szv" secondAttribute="bottom" constant="16" id="BHN-gL-xDK"/>
-                            <constraint firstItem="AIt-U0-AVK" firstAttribute="top" secondItem="7c2-dd-CVk" secondAttribute="bottom" constant="20" id="I9Q-vl-qxF"/>
+                            <constraint firstItem="AIt-U0-AVK" firstAttribute="top" secondItem="7c2-dd-CVk" secondAttribute="bottom" constant="10" id="I9Q-vl-qxF"/>
                             <constraint firstItem="AIt-U0-AVK" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="Isa-B1-zqA"/>
                             <constraint firstItem="D9d-Qc-epP" firstAttribute="width" secondItem="rGD-DN-gar" secondAttribute="width" multiplier="0.8" id="Kzb-bf-H4R"/>
                             <constraint firstItem="d5q-3z-szv" firstAttribute="centerX" secondItem="rGD-DN-gar" secondAttribute="centerX" id="NdQ-xZ-Fil"/>

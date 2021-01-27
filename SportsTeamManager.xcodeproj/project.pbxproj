@@ -19,6 +19,7 @@
 		CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */; };
 		CE48841325B60E1200BCB7F9 /* PlayerViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */; };
 		CE48842425BB077300BCB7F9 /* DataConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48842325BB077300BCB7F9 /* DataConstants.swift */; };
+		CEA8725F25C16A4000AE4BD2 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8725E25C16A4000AE4BD2 /* FilterState.swift */; };
 		CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		CE48841225B60E1200BCB7F9 /* PlayerViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PlayerViewController.storyboard; sourceTree = "<group>"; };
 		CE48842325BB077300BCB7F9 /* DataConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataConstants.swift; sourceTree = "<group>"; };
+		CEA8725E25C16A4000AE4BD2 /* FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterState.swift; sourceTree = "<group>"; };
 		CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				CE48842325BB077300BCB7F9 /* DataConstants.swift */,
+				CEA8725E25C16A4000AE4BD2 /* FilterState.swift */,
 				CE019BB225C00AC10062EF3C /* Collection+Extension.swift */,
 			);
 			path = "Helpers and Extensions";
@@ -240,6 +243,7 @@
 				CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */,
 				CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */,
 				CE019BB325C00AC10062EF3C /* Collection+Extension.swift in Sources */,
+				CEA8725F25C16A4000AE4BD2 /* FilterState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

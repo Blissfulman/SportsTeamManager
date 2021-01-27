@@ -7,7 +7,14 @@
 
 import Foundation
 
+// MARK: - Protocols
+
+protocol PlayersDataModelDelegate: AnyObject {
+    func dataDidChanged()
+}
+
 protocol PlayersDataModel {
+    var delegate: PlayersDataModelDelegate? { get set }
     var numberOfPlayers: Int { get }
     
     func getPlayers() -> [Player]
@@ -15,6 +22,7 @@ protocol PlayersDataModel {
     func removePlayer(at index: Int, completion: () -> Void)
     func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
                       team: String, position: String, inPlay: Bool, photo: Data?)
+    func filterStateDidChanged(to filterState: FilterState)
 }
 
 final class PlayersDataModelImpl: PlayersDataModel {
@@ -23,12 +31,14 @@ final class PlayersDataModelImpl: PlayersDataModel {
     
     static let shared = PlayersDataModelImpl()
     
-    let dataManager = CoreDataManager(modelName: "SportsTeam")
+    weak var delegate: PlayersDataModelDelegate?
     
     var numberOfPlayers: Int {
         players.count
     }
     
+    private let dataManager = CoreDataManager(modelName: "SportsTeam")
+    private var filterState: FilterState = .all
     private var players = [Player]()
     
     // MARK: - Initializators
@@ -77,9 +87,41 @@ final class PlayersDataModelImpl: PlayersDataModel {
         updateData()
     }
     
+    func filterStateDidChanged(to filterState: FilterState) {
+        self.filterState = filterState
+        updateData()
+    }
+    
+//    func makeCompoundPredicate(state: FilterState) -> NSCompoundPredicate {
+//        var predicates = [NSPredicate]()
+//
+//        switch state {
+//        case .inPlay:
+//            predicates.append(NSPredicate(format: "inPlay == true"))
+//        case .bench:
+//            predicates.append(NSPredicate(format: "inPlay == false"))
+//        default:
+//            break
+//        }
+//
+//        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+//    }
+    
     // MARK: - Private methods
     
     private func updateData() {
         players = dataManager.fetchData(for: Player.self)
+        
+        if filterState == .inPlay,
+           let inPlayPlayers = players.first?.value(forKey: "inPlayPlayers") as? [Player] {
+            players = inPlayPlayers
+        }
+        
+        if filterState == .bench,
+           let benchPlayers = players.first?.value(forKey: "benchPlayers") as? [Player]  {
+            players = benchPlayers
+        }
+        
+        delegate?.dataDidChanged()
     }
 }

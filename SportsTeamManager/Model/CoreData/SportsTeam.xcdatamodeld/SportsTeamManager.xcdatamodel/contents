@@ -9,13 +9,19 @@
         <attribute name="photo" optional="YES" attributeType="Binary"/>
         <attribute name="position" attributeType="String"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="player" inverseEntity="Team"/>
+        <fetchedProperty name="benchPlayers" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Player" predicateString="inPlay == false"/>
+        </fetchedProperty>
+        <fetchedProperty name="inPlayPlayers" optional="YES">
+            <fetchRequest name="fetchedPropertyFetchRequest" entity="Player" predicateString="inPlay == true"/>
+        </fetchedProperty>
     </entity>
     <entity name="Team" representedClassName="Team" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
         <relationship name="player" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Player" inverseName="team" inverseEntity="Player"/>
     </entity>
     <elements>
-        <element name="Player" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="Player" positionX="-63" positionY="-18" width="128" height="185"/>
         <element name="Team" positionX="-54" positionY="-9" width="128" height="59"/>
     </elements>
 </model>

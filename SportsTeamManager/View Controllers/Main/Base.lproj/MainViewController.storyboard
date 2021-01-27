@@ -212,6 +212,9 @@
                                     <segment title="In play"/>
                                     <segment title="Bench"/>
                                 </segments>
+                                <connections>
+                                    <action selector="stateSegmentedControlValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="a1E-70-Lg8"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

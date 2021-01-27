@@ -24,6 +24,7 @@ final class MainViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel.delegate = self
     }
     
     // MARK: - Lifecycle methods
@@ -32,13 +33,6 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        tableView.reloadData()
-        updateTableViewVisibility()
     }
     
     // MARK: - Actions
@@ -58,10 +52,23 @@ final class MainViewController: UIViewController {
         navigationController?.pushViewController(playerVC, animated: true)
     }
     
+    @IBAction func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
+        switch sender.selectedSegmentIndex {
+        case 0:
+            playersDataModel.filterStateDidChanged(to: .all)
+        case 1:
+            playersDataModel.filterStateDidChanged(to: .inPlay)
+        default:
+            playersDataModel.filterStateDidChanged(to: .bench)
+        }
+    }
+    
     // MARK: - Setup UI
     
     private func setupUI() {
         title = "Team players"
+        updateTableViewVisibility()
         tableView.separatorInset = .zero
         tableView.allowsSelection = false
         
@@ -117,12 +124,23 @@ extension MainViewController: UITableViewDelegate {
             guard let self = self else { return }
             
             self.playersDataModel.removePlayer(at: indexPath.row) {
-                tableView.performBatchUpdates {
+                tableView.performBatchUpdates({
                     tableView.deleteRows(at: [indexPath], with: .automatic)
-                }
-                self.updateTableViewVisibility()
+                }, completion: { _ in
+                    self.updateTableViewVisibility()
+                })
             }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+}
+
+// MARK: - PlayersDataModelDelegate
+
+extension MainViewController: PlayersDataModelDelegate {
+    
+    func dataDidChanged() {
+        tableView.reloadData()
+        updateTableViewVisibility()
     }
 }

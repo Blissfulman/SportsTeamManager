@@ -39,6 +39,16 @@ final class MainViewController: UIViewController {
     
     @objc private func searchAction() {
         
+        let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
+      
+        guard let searchViewController = storyboard.instantiateViewController(
+                withIdentifier: SearchViewController.identifier
+        ) as? SearchViewController else { return }
+        
+        searchViewController.modalTransitionStyle = .crossDissolve
+        searchViewController.modalPresentationStyle = .overCurrentContext
+        
+        present(searchViewController, animated: true, completion: nil)
     }
     
     @objc private func addPlayerAction() {

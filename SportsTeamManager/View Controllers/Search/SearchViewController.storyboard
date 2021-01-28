@@ -30,6 +30,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="228" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <connections>
+                                                    <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="jgW-nt-giU"/>
+                                                    <outlet property="delegate" destination="EsR-dr-8fF" id="t3I-3Z-Ecz"/>
+                                                </connections>
                                             </textField>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="iPo-df-tdt">
                                                 <rect key="frame" x="0.0" y="44" width="228" height="34"/>
@@ -38,6 +42,10 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="115" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                                        <connections>
+                                                            <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="q7o-UQ-9jv"/>
+                                                            <outlet property="delegate" destination="EsR-dr-8fF" id="0oP-AR-kbz"/>
+                                                        </connections>
                                                     </textField>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4VB-Yf-dxg">
                                                         <rect key="frame" x="121" y="0.0" width="107" height="35"/>
@@ -63,6 +71,9 @@
                                                         <rect key="frame" x="47.5" y="0.0" width="104" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <state key="normal" title="Press to select"/>
+                                                        <connections>
+                                                            <action selector="teamSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="Q8l-W7-WbR"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHa-jg-xeQ">
                                                         <rect key="frame" x="157.5" y="0.0" width="70.5" height="30"/>
@@ -85,6 +96,9 @@
                                                         <rect key="frame" x="65" y="0.0" width="104" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                         <state key="normal" title="Press to select"/>
+                                                        <connections>
+                                                            <action selector="positionSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="mrh-0c-QG0"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uu-PP-ped">
                                                         <rect key="frame" x="175" y="0.0" width="53" height="30"/>
@@ -98,6 +112,10 @@
                                     </stackView>
                                     <pickerView hidden="YES" contentMode="scaleToFill" verticalHuggingPriority="240" translatesAutoresizingMaskIntoConstraints="NO" id="6ea-PK-eyg">
                                         <rect key="frame" x="16" y="16" width="228" height="216"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="EsR-dr-8fF" id="mA3-yd-7r1"/>
+                                            <outlet property="delegate" destination="EsR-dr-8fF" id="ueq-0i-bL1"/>
+                                        </connections>
                                     </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,39 +123,34 @@
                                     <constraint firstAttribute="width" constant="260" id="FvR-nq-FIO"/>
                                     <constraint firstAttribute="trailing" secondItem="6ea-PK-eyg" secondAttribute="trailing" constant="16" id="Gl9-Xi-Bad"/>
                                     <constraint firstAttribute="trailing" secondItem="1vq-So-kwx" secondAttribute="trailing" constant="16" id="PkN-rL-VFt"/>
-                                    <constraint firstAttribute="height" constant="350" id="T0f-Ux-0n4"/>
                                     <constraint firstItem="6ea-PK-eyg" firstAttribute="leading" secondItem="aPb-dy-x8U" secondAttribute="leading" constant="16" id="dgp-G5-MiU"/>
                                     <constraint firstItem="1vq-So-kwx" firstAttribute="leading" secondItem="aPb-dy-x8U" secondAttribute="leading" constant="16" id="h6v-8M-BfC"/>
                                     <constraint firstItem="1vq-So-kwx" firstAttribute="top" secondItem="aPb-dy-x8U" secondAttribute="top" constant="16" id="mUi-em-NXP"/>
                                     <constraint firstItem="6ea-PK-eyg" firstAttribute="top" secondItem="aPb-dy-x8U" secondAttribute="top" constant="16" id="u1e-YK-FFF"/>
                                     <constraint firstItem="6ea-PK-eyg" firstAttribute="centerX" secondItem="aPb-dy-x8U" secondAttribute="centerX" id="v7o-Ki-Gco"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="15"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="T0f-Ux-0n4"/>
-                                    </mask>
-                                </variation>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkB-nN-1KM">
-                                <rect key="frame" x="137" y="526.5" width="140" height="39"/>
+                                <rect key="frame" x="132" y="526.5" width="150" height="39"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="140" id="CBA-l1-fqp"/>
+                                    <constraint firstAttribute="width" constant="150" id="CBA-l1-fqp"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
                                 <state key="normal" title="Start search">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="startSearchButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="I7o-oF-n2l"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxJ-pt-ApB">
                                 <rect key="frame" x="187" y="581.5" width="40" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                 <state key="normal" title="Reset"/>
+                                <connections>
+                                    <action selector="resetButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="tft-rs-I4l"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vXg-TO-JGx"/>
@@ -155,6 +168,18 @@
                             <constraint firstItem="vXg-TO-JGx" firstAttribute="trailing" secondItem="jLM-oY-F2G" secondAttribute="trailing" id="yG0-cg-Spm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="ageOperatorSegmentedControl" destination="4VB-Yf-dxg" id="iNe-f4-hXY"/>
+                        <outlet property="ageTextField" destination="91a-Sh-QDg" id="Oke-p7-znA"/>
+                        <outlet property="backEnvironmentView" destination="jLM-oY-F2G" id="afU-OA-dPR"/>
+                        <outlet property="contentView" destination="aPb-dy-x8U" id="pFC-Sr-PkT"/>
+                        <outlet property="nameTextField" destination="261-Bk-UR1" id="PHm-fp-qIY"/>
+                        <outlet property="pickerView" destination="6ea-PK-eyg" id="1yI-ot-Og6"/>
+                        <outlet property="positionSelectButton" destination="s7s-fo-Hie" id="Gim-J0-M6v"/>
+                        <outlet property="stackView" destination="1vq-So-kwx" id="ymJ-tk-XLL"/>
+                        <outlet property="startSearchButton" destination="FkB-nN-1KM" id="CyT-Gn-MZM"/>
+                        <outlet property="teamSelectButton" destination="fPO-SO-NYn" id="jjG-uX-zdV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="96n-js-hBq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

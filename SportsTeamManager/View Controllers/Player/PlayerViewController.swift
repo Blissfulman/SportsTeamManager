@@ -9,13 +9,6 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
-    // MARK: - Nested types
-    
-    private enum PickerViewContentType {
-        case teams
-        case positions
-    }
-    
     // MARK: - Outlets
     
     @IBOutlet weak var stateSegmentedControl: UISegmentedControl!
@@ -24,8 +17,8 @@ final class PlayerViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var nationalityTextField: UITextField!
     @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var selectedTeamButton: UIButton!
-    @IBOutlet weak var selectedPositionButton: UIButton!
+    @IBOutlet weak var teamSelectButton: UIButton!
+    @IBOutlet weak var positionSelectButton: UIButton!
     @IBOutlet weak var centralStackView: UIStackView!
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var saveButton: UIButton!
@@ -163,25 +156,6 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
 }
 
-// MARK: - Picker view delegate
-
-extension PlayerViewController: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        if pickerViewContentType == .teams {
-            selectedTeamButton.setTitle(teams[row], for: .normal)
-            selectedTeam = teams[row]
-        } else {
-            selectedPositionButton.setTitle(positions[row], for: .normal)
-            selectedPosition = positions[row]
-        }
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
-        updateSaveButtonState()
-    }
-}
-
 // MARK: - Picker view data source
 
 extension PlayerViewController: UIPickerViewDataSource {
@@ -196,6 +170,25 @@ extension PlayerViewController: UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         pickerViewContentType == .teams ? teams[row] : positions[row]
+    }
+}
+
+// MARK: - Picker view delegate
+
+extension PlayerViewController: UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        if pickerViewContentType == .teams {
+            teamSelectButton.setTitle(teams[row], for: .normal)
+            selectedTeam = teams[row]
+        } else {
+            positionSelectButton.setTitle(positions[row], for: .normal)
+            selectedPosition = positions[row]
+        }
+        pickerView.isHidden = true
+        centralStackView.isHidden = false
+        updateSaveButtonState()
     }
 }
 

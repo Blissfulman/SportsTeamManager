@@ -190,10 +190,10 @@
                         <outlet property="numberTextField" destination="MU9-SM-9yI" id="Sio-1Q-k41"/>
                         <outlet property="photoImageView" destination="Z7z-vt-0FU" id="Fgl-xh-BNj"/>
                         <outlet property="pickerView" destination="aHV-n1-KJ8" id="7iR-KA-4q1"/>
+                        <outlet property="positionSelectButton" destination="qGG-TQ-50X" id="2wJ-Qi-goJ"/>
                         <outlet property="saveButton" destination="d5q-3z-szv" id="K7M-94-1ra"/>
-                        <outlet property="selectedPositionButton" destination="qGG-TQ-50X" id="2wJ-Qi-goJ"/>
-                        <outlet property="selectedTeamButton" destination="JQy-eP-rXM" id="Fa1-HY-LPa"/>
                         <outlet property="stateSegmentedControl" destination="D9d-Qc-epP" id="Gr3-uZ-S6q"/>
+                        <outlet property="teamSelectButton" destination="JQy-eP-rXM" id="Fa1-HY-LPa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="avm-VU-cje" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

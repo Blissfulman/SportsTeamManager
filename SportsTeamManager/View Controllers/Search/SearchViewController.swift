@@ -69,9 +69,24 @@ final class SearchViewController: UIViewController {
     }
     
     @IBAction func startSearchButtonTapped() {
+        var int16Age: Int16?
+        
+        if let age = ageTextField.text, !age.isEmpty {
+            int16Age = Int16(age)
+        }
+        
+        playersDataModel.predicateDidChanged(
+            name: nameTextField.text,
+            age: int16Age,
+            ageOperator: "=",
+            team: selectedTeam,
+            position: selectedPosition
+        )
+        dismiss(animated: true)
     }
     
     @IBAction func resetButtonTapped() {
+        playersDataModel.resetPredicate()
         dismiss(animated: true)
     }
     

@@ -23,6 +23,9 @@ protocol PlayersDataModel {
     func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
                       team: String, position: String, inPlay: Bool, photo: Data?)
     func filterStateDidChanged(to filterState: FilterState)
+    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
+                             team: String?, position: String?)
+    func resetPredicate()
 }
 
 final class PlayersDataModelImpl: PlayersDataModel {
@@ -37,9 +40,11 @@ final class PlayersDataModelImpl: PlayersDataModel {
         players.count
     }
     
-    private let dataManager = CoreDataManager(modelName: "SportsTeam")
-    private var filterState: FilterState = .all
     private var players = [Player]()
+    private var filterState: FilterState = .all
+    private var predicate: NSCompoundPredicate?
+    
+    private let dataManager = CoreDataManager(modelName: "SportsTeam")
     
     // MARK: - Initializators
     
@@ -92,36 +97,61 @@ final class PlayersDataModelImpl: PlayersDataModel {
         updateData()
     }
     
-//    func makeCompoundPredicate(state: FilterState) -> NSCompoundPredicate {
-//        var predicates = [NSPredicate]()
-//
-//        switch state {
-//        case .inPlay:
-//            predicates.append(NSPredicate(format: "inPlay == true"))
-//        case .bench:
-//            predicates.append(NSPredicate(format: "inPlay == false"))
-//        default:
-//            break
-//        }
-//
-//        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
-//    }
+    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
+                             team: String?, position: String?) {
+        predicate = makeCompoundPredicate(name: name, age: age, ageOperator: ageOperator,
+                                          team: team, position: position)
+        updateData()
+    }
+    
+    func resetPredicate() {
+        predicate = nil
+        updateData()
+    }
     
     // MARK: - Private methods
     
     private func updateData() {
-        players = dataManager.fetchData(for: Player.self)
+        players = dataManager.fetchData(for: Player.self, predicate: predicate)
         
         if filterState == .inPlay,
            let inPlayPlayers = players.first?.value(forKey: "inPlayPlayers") as? [Player] {
-            players = inPlayPlayers
+            players = players.filter { inPlayPlayers.contains($0) }
         }
         
         if filterState == .bench,
            let benchPlayers = players.first?.value(forKey: "benchPlayers") as? [Player]  {
-            players = benchPlayers
+            players = players.filter { benchPlayers.contains($0) }
         }
         
         delegate?.dataDidChanged()
+    }
+    
+    private func makeCompoundPredicate(name: String?, age: Int16?, ageOperator: String,
+                                       team: String?, position: String?) -> NSCompoundPredicate {
+        
+        var predicates = [NSPredicate]()
+        
+        if let name = name, !name.isEmpty {
+            let namePredicate = NSPredicate(format: "fullName CONTAINS[cd] '\(name)'")
+            predicates.append(namePredicate)
+        }
+        
+        if let team = team {
+            let teamPredicate = NSPredicate(format: "team.name == '\(team)'")
+            predicates.append(teamPredicate)
+        }
+        
+        if let position = position {
+            let positionPredicate = NSPredicate(format: "position == '\(position)'")
+            predicates.append(positionPredicate)
+        }
+            
+        if let int16Age = age {
+            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
+            predicates.append(agePredicate)
+        }
+        
+        return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
     }
 }

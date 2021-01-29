@@ -13,6 +13,7 @@ final class PlayerCell: UITableViewCell {
     
     @IBOutlet weak var playerNumberLabel: UILabel!
     @IBOutlet weak var playerFullNameLabel: UILabel!
+    @IBOutlet weak var playerStateLabel: UILabel!
     @IBOutlet weak var playerPhotoImageView: UIImageView!
     @IBOutlet weak var playerTeamLabel: UILabel!
     @IBOutlet weak var playerNationalityLabel: UILabel!
@@ -29,6 +30,7 @@ final class PlayerCell: UITableViewCell {
         playerPhotoImageView.image = nil
         playerNumberLabel.text = nil
         playerFullNameLabel.text = nil
+        playerStateLabel.text = nil
         playerTeamLabel.text = nil
         playerNationalityLabel.text = nil
         playerPositionLabel.text = nil
@@ -43,6 +45,8 @@ final class PlayerCell: UITableViewCell {
         }
         playerNumberLabel.text = "\(player.number)"
         playerFullNameLabel.text = player.fullName
+        playerStateLabel.text = player.inPlay ? "In play" : "Bench"
+        playerStateLabel.textColor = player.inPlay ? .systemGreen : .systemOrange
         playerTeamLabel.text = player.team?.name
         playerNationalityLabel.text = player.nationality
         playerPositionLabel.text = player.position

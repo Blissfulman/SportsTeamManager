@@ -137,6 +137,11 @@ final class PlayersDataModelImpl: PlayersDataModel {
             predicates.append(namePredicate)
         }
         
+        if let int16Age = age {
+            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
+            predicates.append(agePredicate)
+        }
+        
         if let team = team {
             let teamPredicate = NSPredicate(format: "team.name == '\(team)'")
             predicates.append(teamPredicate)
@@ -145,11 +150,6 @@ final class PlayersDataModelImpl: PlayersDataModel {
         if let position = position {
             let positionPredicate = NSPredicate(format: "position == '\(position)'")
             predicates.append(positionPredicate)
-        }
-            
-        if let int16Age = age {
-            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
-            predicates.append(agePredicate)
         }
         
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)

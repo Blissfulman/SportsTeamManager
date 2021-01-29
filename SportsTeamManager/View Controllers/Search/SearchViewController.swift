@@ -35,6 +35,17 @@ final class SearchViewController: UIViewController {
     
     private var playersDataModel: PlayersDataModel!
     
+    private var ageOperator: String {
+        switch ageOperatorSegmentedControl.selectedSegmentIndex {
+        case 0:
+            return "<="
+        case 1:
+            return "="
+        default:
+            return ">="
+        }
+    }
+    
     // MARK: - Initializers
     
     required init?(coder aDecoder: NSCoder) {
@@ -78,7 +89,7 @@ final class SearchViewController: UIViewController {
         playersDataModel.predicateDidChanged(
             name: nameTextField.text,
             age: int16Age,
-            ageOperator: "=",
+            ageOperator: ageOperator,
             team: selectedTeam,
             position: selectedPosition
         )

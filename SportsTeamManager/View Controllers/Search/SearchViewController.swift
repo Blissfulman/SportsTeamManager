@@ -67,16 +67,14 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
-        stackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func positionSelectButtonTapped() {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
-        stackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func startSearchButtonTapped() {
@@ -113,8 +111,10 @@ final class SearchViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         
         view.endEditing(true)
-        pickerView.isHidden = true
-        stackView.isHidden = false
+        
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
     
     // MARK: - Setup UI
@@ -150,6 +150,16 @@ final class SearchViewController: UIViewController {
             ? .systemBlue
             : .systemGray3
     }
+    
+    private func showPickerView() {
+        stackView.disappear()
+        pickerView.appear()
+    }
+    
+    private func hidePickerView() {
+        stackView.appear()
+        pickerView.disappear()
+    }
 }
 
 // MARK: - Picker view data source
@@ -182,8 +192,7 @@ extension SearchViewController: UIPickerViewDelegate {
             positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
-        pickerView.isHidden = true
-        stackView.isHidden = false
+        hidePickerView()
         updateStartSearchButtonState()
     }
 }

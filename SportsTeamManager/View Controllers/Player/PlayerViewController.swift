@@ -68,16 +68,14 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
-        centralStackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func positionSelectButtonTapped() {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
-        centralStackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func saveButtonTapped() {
@@ -89,14 +87,10 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        playersDataModel.createPlayer(name: name,
-                                      number: number,
-                                      nationality: nationality,
-                                      age: age,
-                                      team: selectedTeam,
-                                      position: selectedPosition,
-                                      inPlay: inPlay,
-                                      photo: selectedPhoto.pngData())
+        playersDataModel.createPlayer(
+            name: name, number: number, nationality: nationality, age: age, team: selectedTeam,
+            position: selectedPosition, inPlay: inPlay, photo: selectedPhoto.pngData()
+        )
         
         navigationController?.popViewController(animated: true)
     }
@@ -109,8 +103,9 @@ final class PlayerViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         
         view.endEditing(true)
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
     
     // MARK: - Setup UI
@@ -136,6 +131,16 @@ final class PlayerViewController: UIViewController {
             saveButton.isEnabled = false
         }
         saveButton.backgroundColor = saveButton.isEnabled ? .systemBlue : .systemGray3
+    }
+    
+    private func showPickerView() {
+        centralStackView.disappear()
+        pickerView.appear()
+    }
+    
+    private func hidePickerView() {
+        centralStackView.appear()
+        pickerView.disappear()
     }
 }
 
@@ -186,8 +191,7 @@ extension PlayerViewController: UIPickerViewDelegate {
             positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        hidePickerView()
         updateSaveButtonState()
     }
 }
@@ -213,7 +217,8 @@ extension PlayerViewController: UITextFieldDelegate {
     
     // Скрытие PickerView при начале ввода текста в текстовое поле
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
 }

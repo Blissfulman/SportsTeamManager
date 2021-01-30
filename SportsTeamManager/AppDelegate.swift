@@ -16,16 +16,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let storyboard = UIStoryboard(name: MainViewController.identifier, bundle: nil)
-      
+        
         guard let mainVC = storyboard.instantiateViewController(
                 withIdentifier: MainViewController.identifier
         ) as? MainViewController else { return false }
-                
+        
         window = UIWindow()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)
         window?.makeKeyAndVisible()
         
+        mainVC.navigationController?.navigationBar.tintColor = Color.main
         return true
+    }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        let playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel.saveData()
     }
 }
 

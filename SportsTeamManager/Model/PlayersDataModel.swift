@@ -26,6 +26,7 @@ protocol PlayersDataModel {
     func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
                              team: String?, position: String?)
     func resetPredicate()
+    func saveData()
 }
 
 final class PlayersDataModelImpl: PlayersDataModel {
@@ -107,6 +108,11 @@ final class PlayersDataModelImpl: PlayersDataModel {
     func resetPredicate() {
         predicate = nil
         updateData()
+    }
+    
+    func saveData() {
+        let context = dataManager.getContext()
+        dataManager.save(context: context)
     }
     
     // MARK: - Private methods

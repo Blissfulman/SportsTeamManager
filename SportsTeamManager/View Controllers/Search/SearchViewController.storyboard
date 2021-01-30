@@ -3,8 +3,8 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,7 +31,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 <connections>
-                                                    <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="jgW-nt-giU"/>
+                                                    <action selector="nameTextFieldEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="jgW-nt-giU"/>
                                                     <outlet property="delegate" destination="EsR-dr-8fF" id="t3I-3Z-Ecz"/>
                                                 </connections>
                                             </textField>
@@ -43,13 +43,13 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                         <connections>
-                                                            <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="q7o-UQ-9jv"/>
+                                                            <action selector="ageTextFieldEditingChanged:" destination="EsR-dr-8fF" eventType="editingChanged" id="mdd-aH-4hL"/>
                                                             <outlet property="delegate" destination="EsR-dr-8fF" id="0oP-AR-kbz"/>
                                                         </connections>
                                                     </textField>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="4VB-Yf-dxg">
                                                         <rect key="frame" x="121" y="0.0" width="107" height="35"/>
-                                                        <color key="backgroundColor" red="0.89173258659999999" green="0.81224048100000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" name="mainLight"/>
                                                         <segments>
                                                             <segment title="&lt;="/>
                                                             <segment title="="/>
@@ -70,7 +70,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fPO-SO-NYn">
                                                         <rect key="frame" x="47.5" y="0.0" width="104" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <state key="normal" title="Press to select"/>
+                                                        <state key="normal" title="Press to select">
+                                                            <color key="titleColor" name="main"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="teamSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="Q8l-W7-WbR"/>
                                                         </connections>
@@ -95,7 +97,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7s-fo-Hie">
                                                         <rect key="frame" x="65" y="0.0" width="104" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                        <state key="normal" title="Press to select"/>
+                                                        <state key="normal" title="Press to select">
+                                                            <color key="titleColor" name="main"/>
+                                                        </state>
                                                         <connections>
                                                             <action selector="positionSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="mrh-0c-QG0"/>
                                                         </connections>
@@ -132,7 +136,7 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkB-nN-1KM">
                                 <rect key="frame" x="132" y="526.5" width="150" height="39"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                                <color key="backgroundColor" name="main"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="150" id="CBA-l1-fqp"/>
                                 </constraints>
@@ -147,7 +151,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TxJ-pt-ApB">
                                 <rect key="frame" x="187" y="581.5" width="40" height="30"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                <state key="normal" title="Reset"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" name="main"/>
+                                </state>
                                 <connections>
                                     <action selector="resetButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="tft-rs-I4l"/>
                                 </connections>
@@ -187,8 +193,11 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
+        <namedColor name="main">
+            <color red="0.55699998140335083" green="0.3529999852180481" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mainLight">
+            <color red="0.85500001907348633" green="0.76999998092651367" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

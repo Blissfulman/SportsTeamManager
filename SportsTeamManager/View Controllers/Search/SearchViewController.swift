@@ -67,16 +67,14 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
-        stackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func positionSelectButtonTapped() {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
-        stackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func startSearchButtonTapped() {
@@ -105,7 +103,14 @@ final class SearchViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func textFieldsEditingChanged() {
+    @IBAction func nameTextFieldEditingChanged() {
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
+        if let text = sender.text, !text.isEmpty {
+            sender.text = text.toNumberTextFieldFiltered()
+        }
         updateStartSearchButtonState()
     }
     
@@ -113,18 +118,20 @@ final class SearchViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         
         view.endEditing(true)
-        pickerView.isHidden = true
-        stackView.isHidden = false
+        
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
     
     // MARK: - Setup UI
     
     private func setupUI() {
-        contentView.layer.cornerRadius = 15
-        contentView.layer.shadowRadius = 20
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.4
-        startSearchButton.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = UIConstants.viewCornerRadius
+        contentView.layer.shadowRadius = UIConstants.shadowRadius
+        contentView.layer.shadowOpacity = UIConstants.shadowOpacity
+        contentView.layer.shadowColor = Color.shadow.cgColor
+        startSearchButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         
         let dismissByTapGR = UITapGestureRecognizer(target: self,
                                                     action: #selector(dismissByTapAction))
@@ -147,8 +154,18 @@ final class SearchViewController: UIViewController {
         
         startSearchButton.isEnabled = isEnabled
         startSearchButton.backgroundColor = startSearchButton.isEnabled
-            ? .systemBlue
-            : .systemGray3
+            ? Color.main
+            : Color.disabled
+    }
+    
+    private func showPickerView() {
+        stackView.disappear()
+        pickerView.appear()
+    }
+    
+    private func hidePickerView() {
+        stackView.appear()
+        pickerView.disappear()
     }
 }
 
@@ -182,8 +199,7 @@ extension SearchViewController: UIPickerViewDelegate {
             positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
-        pickerView.isHidden = true
-        stackView.isHidden = false
+        hidePickerView()
         updateStartSearchButtonState()
     }
 }

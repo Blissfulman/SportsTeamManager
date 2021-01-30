@@ -45,8 +45,10 @@ final class PlayerCell: UITableViewCell {
         }
         playerNumberLabel.text = "\(player.number)"
         playerFullNameLabel.text = player.fullName
-        playerStateLabel.text = player.inPlay ? "In play" : "Bench"
-        playerStateLabel.textColor = player.inPlay ? .systemGreen : .systemOrange
+        playerStateLabel.text = player.inPlay
+            ? FilterState.inPlay.rawValue
+            : FilterState.bench.rawValue
+        playerStateLabel.textColor = player.inPlay ? Color.inPlay : Color.bench
         playerTeamLabel.text = player.team?.name
         playerNationalityLabel.text = player.nationality
         playerPositionLabel.text = player.position

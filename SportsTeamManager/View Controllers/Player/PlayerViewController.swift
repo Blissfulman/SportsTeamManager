@@ -68,40 +68,41 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
-        centralStackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func positionSelectButtonTapped() {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
-        centralStackView.isHidden = true
-        pickerView.isHidden = false
+        showPickerView()
     }
     
     @IBAction func saveButtonTapped() {
         
-        guard let number = Int16(numberTextField.text ?? "0"),
+        guard let number = Int16(numberTextField.text ?? ""),
            let name = nameTextField.text,
            let nationality = nationalityTextField.text,
-           let age = Int16(ageTextField.text ?? "0"),
+           let age = Int16(ageTextField.text ?? ""),
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        playersDataModel.createPlayer(name: name,
-                                      number: number,
-                                      nationality: nationality,
-                                      age: age,
-                                      team: selectedTeam,
-                                      position: selectedPosition,
-                                      inPlay: inPlay,
-                                      photo: selectedPhoto.pngData())
+        playersDataModel.createPlayer(
+            name: name, number: number, nationality: nationality, age: age, team: selectedTeam,
+            position: selectedPosition, inPlay: inPlay, photo: selectedPhoto.pngData()
+        )
         
         navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func textFieldsEditingChanged() {
+    @IBAction func withDefaultPadTextFieldsEditingChanged() {
+        updateSaveButtonState()
+    }
+    
+    @IBAction func withNumberPadTextFieldsEditingChanged(_ sender: UITextField) {
+        if let text = sender.text, !text.isEmpty {
+            sender.text = text.toNumberTextFieldFiltered()
+        }
         updateSaveButtonState()
     }
     
@@ -109,8 +110,9 @@ final class PlayerViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         
         view.endEditing(true)
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
     
     // MARK: - Setup UI
@@ -118,7 +120,9 @@ final class PlayerViewController: UIViewController {
     private func setupUI() {
         title = "New player"
         imagePickerController.delegate = self
-        saveButton.layer.cornerRadius = 8
+        saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = .savedPhotosAlbum
         updateSaveButtonState()
     }
     
@@ -135,7 +139,17 @@ final class PlayerViewController: UIViewController {
         } else {
             saveButton.isEnabled = false
         }
-        saveButton.backgroundColor = saveButton.isEnabled ? .systemBlue : .systemGray3
+        saveButton.backgroundColor = saveButton.isEnabled ? Color.main : Color.disabled
+    }
+    
+    private func showPickerView() {
+        centralStackView.disappear()
+        pickerView.appear()
+    }
+    
+    private func hidePickerView() {
+        centralStackView.appear()
+        pickerView.disappear()
     }
 }
 
@@ -149,7 +163,7 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
             imagePickerController.dismiss(animated: true)
         }
         
-        guard let photo = info[.originalImage] as? UIImage else { return }
+        guard let photo = info[.editedImage] as? UIImage else { return }
         
         selectedPhoto = photo
         photoImageView.image = photo
@@ -186,8 +200,7 @@ extension PlayerViewController: UIPickerViewDelegate {
             positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        hidePickerView()
         updateSaveButtonState()
     }
 }
@@ -213,7 +226,8 @@ extension PlayerViewController: UITextFieldDelegate {
     
     // Скрытие PickerView при начале ввода текста в текстовое поле
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        pickerView.isHidden = true
-        centralStackView.isHidden = false
+        if !pickerView.isHidden {
+            hidePickerView()
+        }
     }
 }

@@ -114,6 +114,8 @@ final class PlayerViewController: UIViewController {
         title = "New player"
         imagePickerController.delegate = self
         saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
+        imagePickerController.allowsEditing = true
+        imagePickerController.sourceType = .savedPhotosAlbum
         updateSaveButtonState()
     }
     
@@ -154,7 +156,7 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
             imagePickerController.dismiss(animated: true)
         }
         
-        guard let photo = info[.originalImage] as? UIImage else { return }
+        guard let photo = info[.editedImage] as? UIImage else { return }
         
         selectedPhoto = photo
         photoImageView.image = photo

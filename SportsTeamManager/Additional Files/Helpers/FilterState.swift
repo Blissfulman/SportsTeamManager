@@ -5,8 +5,8 @@
 //  Created by User on 27.01.2021.
 //
 
-enum FilterState {
+enum FilterState: String {
     case all
-    case inPlay
-    case bench
+    case inPlay = "In play"
+    case bench = "Bench"
 }

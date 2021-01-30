@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -59,7 +60,7 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="tx2-iA-b37"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
@@ -68,7 +69,7 @@
                                                                             </variation>
                                                                         </label>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" red="0.27058823529411763" green="0.61319082979999995" blue="0.58585113290000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="backgroundColor" name="mainLight"/>
                                                                     <constraints>
                                                                         <constraint firstItem="rKP-2M-hTh" firstAttribute="leading" secondItem="JFm-4p-9QO" secondAttribute="leading" constant="5" id="2D2-37-KW4"/>
                                                                         <constraint firstAttribute="trailing" secondItem="rKP-2M-hTh" secondAttribute="trailing" constant="5" id="Cp6-9B-oe0"/>
@@ -85,7 +86,7 @@
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bench" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9Y-61-I7L">
                                                                     <rect key="frame" x="349.5" y="0.0" width="44.5" height="33.5"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                                    <color key="textColor" systemColor="systemOrangeColor"/>
+                                                                    <color key="textColor" name="bench"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
@@ -206,7 +207,7 @@
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KbW-sV-Tsi">
                                 <rect key="frame" x="20" y="54" width="374" height="32"/>
-                                <color key="backgroundColor" red="0.89173258659999999" green="0.81224048100000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="mainLight"/>
                                 <segments>
                                     <segment title="All"/>
                                     <segment title="In play"/>
@@ -242,14 +243,17 @@
     </scenes>
     <resources>
         <image name="some.player" width="500" height="500"/>
+        <namedColor name="bench">
+            <color red="1" green="0.63214474900408013" blue="0.12921959032110542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mainLight">
+            <color red="0.85451370107752322" green="0.76986686888541789" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

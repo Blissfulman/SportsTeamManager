@@ -120,11 +120,11 @@ final class SearchViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupUI() {
-        contentView.layer.cornerRadius = 15
-        contentView.layer.shadowRadius = 20
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.4
-        startSearchButton.layer.cornerRadius = 8
+        contentView.layer.cornerRadius = UIConstants.viewCornerRadius
+        contentView.layer.shadowRadius = UIConstants.shadowRadius
+        contentView.layer.shadowOpacity = UIConstants.shadowOpacity
+        contentView.layer.shadowColor = Color.shadow.cgColor
+        startSearchButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         
         let dismissByTapGR = UITapGestureRecognizer(target: self,
                                                     action: #selector(dismissByTapAction))
@@ -147,8 +147,8 @@ final class SearchViewController: UIViewController {
         
         startSearchButton.isEnabled = isEnabled
         startSearchButton.backgroundColor = startSearchButton.isEnabled
-            ? .systemBlue
-            : .systemGray3
+            ? Color.main
+            : Color.disabled
     }
     
     private func showPickerView() {

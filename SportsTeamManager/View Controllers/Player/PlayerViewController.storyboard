@@ -59,7 +59,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQy-eP-rXM">
                                                 <rect key="frame" x="47.333333333333329" y="0.0" width="103.99999999999999" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                <state key="normal" title="Press to select"/>
+                                                <state key="normal" title="Press to select">
+                                                    <color key="titleColor" name="main"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="teamSelectButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="yQm-7t-S2L"/>
                                                 </connections>
@@ -84,7 +86,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qGG-TQ-50X">
                                                 <rect key="frame" x="65" y="0.0" width="104" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                <state key="normal" title="Press to select"/>
+                                                <state key="normal" title="Press to select">
+                                                    <color key="titleColor" name="main"/>
+                                                </state>
                                                 <connections>
                                                     <action selector="positionSelectButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="vxC-EY-AlE"/>
                                                 </connections>
@@ -118,7 +122,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekw-e0-WCs">
                                         <rect key="frame" x="37" y="176.66666666666669" width="95" height="30"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                        <state key="normal" title="Upload photo"/>
+                                        <state key="normal" title="Upload photo">
+                                            <color key="titleColor" name="main"/>
+                                        </state>
                                         <connections>
                                             <action selector="uploadPhotoButtonTapped" destination="gcq-kf-ehO" eventType="touchUpInside" id="Sn8-AW-VgS"/>
                                         </connections>
@@ -127,7 +133,7 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d5q-3z-szv">
                                 <rect key="frame" x="87.666666666666686" y="721" width="200" height="41"/>
-                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="backgroundColor" name="main"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="7Kc-aQ-luE"/>
                                 </constraints>
@@ -153,7 +159,7 @@
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="D9d-Qc-epP">
                                 <rect key="frame" x="37.666666666666657" y="54" width="300" height="32"/>
-                                <color key="backgroundColor" red="0.89173258659999999" green="0.81224048100000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="mainLight"/>
                                 <segments>
                                     <segment title="In play"/>
                                     <segment title="Bench"/>
@@ -203,8 +209,11 @@
     </scenes>
     <resources>
         <image name="some.player" width="500" height="500"/>
-        <namedColor name="AccentColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="main">
+            <color red="0.55686277149999996" green="0.35294118520000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="mainLight">
+            <color red="0.75506581309999998" green="0.64930193790000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

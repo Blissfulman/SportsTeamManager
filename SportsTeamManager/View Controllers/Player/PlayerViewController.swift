@@ -80,10 +80,10 @@ final class PlayerViewController: UIViewController {
     
     @IBAction func saveButtonTapped() {
         
-        guard let number = Int16(numberTextField.text ?? "0"),
+        guard let number = Int16(numberTextField.text ?? ""),
            let name = nameTextField.text,
            let nationality = nationalityTextField.text,
-           let age = Int16(ageTextField.text ?? "0"),
+           let age = Int16(ageTextField.text ?? ""),
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
@@ -113,7 +113,7 @@ final class PlayerViewController: UIViewController {
     private func setupUI() {
         title = "New player"
         imagePickerController.delegate = self
-        saveButton.layer.cornerRadius = 8
+        saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         updateSaveButtonState()
     }
     
@@ -130,7 +130,7 @@ final class PlayerViewController: UIViewController {
         } else {
             saveButton.isEnabled = false
         }
-        saveButton.backgroundColor = saveButton.isEnabled ? .systemBlue : .systemGray3
+        saveButton.backgroundColor = saveButton.isEnabled ? Color.main : Color.disabled
     }
     
     private func showPickerView() {

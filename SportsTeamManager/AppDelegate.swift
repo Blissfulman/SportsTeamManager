@@ -28,5 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         mainVC.navigationController?.navigationBar.tintColor = Color.main
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        let playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel.saveData()
+    }
 }
 

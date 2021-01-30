@@ -57,6 +57,7 @@
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rKP-2M-hTh">
                                                                             <rect key="frame" x="5" y="3" width="40" height="27.5"/>
                                                                             <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="22" id="KpD-2I-spW"/>
                                                                                 <constraint firstAttribute="height" constant="30" id="tx2-iA-b37"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
@@ -244,10 +245,10 @@
     <resources>
         <image name="some.player" width="500" height="500"/>
         <namedColor name="bench">
-            <color red="1" green="0.63214474900408013" blue="0.12921959032110542" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.63200002908706665" blue="0.1289999932050705" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainLight">
-            <color red="0.85451370107752322" green="0.76986686888541789" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.85500001907348633" green="0.76999998092651367" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

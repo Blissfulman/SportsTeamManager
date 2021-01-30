@@ -103,7 +103,14 @@ final class SearchViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @IBAction func textFieldsEditingChanged() {
+    @IBAction func nameTextFieldEditingChanged() {
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
+        if let text = sender.text, !text.isEmpty {
+            sender.text = text.toNumberTextFieldFiltered()
+        }
         updateStartSearchButtonState()
     }
     

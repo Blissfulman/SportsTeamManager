@@ -25,7 +25,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="HJ7-dw-6Uo"/>
+                                            <action selector="withDefaultPadTextFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="HJ7-dw-6Uo"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="iuP-TJ-ABw"/>
                                         </connections>
                                     </textField>
@@ -34,7 +34,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="F5G-4I-tTa"/>
+                                            <action selector="withDefaultPadTextFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="F5G-4I-tTa"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="Ywm-nz-Rx1"/>
                                         </connections>
                                     </textField>
@@ -43,7 +43,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
-                                            <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="WFt-Mj-oBb"/>
+                                            <action selector="withNumberPadTextFieldsEditingChanged:" destination="gcq-kf-ehO" eventType="editingChanged" id="VjE-sg-vuE"/>
                                             <outlet property="delegate" destination="gcq-kf-ehO" id="ab4-VA-Ote"/>
                                         </connections>
                                     </textField>
@@ -153,7 +153,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                 <connections>
-                                    <action selector="textFieldsEditingChanged" destination="gcq-kf-ehO" eventType="editingChanged" id="1ec-mh-L5g"/>
+                                    <action selector="withNumberPadTextFieldsEditingChanged:" destination="gcq-kf-ehO" eventType="editingChanged" id="P99-K9-TiF"/>
                                     <outlet property="delegate" destination="gcq-kf-ehO" id="Dgp-BU-UPq"/>
                                 </connections>
                             </textField>
@@ -210,10 +210,10 @@
     <resources>
         <image name="some.player" width="500" height="500"/>
         <namedColor name="main">
-            <color red="0.55686277149999996" green="0.35294118520000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55699998140335083" green="0.3529999852180481" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainLight">
-            <color red="0.75506581309999998" green="0.64930193790000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.85500001907348633" green="0.76999998092651367" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

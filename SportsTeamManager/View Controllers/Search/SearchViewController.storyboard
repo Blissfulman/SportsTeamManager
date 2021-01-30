@@ -31,7 +31,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 <connections>
-                                                    <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="jgW-nt-giU"/>
+                                                    <action selector="nameTextFieldEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="jgW-nt-giU"/>
                                                     <outlet property="delegate" destination="EsR-dr-8fF" id="t3I-3Z-Ecz"/>
                                                 </connections>
                                             </textField>
@@ -43,7 +43,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                                         <connections>
-                                                            <action selector="textFieldsEditingChanged" destination="EsR-dr-8fF" eventType="editingChanged" id="q7o-UQ-9jv"/>
+                                                            <action selector="ageTextFieldEditingChanged:" destination="EsR-dr-8fF" eventType="editingChanged" id="mdd-aH-4hL"/>
                                                             <outlet property="delegate" destination="EsR-dr-8fF" id="0oP-AR-kbz"/>
                                                         </connections>
                                                     </textField>
@@ -194,10 +194,10 @@
     </scenes>
     <resources>
         <namedColor name="main">
-            <color red="0.55686277149999996" green="0.35294118520000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55699998140335083" green="0.3529999852180481" blue="0.96899998188018799" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="mainLight">
-            <color red="0.75506581309999998" green="0.64930193790000001" blue="0.96862745289999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.85500001907348633" green="0.76999998092651367" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

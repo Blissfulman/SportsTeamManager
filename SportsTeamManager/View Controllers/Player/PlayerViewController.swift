@@ -95,7 +95,14 @@ final class PlayerViewController: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func textFieldsEditingChanged() {
+    @IBAction func withDefaultPadTextFieldsEditingChanged() {
+        updateSaveButtonState()
+    }
+    
+    @IBAction func withNumberPadTextFieldsEditingChanged(_ sender: UITextField) {
+        if let text = sender.text, !text.isEmpty {
+            sender.text = text.toNumberTextFieldFiltered()
+        }
         updateSaveButtonState()
     }
     

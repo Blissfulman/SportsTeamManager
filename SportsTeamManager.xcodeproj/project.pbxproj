@@ -14,11 +14,12 @@
 		CE1AF84125C450C90050114F /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AF84025C450C90050114F /* UIView+Extension.swift */; };
 		CE1AF84625C47E510050114F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1AF84525C47E510050114F /* Constants.swift */; };
 		CE1AF84E25C52EDE0050114F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1AF84D25C52EDE0050114F /* Colors.xcassets */; };
+		CE1AF85125C53C8B0050114F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE1AF85025C53C8B0050114F /* Images.xcassets */; };
 		CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */; };
 		CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */; };
 		CE4883DA25B4ACE700BCB7F9 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4883D825B4ACE700BCB7F9 /* MainViewController.storyboard */; };
 		CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CE4883DB25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld */; };
-		CE4883DF25B4ACEA00BCB7F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4883DE25B4ACEA00BCB7F9 /* Assets.xcassets */; };
+		CE4883DF25B4ACEA00BCB7F9 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE4883DE25B4ACEA00BCB7F9 /* Icons.xcassets */; };
 		CE4883E225B4ACEA00BCB7F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE4883E025B4ACEA00BCB7F9 /* LaunchScreen.storyboard */; };
 		CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */; };
 		CE48840725B602E300BCB7F9 /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48840625B602E300BCB7F9 /* PlayerCell.swift */; };
@@ -36,12 +37,13 @@
 		CE1AF84025C450C90050114F /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		CE1AF84525C47E510050114F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE1AF84D25C52EDE0050114F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		CE1AF85025C53C8B0050114F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CE4883CF25B4ACE700BCB7F9 /* SportsTeamManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SportsTeamManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE4883D225B4ACE700BCB7F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		CE4883D925B4ACE700BCB7F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainViewController.storyboard; sourceTree = "<group>"; };
 		CE4883DC25B4ACE700BCB7F9 /* SportsTeamManager.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SportsTeamManager.xcdatamodel; sourceTree = "<group>"; };
-		CE4883DE25B4ACEA00BCB7F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CE4883DE25B4ACEA00BCB7F9 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		CE4883E125B4ACEA00BCB7F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CE4883E325B4ACEA00BCB7F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -123,8 +125,9 @@
 		CE4883EB25B5636900BCB7F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE4883DE25B4ACEA00BCB7F9 /* Assets.xcassets */,
+				CE4883DE25B4ACEA00BCB7F9 /* Icons.xcassets */,
 				CE1AF84D25C52EDE0050114F /* Colors.xcassets */,
+				CE1AF85025C53C8B0050114F /* Images.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -260,7 +263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE4883E225B4ACEA00BCB7F9 /* LaunchScreen.storyboard in Resources */,
-				CE4883DF25B4ACEA00BCB7F9 /* Assets.xcassets in Resources */,
+				CE4883DF25B4ACEA00BCB7F9 /* Icons.xcassets in Resources */,
+				CE1AF85125C53C8B0050114F /* Images.xcassets in Resources */,
 				CE48841325B60E1200BCB7F9 /* PlayerViewController.storyboard in Resources */,
 				CE1AF84E25C52EDE0050114F /* Colors.xcassets in Resources */,
 				CE1AF83325C1DFFD0050114F /* SearchViewController.storyboard in Resources */,

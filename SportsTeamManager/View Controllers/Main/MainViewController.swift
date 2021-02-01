@@ -35,6 +35,14 @@ final class MainViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
+        }
+    }
+    
     // MARK: - Actions
     
     @objc private func searchAction() {
@@ -80,7 +88,7 @@ final class MainViewController: UIViewController {
         title = "Team players"
         updateTableViewVisibility()
         tableView.separatorInset = .zero
-        tableView.allowsSelection = false
+//        tableView.allowsSelection = false
         
         let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                                  target: self,
@@ -142,6 +150,21 @@ extension MainViewController: UITableViewDelegate {
             }
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedPlayer = playersDataModel.getPlayer(at: indexPath.row)
+        
+        let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
+      
+        guard let playerVC = storyboard.instantiateViewController(
+                withIdentifier: PlayerViewController.identifier
+        ) as? PlayerViewController else { return }
+        
+        playerVC.editingPlayer = selectedPlayer
+        
+        navigationController?.pushViewController(playerVC, animated: true)
     }
 }
 

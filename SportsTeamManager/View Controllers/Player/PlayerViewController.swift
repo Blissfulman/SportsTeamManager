@@ -27,6 +27,8 @@ final class PlayerViewController: UIViewController {
     
     static let identifier = String(describing: PlayerViewController.self)
     
+    var editingPlayer: Player!
+    
     private var pickerViewContentType: PickerViewContentType = .teams
     private var selectedPhoto = #imageLiteral(resourceName: "some.player")
     private var selectedTeam: String!
@@ -68,6 +70,9 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
+        pickerView.selectRow(teams.firstIndex(of: selectedTeam) ?? 0,
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -75,6 +80,9 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
+        pickerView.selectRow(positions.firstIndex(of: selectedPosition) ?? 0,
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -123,6 +131,10 @@ final class PlayerViewController: UIViewController {
         saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = .savedPhotosAlbum
+        
+        if let player = editingPlayer {
+            fillPlayerData(player)
+        }
         updateSaveButtonState()
     }
     
@@ -150,6 +162,22 @@ final class PlayerViewController: UIViewController {
     private func hidePickerView() {
         centralStackView.appear()
         pickerView.disappear()
+    }
+    
+    private func fillPlayerData(_ player: Player) {
+        if let photoData = player.photo, let photo = UIImage(data: photoData) {
+            selectedPhoto = photo
+            photoImageView.image = photo
+        }
+        stateSegmentedControl.selectedSegmentIndex = player.inPlay ? 0 : 1
+        numberTextField.text = String(player.number)
+        nameTextField.text = player.fullName
+        nationalityTextField.text = player.nationality
+        ageTextField.text = String(player.age)
+        teamSelectButton.setTitle(player.team?.name, for: .normal)
+        selectedTeam = player.team?.name
+        positionSelectButton.setTitle(player.position, for: .normal)
+        selectedPosition = player.position
     }
 }
 

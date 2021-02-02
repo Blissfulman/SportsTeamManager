@@ -31,9 +31,18 @@ final class PlayerViewController: UIViewController {
     
     private var pickerViewContentType: PickerViewContentType = .teams
     private var selectedPhoto = #imageLiteral(resourceName: "some.player")
-    private var selectedTeam: String!
-    private var selectedPosition: String!
+    
     private let imagePickerController = UIImagePickerController()
+    private var selectedTeam: String! {
+        willSet {
+            teamSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
+    private var selectedPosition: String! {
+        willSet {
+            positionSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
     
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
@@ -175,9 +184,7 @@ final class PlayerViewController: UIViewController {
         nameTextField.text = player.fullName
         nationalityTextField.text = player.nationality
         ageTextField.text = String(player.age)
-        teamSelectButton.setTitle(player.team?.name, for: .normal)
         selectedTeam = player.team?.name
-        positionSelectButton.setTitle(player.position, for: .normal)
         selectedPosition = player.position
     }
 }
@@ -223,10 +230,8 @@ extension PlayerViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerViewContentType == .teams {
-            teamSelectButton.setTitle(teams[row], for: .normal)
             selectedTeam = teams[row]
         } else {
-            positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
         hidePickerView()

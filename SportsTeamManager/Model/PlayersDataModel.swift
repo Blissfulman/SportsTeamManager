@@ -9,8 +9,8 @@ import Foundation
 
 typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
                         team: String, position: String, inPlay: Bool, photo: Data?)
-typealias PredicateData = (name: String?, age: Int16?, ageOperator: String,
-                           team: String?, position: String?)
+typealias SearchData = (name: String?, age: Int16?, ageOperator: String,
+                        team: String?, position: String?)
 
 // MARK: - Protocols
 
@@ -27,8 +27,9 @@ protocol PlayersDataModel {
     func removePlayer(at index: Int, completion: () -> Void)
     func createPlayer(_ playerData: PlayerData)
     func filterStateDidChanged(to filterState: FilterState)
-    func predicateDidChanged(_ predicateData: PredicateData)
-    func resetPredicate()
+    func searchDidUpdated(to searchData: SearchData)
+    func resetSearchData()
+    func getSearchData() -> SearchData?
     func saveData()
 }
 
@@ -46,7 +47,7 @@ final class PlayersDataModelImpl: PlayersDataModel {
     
     private var players = [Player]()
     private var filterState: FilterState = .all
-    private var predicate: NSCompoundPredicate?
+    private var searchData: SearchData?
     
     private let dataManager = CoreDataManager(modelName: "SportsTeam")
     
@@ -75,7 +76,6 @@ final class PlayersDataModelImpl: PlayersDataModel {
     }
     
     func createPlayer(_ playerData: PlayerData) {
-        
         let context = dataManager.getContext()
         let player = dataManager.createObject(from: Player.self)
         let teamOfPlayer = dataManager.createObject(from: Team.self)
@@ -100,14 +100,18 @@ final class PlayersDataModelImpl: PlayersDataModel {
         updateData()
     }
     
-    func predicateDidChanged(_ predicateData: PredicateData) {
-        predicate = makeCompoundPredicate(predicateData)
+    func searchDidUpdated(to searchData: SearchData) {
+        self.searchData = searchData
         updateData()
     }
     
-    func resetPredicate() {
-        predicate = nil
+    func resetSearchData() {
+        searchData = nil
         updateData()
+    }
+    
+    func getSearchData() -> SearchData? {
+        searchData
     }
     
     func saveData() {
@@ -118,6 +122,7 @@ final class PlayersDataModelImpl: PlayersDataModel {
     // MARK: - Private methods
     
     private func updateData() {
+        let predicate = makeCompoundPredicate()
         players = dataManager.fetchData(for: Player.self, predicate: predicate)
         
         if filterState == .inPlay,
@@ -133,26 +138,26 @@ final class PlayersDataModelImpl: PlayersDataModel {
         delegate?.dataDidChanged()
     }
     
-    private func makeCompoundPredicate(_ predicateData: PredicateData) -> NSCompoundPredicate {
+    private func makeCompoundPredicate() -> NSCompoundPredicate {
         
         var predicates = [NSPredicate]()
         
-        if let name = predicateData.name, !name.isEmpty {
+        if let name = searchData?.name, !name.isEmpty {
             let namePredicate = NSPredicate(format: "fullName CONTAINS[cd] '\(name)'")
             predicates.append(namePredicate)
         }
         
-        if let int16Age = predicateData.age {
-            let agePredicate = NSPredicate(format: "age \(predicateData.ageOperator) '\(String(int16Age))'")
+        if let int16Age = searchData?.age, let ageOperator = searchData?.ageOperator {
+            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
             predicates.append(agePredicate)
         }
         
-        if let team = predicateData.team {
+        if let team = searchData?.team {
             let teamPredicate = NSPredicate(format: "team.name == '\(team)'")
             predicates.append(teamPredicate)
         }
         
-        if let position = predicateData.position {
+        if let position = searchData?.position {
             let positionPredicate = NSPredicate(format: "position == '\(position)'")
             predicates.append(positionPredicate)
         }

@@ -2,7 +2,7 @@
 //  String+Extension.swift
 //  SportsTeamManager
 //
-//  Created by User on 30.01.2021.
+//  Created by Evgeny Novgorodov on 30.01.2021.
 //
 
 extension String {

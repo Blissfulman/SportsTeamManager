@@ -2,7 +2,7 @@
 //  CoreDataManager.swift
 //  SportsTeamManager
 //
-//  Created by User on 18.01.2021.
+//  Created by Evgeny Novgorodov on 18.01.2021.
 //
 
 import CoreData

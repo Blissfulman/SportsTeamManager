@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  SportsTeamManager
 //
-//  Created by User on 17.01.2021.
+//  Created by Evgeny Novgorodov on 17.01.2021.
 //
 
 import UIKit

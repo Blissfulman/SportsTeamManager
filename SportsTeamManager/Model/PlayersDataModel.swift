@@ -2,7 +2,7 @@
 //  PlayersDataModel.swift
 //  SportsTeamManager
 //
-//  Created by User on 24.01.2021.
+//  Created by Evgeny Novgorodov on 24.01.2021.
 //
 
 import Foundation

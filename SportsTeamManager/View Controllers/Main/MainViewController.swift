@@ -145,21 +145,30 @@ extension MainViewController: UITableViewDelegate {
                 })
             }
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedPlayer = playersDataModel.getPlayer(at: indexPath.row)
+        let editAction = UIContextualAction(style: .normal, title: "Edit") {
+            [weak self] _, _, _  in
+            
+            guard let self = self else { return }
+            
+            let selectedPlayer = self.playersDataModel.getPlayer(at: indexPath.row)
+            
+            let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
+          
+            guard let playerVC = storyboard.instantiateInitialViewController()
+                    as? PlayerViewController else { return }
+            
+            playerVC.editingPlayer = selectedPlayer
+            
+            self.navigationController?.pushViewController(playerVC, animated: true)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        editAction.backgroundColor = .orange
         
-        let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
-      
-        guard let playerVC = storyboard.instantiateInitialViewController()
-                as? PlayerViewController else { return }
+        let configuration = UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
         
-        playerVC.editingPlayer = selectedPlayer
-        
-        navigationController?.pushViewController(playerVC, animated: true)
+        return configuration
     }
 }
 

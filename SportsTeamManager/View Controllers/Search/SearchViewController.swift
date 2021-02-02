@@ -67,6 +67,9 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
+        pickerView.selectRow(teams.safeFirstIndex(of: selectedTeam),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -74,6 +77,9 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
+        pickerView.selectRow(positions.safeFirstIndex(of: selectedPosition),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -84,13 +90,11 @@ final class SearchViewController: UIViewController {
             int16Age = Int16(age)
         }
         
-        playersDataModel.predicateDidChanged(
-            name: nameTextField.text,
-            age: int16Age,
-            ageOperator: ageOperator,
-            team: selectedTeam,
-            position: selectedPosition
+        let predicateData: PredicateData = (
+            name: nameTextField.text, age: int16Age, ageOperator: ageOperator,
+            team: selectedTeam, position: selectedPosition
         )
+        playersDataModel.predicateDidChanged(predicateData)
         dismiss(animated: true)
     }
     

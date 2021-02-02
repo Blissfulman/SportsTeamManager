@@ -70,7 +70,7 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
-        pickerView.selectRow(teams.firstIndex(of: selectedTeam) ?? 0,
+        pickerView.selectRow(teams.safeFirstIndex(of: selectedTeam),
                              inComponent: 0,
                              animated: false)
         showPickerView()
@@ -80,7 +80,7 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
-        pickerView.selectRow(positions.firstIndex(of: selectedPosition) ?? 0,
+        pickerView.selectRow(positions.safeFirstIndex(of: selectedPosition),
                              inComponent: 0,
                              animated: false)
         showPickerView()
@@ -95,10 +95,11 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        playersDataModel.createPlayer(
+        let playerData: PlayerData = (
             name: name, number: number, nationality: nationality, age: age, team: selectedTeam,
             position: selectedPosition, inPlay: inPlay, photo: selectedPhoto.pngData()
         )
+        playersDataModel.createPlayer(playerData)
         
         navigationController?.popViewController(animated: true)
     }
@@ -133,7 +134,7 @@ final class PlayerViewController: UIViewController {
         imagePickerController.sourceType = .savedPhotosAlbum
         
         if let player = editingPlayer {
-            fillPlayerData(player)
+            fillView(for: player)
         }
         updateSaveButtonState()
     }
@@ -164,7 +165,7 @@ final class PlayerViewController: UIViewController {
         pickerView.disappear()
     }
     
-    private func fillPlayerData(_ player: Player) {
+    private func fillView(for player: Player) {
         if let photoData = player.photo, let photo = UIImage(data: photoData) {
             selectedPhoto = photo
             photoImageView.image = photo

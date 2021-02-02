@@ -49,9 +49,8 @@ final class MainViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
       
-        guard let searchViewController = storyboard.instantiateViewController(
-                withIdentifier: SearchViewController.identifier
-        ) as? SearchViewController else { return }
+        guard let searchViewController = storyboard.instantiateInitialViewController()
+                as? SearchViewController else { return }
         
         searchViewController.modalTransitionStyle = .crossDissolve
         searchViewController.modalPresentationStyle = .overCurrentContext
@@ -63,9 +62,8 @@ final class MainViewController: UIViewController {
         
         let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
       
-        guard let playerVC = storyboard.instantiateViewController(
-                withIdentifier: PlayerViewController.identifier
-        ) as? PlayerViewController else { return }
+        guard let playerVC = storyboard.instantiateInitialViewController()
+                as? PlayerViewController else { return }
         
         navigationController?.pushViewController(playerVC, animated: true)
     }
@@ -87,8 +85,6 @@ final class MainViewController: UIViewController {
     private func setupUI() {
         title = "Team players"
         updateTableViewVisibility()
-        tableView.separatorInset = .zero
-//        tableView.allowsSelection = false
         
         let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
                                                  target: self,
@@ -158,9 +154,8 @@ extension MainViewController: UITableViewDelegate {
         
         let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
       
-        guard let playerVC = storyboard.instantiateViewController(
-                withIdentifier: PlayerViewController.identifier
-        ) as? PlayerViewController else { return }
+        guard let playerVC = storyboard.instantiateInitialViewController()
+                as? PlayerViewController else { return }
         
         playerVC.editingPlayer = selectedPlayer
         

@@ -7,6 +7,11 @@
 
 import Foundation
 
+typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
+                        team: String, position: String, inPlay: Bool, photo: Data?)
+typealias PredicateData = (name: String?, age: Int16?, ageOperator: String,
+                           team: String?, position: String?)
+
 // MARK: - Protocols
 
 protocol PlayersDataModelDelegate: AnyObject {
@@ -20,11 +25,9 @@ protocol PlayersDataModel {
     func getPlayers() -> [Player]
     func getPlayer(at index: Int) -> Player?
     func removePlayer(at index: Int, completion: () -> Void)
-    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
-                      team: String, position: String, inPlay: Bool, photo: Data?)
+    func createPlayer(_ playerData: PlayerData)
     func filterStateDidChanged(to filterState: FilterState)
-    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
-                             team: String?, position: String?)
+    func predicateDidChanged(_ predicateData: PredicateData)
     func resetPredicate()
     func saveData()
 }
@@ -71,23 +74,22 @@ final class PlayersDataModelImpl: PlayersDataModel {
         }
     }
     
-    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
-                      team: String, position: String, inPlay: Bool, photo: Data?) {
+    func createPlayer(_ playerData: PlayerData) {
         
         let context = dataManager.getContext()
         let player = dataManager.createObject(from: Player.self)
         let teamOfPlayer = dataManager.createObject(from: Team.self)
         
-        teamOfPlayer.name = team
+        teamOfPlayer.name = playerData.team
         
-        player.fullName = name
-        player.number = number
-        player.nationality = nationality
-        player.age = age
+        player.fullName = playerData.name
+        player.number = playerData.number
+        player.nationality = playerData.nationality
+        player.age = playerData.age
         player.team = teamOfPlayer
-        player.position = position
-        player.inPlay = inPlay
-        player.photo = photo
+        player.position = playerData.position
+        player.inPlay = playerData.inPlay
+        player.photo = playerData.photo
         
         dataManager.save(context: context)
         updateData()
@@ -98,10 +100,8 @@ final class PlayersDataModelImpl: PlayersDataModel {
         updateData()
     }
     
-    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
-                             team: String?, position: String?) {
-        predicate = makeCompoundPredicate(name: name, age: age, ageOperator: ageOperator,
-                                          team: team, position: position)
+    func predicateDidChanged(_ predicateData: PredicateData) {
+        predicate = makeCompoundPredicate(predicateData)
         updateData()
     }
     
@@ -133,27 +133,26 @@ final class PlayersDataModelImpl: PlayersDataModel {
         delegate?.dataDidChanged()
     }
     
-    private func makeCompoundPredicate(name: String?, age: Int16?, ageOperator: String,
-                                       team: String?, position: String?) -> NSCompoundPredicate {
+    private func makeCompoundPredicate(_ predicateData: PredicateData) -> NSCompoundPredicate {
         
         var predicates = [NSPredicate]()
         
-        if let name = name, !name.isEmpty {
+        if let name = predicateData.name, !name.isEmpty {
             let namePredicate = NSPredicate(format: "fullName CONTAINS[cd] '\(name)'")
             predicates.append(namePredicate)
         }
         
-        if let int16Age = age {
-            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
+        if let int16Age = predicateData.age {
+            let agePredicate = NSPredicate(format: "age \(predicateData.ageOperator) '\(String(int16Age))'")
             predicates.append(agePredicate)
         }
         
-        if let team = team {
+        if let team = predicateData.team {
             let teamPredicate = NSPredicate(format: "team.name == '\(team)'")
             predicates.append(teamPredicate)
         }
         
-        if let position = position {
+        if let position = predicateData.position {
             let positionPredicate = NSPredicate(format: "position == '\(position)'")
             predicates.append(positionPredicate)
         }

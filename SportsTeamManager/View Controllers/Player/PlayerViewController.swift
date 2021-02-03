@@ -11,17 +11,17 @@ final class PlayerViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var stateSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var numberTextField: UITextField!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var nationalityTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var teamSelectButton: UIButton!
-    @IBOutlet weak var positionSelectButton: UIButton!
-    @IBOutlet weak var centralStackView: UIStackView!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet private weak var stateSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var photoImageView: UIImageView!
+    @IBOutlet private weak var numberTextField: UITextField!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var nationalityTextField: UITextField!
+    @IBOutlet private weak var ageTextField: UITextField!
+    @IBOutlet private weak var teamSelectButton: UIButton!
+    @IBOutlet private weak var positionSelectButton: UIButton!
+    @IBOutlet private weak var centralStackView: UIStackView!
+    @IBOutlet private weak var pickerView: UIPickerView!
+    @IBOutlet private weak var saveButton: UIButton!
     
     // MARK: - Properties
     

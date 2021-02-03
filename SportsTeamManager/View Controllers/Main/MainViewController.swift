@@ -11,7 +11,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Properties
     

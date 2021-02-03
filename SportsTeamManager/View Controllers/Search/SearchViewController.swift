@@ -11,16 +11,16 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var backEnvironmentView: UIView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var ageOperatorSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var teamSelectButton: UIButton!
-    @IBOutlet weak var positionSelectButton: UIButton!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var startSearchButton: UIButton!
+    @IBOutlet private weak var backEnvironmentView: UIView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var ageTextField: UITextField!
+    @IBOutlet private weak var ageOperatorSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var teamSelectButton: UIButton!
+    @IBOutlet private weak var positionSelectButton: UIButton!
+    @IBOutlet private weak var pickerView: UIPickerView!
+    @IBOutlet private weak var startSearchButton: UIButton!
     
     // MARK: - Properties
     

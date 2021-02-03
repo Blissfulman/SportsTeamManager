@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 final class MainViewController: UIViewController {
     
@@ -33,14 +34,6 @@ final class MainViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let selectedIndexPath = tableView.indexPathForSelectedRow {
-            tableView.deselectRow(at: selectedIndexPath, animated: true)
-        }
     }
     
     // MARK: - Actions
@@ -101,7 +94,7 @@ final class MainViewController: UIViewController {
     // MARK: - Private methods
     
     private func updateTableViewVisibility() {
-        tableView.isHidden = playersDataModel.numberOfPlayers == 0 ? true : false
+        tableView.isHidden = playersDataModel.isEmptyData
     }
 }
 
@@ -109,8 +102,16 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        playersDataModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        playersDataModel.getSectionTitle(for: section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        playersDataModel.numberOfPlayers
+        playersDataModel.getNumberOfPlayers(atSection: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,7 +121,7 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let item = playersDataModel.getPlayer(at: indexPath.row) {
+        if let item = playersDataModel.getPlayer(at: indexPath) {
             cell.configure(item)
         }
         return cell
@@ -138,13 +139,7 @@ extension MainViewController: UITableViewDelegate {
             
             guard let self = self else { return }
             
-            self.playersDataModel.removePlayer(at: indexPath.row) {
-                tableView.performBatchUpdates({
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                }, completion: { _ in
-                    self.updateTableViewVisibility()
-                })
-            }
+            self.playersDataModel.removePlayer(at: indexPath)
         }
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
@@ -152,7 +147,7 @@ extension MainViewController: UITableViewDelegate {
             
             guard let self = self else { return }
             
-            let selectedPlayer = self.playersDataModel.getPlayer(at: indexPath.row)
+            let selectedPlayer = self.playersDataModel.getPlayer(at: indexPath)
             
             let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
           
@@ -174,12 +169,65 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-// MARK: - PlayersDataModelDelegate
+// MARK: - Players data model delegate
 
 extension MainViewController: PlayersDataModelDelegate {
     
-    func dataDidChanged() {
+    func dataDidChange() {
         tableView.reloadData()
         updateTableViewVisibility()
+    }
+    
+    func willChangeContent() {
+        tableView.beginUpdates()
+    }
+    
+    func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int) {
+        switch type {
+        case .insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+        case .delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func didChangeObject(type: NSFetchedResultsChangeType, indexPath: IndexPath?, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+                updateTableViewVisibility()
+            }
+
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                updateTableViewVisibility()
+            }
+
+        case .update:
+            if let indexPath = indexPath {
+                let cell = tableView.cellForRow(at: indexPath) as! PlayerCell
+                if let player = playersDataModel.getPlayer(at: indexPath) {
+                    cell.configure(player)
+                }
+            }
+
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        @unknown default:
+            fatalError(debugDescription)
+        }
+    }
+    
+    func didChangeContent() {
+        tableView.endUpdates()
     }
 }

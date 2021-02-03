@@ -28,6 +28,7 @@
 		CE9E159D25C5C9FF003D8E93 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E159C25C5C9FF003D8E93 /* String+Extension.swift */; };
 		CEA8725F25C16A4000AE4BD2 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8725E25C16A4000AE4BD2 /* FilterState.swift */; };
 		CEBF6F1825C93131009374A0 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF6F1725C93131009374A0 /* Array+Extension.swift */; };
+		CEBF6F1C25CA7857009374A0 /* AgeOperatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF6F1B25CA7857009374A0 /* AgeOperatorState.swift */; };
 		CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		CE9E159C25C5C9FF003D8E93 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CEA8725E25C16A4000AE4BD2 /* FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterState.swift; sourceTree = "<group>"; };
 		CEBF6F1725C93131009374A0 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		CEBF6F1B25CA7857009374A0 /* AgeOperatorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeOperatorState.swift; sourceTree = "<group>"; };
 		CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,6 +86,7 @@
 				CE1AF84525C47E510050114F /* Constants.swift */,
 				CEA8725E25C16A4000AE4BD2 /* FilterState.swift */,
 				CE1AF83525C2B30A0050114F /* PickerViewContentType.swift */,
+				CEBF6F1B25CA7857009374A0 /* AgeOperatorState.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				CE1AF84625C47E510050114F /* Constants.swift in Sources */,
 				CE9E159D25C5C9FF003D8E93 /* String+Extension.swift in Sources */,
 				CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */,
+				CEBF6F1C25CA7857009374A0 /* AgeOperatorState.swift in Sources */,
 				CE4883DD25B4ACE700BCB7F9 /* SportsTeam.xcdatamodeld in Sources */,
 				CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */,
 				CE019BB325C00AC10062EF3C /* Collection+Extension.swift in Sources */,

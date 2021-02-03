@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        let playersDataModel = PlayersDataModelImpl.shared
+        let playersDataModel = PlayersDataModel.shared
         playersDataModel.saveData()
     }
 }

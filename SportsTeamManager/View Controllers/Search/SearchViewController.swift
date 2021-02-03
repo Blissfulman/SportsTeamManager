@@ -41,16 +41,16 @@ final class SearchViewController: UIViewController {
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
-    private var ageOperator: String {
+    private var ageOperator: AgeOperatorState {
         switch ageOperatorSegmentedControl.selectedSegmentIndex {
         case 0:
-            return "<="
+            return .lessOrEqual
         case 1:
-            return "="
+            return .equal
         default:
-            return ">="
+            return .moreOrEqual
         }
     }
     
@@ -58,7 +58,7 @@ final class SearchViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
     }
     
     // MARK: - Lifecycle methods
@@ -190,12 +190,12 @@ final class SearchViewController: UIViewController {
             ageTextField.text = String(ageData)
         }
         switch searchData.ageOperator {
-        case "=":
+        case .lessOrEqual:
+            ageOperatorSegmentedControl.selectedSegmentIndex = 0
+        case .equal:
             ageOperatorSegmentedControl.selectedSegmentIndex = 1
-        case ">=":
+        case .moreOrEqual:
             ageOperatorSegmentedControl.selectedSegmentIndex = 2
-        default:
-            break
         }
         if let selectedTeam = searchData.team {
             self.selectedTeam = selectedTeam

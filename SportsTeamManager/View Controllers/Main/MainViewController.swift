@@ -17,13 +17,13 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
     // MARK: - Initializers
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
         playersDataModel.delegate = self
     }
     
@@ -64,6 +64,7 @@ final class MainViewController: UIViewController {
       
         guard let playerVC = storyboard.instantiateInitialViewController()
                 as? PlayerViewController else { return }
+        playerVC.title = "New player"
         
         navigationController?.pushViewController(playerVC, animated: true)
     }
@@ -159,6 +160,7 @@ extension MainViewController: UITableViewDelegate {
                     as? PlayerViewController else { return }
             
             playerVC.editingPlayer = selectedPlayer
+            playerVC.title = "Edit player"
             
             self.navigationController?.pushViewController(playerVC, animated: true)
             tableView.reloadRows(at: [indexPath], with: .automatic)

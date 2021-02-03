@@ -47,7 +47,7 @@ final class PlayerViewController: UIViewController {
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
     private lazy var inPlay: Bool = {
         stateSegmentedControl.selectedSegmentIndex == 0 ? true : false
@@ -57,7 +57,7 @@ final class PlayerViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
     }
     
     // MARK: - Lifecycle methods
@@ -136,7 +136,6 @@ final class PlayerViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupUI() {
-        title = "New player"
         imagePickerController.delegate = self
         saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         imagePickerController.allowsEditing = true

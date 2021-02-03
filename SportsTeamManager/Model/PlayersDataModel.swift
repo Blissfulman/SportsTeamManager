@@ -9,7 +9,7 @@ import Foundation
 
 typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
                         team: String, position: String, inPlay: Bool, photo: Data?)
-typealias SearchData = (name: String?, age: Int16?, ageOperator: String,
+typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorState,
                         team: String?, position: String?)
 
 // MARK: - Protocols
@@ -18,7 +18,7 @@ protocol PlayersDataModelDelegate: AnyObject {
     func dataDidChanged()
 }
 
-protocol PlayersDataModel {
+protocol PlayersDataModelProtocol {
     var delegate: PlayersDataModelDelegate? { get set }
     var numberOfPlayers: Int { get }
     
@@ -33,11 +33,11 @@ protocol PlayersDataModel {
     func saveData()
 }
 
-final class PlayersDataModelImpl: PlayersDataModel {
+final class PlayersDataModel: PlayersDataModelProtocol {
     
     // MARK: - Properties
     
-    static let shared = PlayersDataModelImpl()
+    static let shared = PlayersDataModel()
     
     weak var delegate: PlayersDataModelDelegate?
     
@@ -148,7 +148,7 @@ final class PlayersDataModelImpl: PlayersDataModel {
         }
         
         if let int16Age = searchData?.age, let ageOperator = searchData?.ageOperator {
-            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
+            let agePredicate = NSPredicate(format: "age \(ageOperator.rawValue) '\(String(int16Age))'")
             predicates.append(agePredicate)
         }
         

@@ -18,6 +18,8 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
+    private var editingPlayer: Player!
+    
     private var playersDataModel: PlayersDataModelProtocol!
     
     // MARK: - Initializers
@@ -33,12 +35,12 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        updateTableViewVisibility()
     }
     
     // MARK: - Actions
     
-    @objc private func searchAction() {
+    @IBAction func searchBarButtonTapped(_ sender: UIBarButtonItem) {
         
         let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
       
@@ -51,17 +53,6 @@ final class MainViewController: UIViewController {
         present(searchViewController, animated: true, completion: nil)
     }
     
-    @objc private func addPlayerAction() {
-        
-        let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
-      
-        guard let playerVC = storyboard.instantiateInitialViewController()
-                as? PlayerViewController else { return }
-        playerVC.title = "New player"
-        
-        navigationController?.pushViewController(playerVC, animated: true)
-    }
-    
     @IBAction func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
@@ -72,23 +63,6 @@ final class MainViewController: UIViewController {
         default:
             playersDataModel.filterStateDidChanged(to: .bench)
         }
-    }
-    
-    // MARK: - Setup UI
-    
-    private func setupUI() {
-        title = "Team players"
-        updateTableViewVisibility()
-        
-        let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
-                                                 target: self,
-                                                 action: #selector(addPlayerAction))
-        navigationItem.rightBarButtonItem = addPlayerBarButton
-        
-        let searchBarButton = UIBarButtonItem(barButtonSystemItem: .search,
-                                              target: self,
-                                              action: #selector(searchAction))
-        navigationItem.leftBarButtonItem = searchBarButton
     }
     
     // MARK: - Private methods
@@ -147,17 +121,10 @@ extension MainViewController: UITableViewDelegate {
             
             guard let self = self else { return }
             
-            let selectedPlayer = self.playersDataModel.getPlayer(at: indexPath)
+            guard let editingPlayer = self.playersDataModel.getPlayer(at: indexPath) else { return }
             
-            let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
-          
-            guard let playerVC = storyboard.instantiateInitialViewController()
-                    as? PlayerViewController else { return }
-            
-            playerVC.editingPlayer = selectedPlayer
-            playerVC.title = "Edit player"
-            
-            self.navigationController?.pushViewController(playerVC, animated: true)
+            self.editingPlayer = editingPlayer
+            self.performSegue(withIdentifier: "toEditPlayer", sender: self)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         editAction.backgroundColor = .orange
@@ -166,6 +133,23 @@ extension MainViewController: UITableViewDelegate {
         configuration.performsFirstActionWithFullSwipe = false
         
         return configuration
+    }
+}
+
+// MARK: - Navigation
+
+extension MainViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let playerVC = segue.destination as? PlayerViewController else { return }
+        
+        if segue.identifier == "toNewPlayer" {
+            playerVC.title = "New player"
+        } else if segue.identifier == "toEditPlayer" {
+            playerVC.title = "Edit player"
+            playerVC.editingPlayer = editingPlayer
+        }
     }
 }
 

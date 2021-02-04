@@ -15,16 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        let storyboard = UIStoryboard(name: MainViewController.identifier, bundle: nil)
+        let storyboard = UIStoryboard(name: "MainFlow", bundle: nil)
         
-        guard let mainVC = storyboard.instantiateInitialViewController()
-                as? MainViewController else { return false }
+        guard let rootVC = storyboard.instantiateInitialViewController() else { return false }
         
         window = UIWindow()
-        window?.rootViewController = UINavigationController(rootViewController: mainVC)
+        window?.rootViewController = rootVC
         window?.makeKeyAndVisible()
-        
-        mainVC.navigationController?.navigationBar.tintColor = Color.main
         return true
     }
     

@@ -108,7 +108,9 @@ final class PlayerViewController: UIViewController {
             name: name, number: number, nationality: nationality, age: age, team: selectedTeam,
             position: selectedPosition, inPlay: inPlay, photo: selectedPhoto.pngData()
         )
-        playersDataModel.createPlayer(playerData)
+        editingPlayer == nil
+            ? playersDataModel.createPlayer(playerData)
+            : playersDataModel.updatePlayer(editingPlayer, withPlayerData: playerData)
         
         navigationController?.popViewController(animated: true)
     }

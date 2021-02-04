@@ -32,6 +32,8 @@ protocol PlayersDataModelProtocol {
     func getNumberOfPlayers(atSection section: Int) -> Int
     func removePlayer(at indexPath: IndexPath)
     func createPlayer(_ playerData: PlayerData)
+    func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData)
+    func replacePlayer(_ player: Player, isInPlay: Bool)
     func filterStateDidChanged(to filterState: FilterState)
     func searchDidUpdated(to searchData: SearchData)
     func resetSearchData()
@@ -97,8 +99,12 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     }
     
     func createPlayer(_ playerData: PlayerData) {
-        let context = dataManager.getContext()
         let player = dataManager.createObject(from: Player.self)
+        updatePlayer(player, withPlayerData: playerData)
+    }
+    
+    func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData) {
+        let context = dataManager.getContext()
         let teamOfPlayer = dataManager.createObject(from: Team.self)
         
         teamOfPlayer.name = playerData.team
@@ -112,6 +118,13 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         player.inPlay = playerData.inPlay
         player.photo = playerData.photo
         
+        dataManager.save(context: context)
+        updateData()
+    }
+    
+    func replacePlayer(_ player: Player, isInPlay: Bool) {
+        let context = dataManager.getContext()
+        player.inPlay = !isInPlay
         dataManager.save(context: context)
         updateData()
     }

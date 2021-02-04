@@ -18,8 +18,6 @@ final class MainViewController: UIViewController {
     
     static let identifier = String(describing: MainViewController.self)
     
-    private var editingPlayer: Player!
-    
     private var playersDataModel: PlayersDataModelProtocol!
     
     // MARK: - Initializers
@@ -107,7 +105,10 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        
+        let selectedPlayer = playersDataModel.getPlayer(at: indexPath)
+        let isInPlay = selectedPlayer?.inPlay ?? true
+        
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
             
@@ -116,20 +117,27 @@ extension MainViewController: UITableViewDelegate {
             self.playersDataModel.removePlayer(at: indexPath)
         }
         
+        let replacementAction = UIContextualAction(style: .destructive,
+                                                   title: isInPlay ? "To bench" : "To play") {
+            [weak self] _, _, _  in
+            
+            guard let self = self, let player = selectedPlayer else { return }
+            
+            self.playersDataModel.replacePlayer(player, isInPlay: isInPlay)
+        }
+        replacementAction.backgroundColor = isInPlay ? Color.bench : Color.inPlay
+        
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
             [weak self] _, _, _  in
             
             guard let self = self else { return }
-            
-            guard let editingPlayer = self.playersDataModel.getPlayer(at: indexPath) else { return }
-            
-            self.editingPlayer = editingPlayer
-            self.performSegue(withIdentifier: "toEditPlayer", sender: self)
+                        
+            self.performSegue(withIdentifier: "toEditPlayer", sender: selectedPlayer)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
-        editAction.backgroundColor = .orange
+        editAction.backgroundColor = .systemBlue
         
-        let configuration = UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+        let configuration = UISwipeActionsConfiguration(actions: [editAction, replacementAction, deleteAction])
         configuration.performsFirstActionWithFullSwipe = false
         
         return configuration
@@ -148,7 +156,9 @@ extension MainViewController {
             playerVC.title = "New player"
         } else if segue.identifier == "toEditPlayer" {
             playerVC.title = "Edit player"
-            playerVC.editingPlayer = editingPlayer
+            if let editingPlayer = sender as? Player {
+                playerVC.editingPlayer = editingPlayer
+            }
         }
     }
 }

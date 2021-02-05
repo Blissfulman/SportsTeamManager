@@ -29,6 +29,7 @@
 		CEBF6F1825C93131009374A0 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF6F1725C93131009374A0 /* Array+Extension.swift */; };
 		CEBF6F1C25CA7857009374A0 /* AgeOperatorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF6F1B25CA7857009374A0 /* AgeOperatorState.swift */; };
 		CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */; };
+		CEEC84BD25CCFD4100B87791 /* PlayerCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEEC84BC25CCFD4100B87791 /* PlayerCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		CEBF6F1725C93131009374A0 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		CEBF6F1B25CA7857009374A0 /* AgeOperatorState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeOperatorState.swift; sourceTree = "<group>"; };
 		CEE04A4C25BDCF48004ACB57 /* PlayersDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersDataModel.swift; sourceTree = "<group>"; };
+		CEEC84BC25CCFD4100B87791 /* PlayerCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,17 +173,18 @@
 			isa = PBXGroup;
 			children = (
 				CE4883D625B4ACE700BCB7F9 /* MainViewController.swift */,
-				CE48840525B602B400BCB7F9 /* Cell */,
+				CE48840525B602B400BCB7F9 /* PlayerCell */,
 			);
 			path = Main;
 			sourceTree = "<group>";
 		};
-		CE48840525B602B400BCB7F9 /* Cell */ = {
+		CE48840525B602B400BCB7F9 /* PlayerCell */ = {
 			isa = PBXGroup;
 			children = (
 				CE48840625B602E300BCB7F9 /* PlayerCell.swift */,
+				CEEC84BC25CCFD4100B87791 /* PlayerCellViewModel.swift */,
 			);
-			path = Cell;
+			path = PlayerCell;
 			sourceTree = "<group>";
 		};
 		CE48840D25B60BE300BCB7F9 /* Player */ = {
@@ -296,6 +299,7 @@
 				CE1AF84125C450C90050114F /* UIView+Extension.swift in Sources */,
 				CE4883D725B4ACE700BCB7F9 /* MainViewController.swift in Sources */,
 				CE1AF82F25C1DF360050114F /* SearchViewController.swift in Sources */,
+				CEEC84BD25CCFD4100B87791 /* PlayerCellViewModel.swift in Sources */,
 				CEE04A4D25BDCF48004ACB57 /* PlayersDataModel.swift in Sources */,
 				CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */,
 				CEBF6F1825C93131009374A0 /* Array+Extension.swift in Sources */,

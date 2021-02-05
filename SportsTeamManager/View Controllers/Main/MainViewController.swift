@@ -93,8 +93,8 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let item = playersDataModel.getPlayer(at: indexPath) {
-            cell.configure(item)
+        if let player = playersDataModel.getPlayer(at: indexPath) {
+            cell.viewModel = PlayerCellViewModel(player: player)
         }
         return cell
     }
@@ -205,7 +205,7 @@ extension MainViewController: PlayersDataModelDelegate {
             if let indexPath = indexPath {
                 let cell = tableView.cellForRow(at: indexPath) as! PlayerCell
                 if let player = playersDataModel.getPlayer(at: indexPath) {
-                    cell.configure(player)
+                    cell.viewModel = PlayerCellViewModel(player: player)
                 }
             }
 

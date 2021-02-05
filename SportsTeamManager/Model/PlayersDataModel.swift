@@ -34,8 +34,8 @@ protocol PlayersDataModelProtocol {
     func createPlayer(_ playerData: PlayerData)
     func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData)
     func replacePlayer(_ player: Player, isInPlay: Bool)
-    func filterStateDidChanged(to filterState: FilterState)
-    func searchDidUpdated(to searchData: SearchData)
+    func filterStateDidChange(to filterState: FilterState)
+    func searchDidUpdate(to searchData: SearchData)
     func resetSearchData()
     func getSearchData() -> SearchData?
     func saveData()
@@ -129,12 +129,12 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         updateData()
     }
     
-    func filterStateDidChanged(to filterState: FilterState) {
+    func filterStateDidChange(to filterState: FilterState) {
         self.filterState = filterState
         updateData()
     }
     
-    func searchDidUpdated(to searchData: SearchData) {
+    func searchDidUpdate(to searchData: SearchData) {
         self.searchData = searchData
         updateData()
     }

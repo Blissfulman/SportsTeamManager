@@ -26,40 +26,7 @@ final class SearchViewController: UIViewController {
     
     static let identifier = String(describing: SearchViewController.self)
     
-    private var pickerViewContentType: PickerViewContentType = .teams
-    private var selectedTeam: String! {
-        willSet {
-            teamSelectButton.setTitle(newValue, for: .normal)
-        }
-    }
-    private var selectedPosition: String! {
-        willSet {
-            positionSelectButton.setTitle(newValue, for: .normal)
-        }
-    }
-    
-    private let teams = DataConstants.teams
-    private let positions = DataConstants.positions
-    
-    private var playersDataModel: PlayersDataModelProtocol!
-    
-    private var ageOperator: AgeOperatorState {
-        switch ageOperatorSegmentedControl.selectedSegmentIndex {
-        case 0:
-            return .lessOrEqual
-        case 1:
-            return .equal
-        default:
-            return .moreOrEqual
-        }
-    }
-    
-    // MARK: - Initializers
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModel.shared
-    }
+    var viewModel: SearchViewModelProtocol!
     
     // MARK: - Lifecycle methods
     
@@ -71,43 +38,21 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func teamSelectButtonTapped() {
+    @IBAction func selectionButtonsTapped(_ sender: UIButton) {
         view.endEditing(true)
-        pickerViewContentType = .teams
+        viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
         pickerView.reloadAllComponents()
-        pickerView.selectRow(teams.safeFirstIndex(of: selectedTeam),
-                             inComponent: 0,
-                             animated: false)
-        showPickerView()
-    }
-    
-    @IBAction func positionSelectButtonTapped() {
-        view.endEditing(true)
-        pickerViewContentType = .positions
-        pickerView.reloadAllComponents()
-        pickerView.selectRow(positions.safeFirstIndex(of: selectedPosition),
-                             inComponent: 0,
-                             animated: false)
+        pickerView.selectRow(viewModel.pickerViewSelectedIndex, inComponent: 0, animated: false)
         showPickerView()
     }
     
     @IBAction func startSearchButtonTapped() {
-        var int16Age: Int16?
-        
-        if let age = ageTextField.text, !age.isEmpty {
-            int16Age = Int16(age)
-        }
-        
-        let searchData: SearchData = (
-            name: nameTextField.text, age: int16Age, ageOperator: ageOperator,
-            team: selectedTeam, position: selectedPosition
-        )
-        playersDataModel.searchDidUpdated(to: searchData)
+        viewModel.startSearch()
         dismiss(animated: true)
     }
     
     @IBAction func resetButtonTapped() {
-        playersDataModel.resetSearchData()
+        viewModel.resetSearchData()
         dismiss(animated: true)
     }
     
@@ -116,14 +61,18 @@ final class SearchViewController: UIViewController {
     }
     
     @IBAction func nameTextFieldEditingChanged() {
+        viewModel.name = nameTextField.text
         updateStartSearchButtonState()
     }
     
     @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
-        if let text = sender.text, !text.isEmpty {
-            sender.text = text.toNumberTextFieldFiltered()
-        }
+        viewModel.age = sender.text
+        sender.text = viewModel.age
         updateStartSearchButtonState()
+    }
+    
+    @IBAction func ageOperatorValueChanged(_ sender: UISegmentedControl) {
+        viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -149,26 +98,20 @@ final class SearchViewController: UIViewController {
                                                     action: #selector(dismissByTapAction))
         backEnvironmentView.addGestureRecognizer(dismissByTapGR)
         
-        if let searchData = playersDataModel.getSearchData() {
-            fillView(for: searchData)
+        viewModel.buttonTitleNeedUpdating = { title, contentType in
+            contentType == .teams
+                ? self.teamSelectButton.setTitle(title, for: .normal)
+                : self.positionSelectButton.setTitle(title, for: .normal)
         }
+        
+        fillView()
         updateStartSearchButtonState()
     }
     
     // MARK: - Private methods
     
     private func updateStartSearchButtonState() {
-        var isEnabled = false
-        
-        if (selectedTeam != nil) || (selectedPosition != nil) {
-            isEnabled = true
-        } else if let name = nameTextField.text, !name.isEmpty {
-            isEnabled = true
-        } else if let age = ageTextField.text, !age.isEmpty {
-            isEnabled = true
-        }
-        
-        startSearchButton.isEnabled = isEnabled
+        startSearchButton.isEnabled = viewModel.isEnabledStartSearchButton
         startSearchButton.backgroundColor = startSearchButton.isEnabled
             ? Color.main
             : Color.disabled
@@ -184,25 +127,12 @@ final class SearchViewController: UIViewController {
         pickerView.disappear()
     }
     
-    private func fillView(for searchData: SearchData) {
-        nameTextField.text = searchData.name
-        if let ageData = searchData.age {
-            ageTextField.text = String(ageData)
-        }
-        switch searchData.ageOperator {
-        case .lessOrEqual:
-            ageOperatorSegmentedControl.selectedSegmentIndex = 0
-        case .equal:
-            ageOperatorSegmentedControl.selectedSegmentIndex = 1
-        case .moreOrEqual:
-            ageOperatorSegmentedControl.selectedSegmentIndex = 2
-        }
-        if let selectedTeam = searchData.team {
-            self.selectedTeam = selectedTeam
-        }
-        if let selectedPosition = searchData.position {
-            self.selectedPosition = selectedPosition
-        }
+    private func fillView() {
+        nameTextField.text = viewModel.name
+        ageTextField.text = viewModel.age
+        ageOperatorSegmentedControl.selectedSegmentIndex = viewModel.ageOperatorSelectedSegmentIndex
+        teamSelectButton.setTitle(viewModel.teamButtonTitle, for: .normal)
+        positionSelectButton.setTitle(viewModel.positionButtonTitle, for: .normal)
     }
 }
 
@@ -215,11 +145,11 @@ extension SearchViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        pickerViewContentType == .teams ? teams.count : positions.count
+        viewModel.pickerViewNumberOfRows
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        pickerViewContentType == .teams ? teams[row] : positions[row]
+        viewModel.pickerViewTitle(forRow: row)
     }
 }
 
@@ -228,12 +158,7 @@ extension SearchViewController: UIPickerViewDataSource {
 extension SearchViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        if pickerViewContentType == .teams {
-            selectedTeam = teams[row]
-        } else {
-            selectedPosition = positions[row]
-        }
+        viewModel.pickerViewDidSelectRow(at: row)
         hidePickerView()
         updateStartSearchButtonState()
     }

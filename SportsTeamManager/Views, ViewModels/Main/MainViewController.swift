@@ -47,6 +47,7 @@ final class MainViewController: UIViewController {
         
         searchViewController.modalTransitionStyle = .crossDissolve
         searchViewController.modalPresentationStyle = .overCurrentContext
+        searchViewController.viewModel = SearchViewModel(searchData: playersDataModel.getSearchData())
         
         present(searchViewController, animated: true, completion: nil)
     }
@@ -55,11 +56,11 @@ final class MainViewController: UIViewController {
         
         switch sender.selectedSegmentIndex {
         case 0:
-            playersDataModel.filterStateDidChanged(to: .all)
+            playersDataModel.filterStateDidChange(to: .all)
         case 1:
-            playersDataModel.filterStateDidChanged(to: .inPlay)
+            playersDataModel.filterStateDidChange(to: .inPlay)
         default:
-            playersDataModel.filterStateDidChanged(to: .bench)
+            playersDataModel.filterStateDidChange(to: .bench)
         }
     }
     

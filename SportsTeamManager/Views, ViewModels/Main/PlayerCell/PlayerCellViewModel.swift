@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - Protocols
+
 protocol PlayerCellViewModelProtocol {
     var photo: Data? { get }
     var number: String? { get }
@@ -21,7 +23,10 @@ protocol PlayerCellViewModelProtocol {
     init(player: Player)
 }
 
-class PlayerCellViewModel: PlayerCellViewModelProtocol {
+final class PlayerCellViewModel: PlayerCellViewModelProtocol {
+    
+    // MARK: - Properties
+    
     var photo: Data? {
         player.photo
     }
@@ -59,6 +64,8 @@ class PlayerCellViewModel: PlayerCellViewModelProtocol {
     }
     
     private let player: Player
+    
+    // MARK: - Initializers
     
     required init(player: Player) {
         self.player = player

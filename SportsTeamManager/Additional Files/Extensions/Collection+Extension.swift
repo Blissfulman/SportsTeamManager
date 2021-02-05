@@ -2,10 +2,8 @@
 //  Collection+Extension.swift
 //  SportsTeamManager
 //
-//  Created by User on 26.01.2021.
+//  Created by Evgeny Novgorodov on 26.01.2021.
 //
-
-import Foundation
 
 extension Collection {
     

@@ -2,7 +2,7 @@
 //  PlayerCell.swift
 //  SportsTeamManager
 //
-//  Created by User on 18.01.2021.
+//  Created by Evgeny Novgorodov on 18.01.2021.
 //
 
 import UIKit
@@ -11,20 +11,20 @@ final class PlayerCell: UITableViewCell {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var playerNumberLabel: UILabel!
-    @IBOutlet weak var playerFullNameLabel: UILabel!
-    @IBOutlet weak var playerStateLabel: UILabel!
-    @IBOutlet weak var playerPhotoImageView: UIImageView!
-    @IBOutlet weak var playerTeamLabel: UILabel!
-    @IBOutlet weak var playerNationalityLabel: UILabel!
-    @IBOutlet weak var playerPositionLabel: UILabel!
-    @IBOutlet weak var playerAgeLabel: UILabel!
+    @IBOutlet private weak var playerNumberLabel: UILabel!
+    @IBOutlet private weak var playerFullNameLabel: UILabel!
+    @IBOutlet private weak var playerStateLabel: UILabel!
+    @IBOutlet private weak var playerPhotoImageView: UIImageView!
+    @IBOutlet private weak var playerTeamLabel: UILabel!
+    @IBOutlet private weak var playerNationalityLabel: UILabel!
+    @IBOutlet private weak var playerPositionLabel: UILabel!
+    @IBOutlet private weak var playerAgeLabel: UILabel!
     
     // MARK: - Properties
     
     static let identifier = String(describing: PlayerCell.self)
     
-    // MARK: - Lyfecycle metods
+    // MARK: - Lifecycle methods
     
     override func prepareForReuse() {
         playerPhotoImageView.image = nil

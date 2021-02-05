@@ -2,7 +2,7 @@
 //  Constants.swift
 //  SportsTeamManager
 //
-//  Created by User on 29.01.2021.
+//  Created by Evgeny Novgorodov on 29.01.2021.
 //
 
 import UIKit

@@ -2,93 +2,129 @@
 //  PlayersDataModel.swift
 //  SportsTeamManager
 //
-//  Created by User on 24.01.2021.
+//  Created by Evgeny Novgorodov on 24.01.2021.
 //
 
-import Foundation
+import CoreData
+
+typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
+                        team: String, position: String, inPlay: Bool, photo: Data?)
+typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorState,
+                        team: String?, position: String?)
 
 // MARK: - Protocols
 
 protocol PlayersDataModelDelegate: AnyObject {
-    func dataDidChanged()
+    func dataDidChange()
+    func willChangeContent()
+    func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int)
+    func didChangeObject(type: NSFetchedResultsChangeType, indexPath: IndexPath?, newIndexPath: IndexPath?)
+    func didChangeContent()
 }
 
-protocol PlayersDataModel {
+protocol PlayersDataModelProtocol {
     var delegate: PlayersDataModelDelegate? { get set }
-    var numberOfPlayers: Int { get }
+    var isEmptyData: Bool { get }
+    var numberOfSections: Int { get }
     
-    func getPlayers() -> [Player]
-    func getPlayer(at index: Int) -> Player?
-    func removePlayer(at index: Int, completion: () -> Void)
-    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
-                      team: String, position: String, inPlay: Bool, photo: Data?)
+    func getPlayer(at indexPath: IndexPath) -> Player?
+    func getSectionTitle(for section: Int) -> String?
+    func getNumberOfPlayers(atSection section: Int) -> Int
+    func removePlayer(at indexPath: IndexPath)
+    func createPlayer(_ playerData: PlayerData)
+    func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData)
+    func replacePlayer(_ player: Player, isInPlay: Bool)
     func filterStateDidChanged(to filterState: FilterState)
-    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
-                             team: String?, position: String?)
-    func resetPredicate()
+    func searchDidUpdated(to searchData: SearchData)
+    func resetSearchData()
+    func getSearchData() -> SearchData?
     func saveData()
 }
 
-final class PlayersDataModelImpl: PlayersDataModel {
+final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     
     // MARK: - Properties
     
-    static let shared = PlayersDataModelImpl()
+    static let shared = PlayersDataModel()
     
     weak var delegate: PlayersDataModelDelegate?
     
-    var numberOfPlayers: Int {
-        players.count
+    var isEmptyData: Bool {
+        guard let objectsCount = fetchedResultsController.fetchedObjects?.count else { return true }
+        return objectsCount == 0
     }
     
-    private var players = [Player]()
+    var numberOfSections: Int {
+        sections.count
+    }
+    
+    private var fetchedResultsController: NSFetchedResultsController<Player>!
+    
+    private var sections: [String] {
+        guard let fetchedSections = fetchedResultsController.sections else { return [] }
+        return fetchedSections.map { $0.name }
+    }
+    
     private var filterState: FilterState = .all
-    private var predicate: NSCompoundPredicate?
+    private var searchData: SearchData?
     
     private let dataManager = CoreDataManager(modelName: "SportsTeam")
     
-    // MARK: - Initializators
+    // MARK: - Initializers
     
-    private init() {
+    private override init() {
+        super.init()
         updateData()
     }
     
     // MARK: - Public methods
     
-    func getPlayers() -> [Player] {
-        players
+    func getPlayer(at indexPath: IndexPath) -> Player? {
+        fetchedResultsController.object(at: indexPath)
     }
     
-    func getPlayer(at index: Int) -> Player? {
-        players[safeIndex: index]
+    func getSectionTitle(for section: Int) -> String? {
+        sections[safeIndex: section]
     }
     
-    func removePlayer(at index: Int, completion: () -> Void) {
-        if let _ = getPlayer(at: index) {
-            dataManager.delete(object: players[index])
-            players.remove(at: index)
-            completion()
+    func getNumberOfPlayers(atSection section: Int) -> Int {
+        guard let fetchedSections = fetchedResultsController.sections else { return 0 }
+        return fetchedSections[section].numberOfObjects
+    }
+    
+    func removePlayer(at indexPath: IndexPath) {
+        if let deletingPlayer = getPlayer(at: indexPath) {
+            dataManager.delete(object: deletingPlayer)
         }
     }
     
-    func createPlayer(name: String, number: Int16, nationality: String, age: Int16,
-                      team: String, position: String, inPlay: Bool, photo: Data?) {
-        
-        let context = dataManager.getContext()
+    func createPlayer(_ playerData: PlayerData) {
         let player = dataManager.createObject(from: Player.self)
+        updatePlayer(player, withPlayerData: playerData)
+    }
+    
+    func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData) {
+        let context = dataManager.getContext()
         let teamOfPlayer = dataManager.createObject(from: Team.self)
         
-        teamOfPlayer.name = team
+        teamOfPlayer.name = playerData.team
         
-        player.fullName = name
-        player.number = number
-        player.nationality = nationality
-        player.age = age
+        player.fullName = playerData.name
+        player.number = playerData.number
+        player.nationality = playerData.nationality
+        player.age = playerData.age
         player.team = teamOfPlayer
-        player.position = position
-        player.inPlay = inPlay
-        player.photo = photo
+        player.position = playerData.position
+        player.inPlay = playerData.inPlay
+        player.photo = playerData.photo
         
+        dataManager.save(context: context)
+        updateData()
+    }
+    
+    func replacePlayer(_ player: Player, isInPlay: Bool) {
+        let context = dataManager.getContext()
+        player.inPlay = !isInPlay
         dataManager.save(context: context)
         updateData()
     }
@@ -98,16 +134,18 @@ final class PlayersDataModelImpl: PlayersDataModel {
         updateData()
     }
     
-    func predicateDidChanged(name: String?, age: Int16?, ageOperator: String,
-                             team: String?, position: String?) {
-        predicate = makeCompoundPredicate(name: name, age: age, ageOperator: ageOperator,
-                                          team: team, position: position)
+    func searchDidUpdated(to searchData: SearchData) {
+        self.searchData = searchData
         updateData()
     }
     
-    func resetPredicate() {
-        predicate = nil
+    func resetSearchData() {
+        searchData = nil
         updateData()
+    }
+    
+    func getSearchData() -> SearchData? {
+        searchData
     }
     
     func saveData() {
@@ -118,46 +156,69 @@ final class PlayersDataModelImpl: PlayersDataModel {
     // MARK: - Private methods
     
     private func updateData() {
-        players = dataManager.fetchData(for: Player.self, predicate: predicate)
+        let predicate = makeCompoundPredicate()
         
-        if filterState == .inPlay,
-           let inPlayPlayers = players.first?.value(forKey: "inPlayPlayers") as? [Player] {
-            players = players.filter { inPlayPlayers.contains($0) }
-        }
+        fetchedResultsController = dataManager.fetchDataWithController(
+            for: Player.self, sectionNameKeyPath: #keyPath(Player.position), predicate: predicate
+        )
         
-        if filterState == .bench,
-           let benchPlayers = players.first?.value(forKey: "benchPlayers") as? [Player]  {
-            players = players.filter { benchPlayers.contains($0) }
-        }
-        
-        delegate?.dataDidChanged()
+        fetchedResultsController.delegate = self
+        delegate?.dataDidChange()
     }
     
-    private func makeCompoundPredicate(name: String?, age: Int16?, ageOperator: String,
-                                       team: String?, position: String?) -> NSCompoundPredicate {
+    private func makeCompoundPredicate() -> NSCompoundPredicate {
         
         var predicates = [NSPredicate]()
         
-        if let name = name, !name.isEmpty {
+        if let name = searchData?.name, !name.isEmpty {
             let namePredicate = NSPredicate(format: "fullName CONTAINS[cd] '\(name)'")
             predicates.append(namePredicate)
         }
         
-        if let int16Age = age {
-            let agePredicate = NSPredicate(format: "age \(ageOperator) '\(String(int16Age))'")
+        if let int16Age = searchData?.age, let ageOperator = searchData?.ageOperator {
+            let agePredicate = NSPredicate(format: "age \(ageOperator.rawValue) '\(String(int16Age))'")
             predicates.append(agePredicate)
         }
         
-        if let team = team {
+        if let team = searchData?.team {
             let teamPredicate = NSPredicate(format: "team.name == '\(team)'")
             predicates.append(teamPredicate)
         }
         
-        if let position = position {
+        if let position = searchData?.position {
             let positionPredicate = NSPredicate(format: "position == '\(position)'")
             predicates.append(positionPredicate)
         }
         
+        if filterState == .inPlay {
+            predicates.append(NSPredicate(format: "inPlay == true"))
+        } else if filterState == .bench {
+            predicates.append(NSPredicate(format: "inPlay == false"))
+        }
+        
         return NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
+    }
+}
+
+// MARK: - Fetched results controller delegate
+
+extension PlayersDataModel: NSFetchedResultsControllerDelegate {
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        delegate?.willChangeContent()
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        
+        delegate?.didChangeSection(type: type, sectionIndex: sectionIndex)
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        delegate?.didChangeObject(type: type, indexPath: indexPath, newIndexPath: newIndexPath)
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        delegate?.didChangeContent()
     }
 }

@@ -24,7 +24,7 @@ final class PlayerCell: UITableViewCell {
     
     static let identifier = String(describing: PlayerCell.self)
     
-    // MARK: - Lyfecycle metods
+    // MARK: - Lifecycle methods
     
     override func prepareForReuse() {
         playerPhotoImageView.image = nil

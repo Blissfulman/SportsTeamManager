@@ -2,28 +2,29 @@
 //  MainViewController.swift
 //  SportsTeamManager
 //
-//  Created by User on 17.01.2021.
+//  Created by Evgeny Novgorodov on 17.01.2021.
 //
 
 import UIKit
+import CoreData
 
 final class MainViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Properties
     
     static let identifier = String(describing: MainViewController.self)
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
     // MARK: - Initializers
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
         playersDataModel.delegate = self
     }
     
@@ -32,34 +33,22 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupUI()
+        updateTableViewVisibility()
     }
     
     // MARK: - Actions
     
-    @objc private func searchAction() {
+    @IBAction func searchBarButtonTapped(_ sender: UIBarButtonItem) {
         
         let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
       
-        guard let searchViewController = storyboard.instantiateViewController(
-                withIdentifier: SearchViewController.identifier
-        ) as? SearchViewController else { return }
+        guard let searchViewController = storyboard.instantiateInitialViewController()
+                as? SearchViewController else { return }
         
         searchViewController.modalTransitionStyle = .crossDissolve
         searchViewController.modalPresentationStyle = .overCurrentContext
         
         present(searchViewController, animated: true, completion: nil)
-    }
-    
-    @objc private func addPlayerAction() {
-        
-        let storyboard = UIStoryboard(name: PlayerViewController.identifier, bundle: nil)
-      
-        guard let playerVC = storyboard.instantiateViewController(
-                withIdentifier: PlayerViewController.identifier
-        ) as? PlayerViewController else { return }
-        
-        navigationController?.pushViewController(playerVC, animated: true)
     }
     
     @IBAction func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
@@ -74,29 +63,10 @@ final class MainViewController: UIViewController {
         }
     }
     
-    // MARK: - Setup UI
-    
-    private func setupUI() {
-        title = "Team players"
-        updateTableViewVisibility()
-        tableView.separatorInset = .zero
-        tableView.allowsSelection = false
-        
-        let addPlayerBarButton = UIBarButtonItem(barButtonSystemItem: .add,
-                                                 target: self,
-                                                 action: #selector(addPlayerAction))
-        navigationItem.rightBarButtonItem = addPlayerBarButton
-        
-        let searchBarButton = UIBarButtonItem(barButtonSystemItem: .search,
-                                              target: self,
-                                              action: #selector(searchAction))
-        navigationItem.leftBarButtonItem = searchBarButton
-    }
-    
     // MARK: - Private methods
     
     private func updateTableViewVisibility() {
-        tableView.isHidden = playersDataModel.numberOfPlayers == 0 ? true : false
+        tableView.isHidden = playersDataModel.isEmptyData
     }
 }
 
@@ -104,8 +74,16 @@ final class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        playersDataModel.numberOfSections
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        playersDataModel.getSectionTitle(for: section)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        playersDataModel.numberOfPlayers
+        playersDataModel.getNumberOfPlayers(atSection: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,7 +93,7 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let item = playersDataModel.getPlayer(at: indexPath.row) {
+        if let item = playersDataModel.getPlayer(at: indexPath) {
             cell.configure(item)
         }
         return cell
@@ -127,30 +105,123 @@ extension MainViewController: UITableViewDataSource {
 extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        
+        let selectedPlayer = playersDataModel.getPlayer(at: indexPath)
+        let isInPlay = selectedPlayer?.inPlay ?? true
+        
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
             
             guard let self = self else { return }
             
-            self.playersDataModel.removePlayer(at: indexPath.row) {
-                tableView.performBatchUpdates({
-                    tableView.deleteRows(at: [indexPath], with: .automatic)
-                }, completion: { _ in
-                    self.updateTableViewVisibility()
-                })
-            }
+            self.playersDataModel.removePlayer(at: indexPath)
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        
+        let replacementAction = UIContextualAction(style: .destructive,
+                                                   title: isInPlay ? "To bench" : "To play") {
+            [weak self] _, _, _  in
+            
+            guard let self = self, let player = selectedPlayer else { return }
+            
+            self.playersDataModel.replacePlayer(player, isInPlay: isInPlay)
+        }
+        replacementAction.backgroundColor = isInPlay ? Color.bench : Color.inPlay
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") {
+            [weak self] _, _, _  in
+            
+            guard let self = self else { return }
+                        
+            self.performSegue(withIdentifier: "toEditPlayer", sender: selectedPlayer)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+        }
+        editAction.backgroundColor = .systemBlue
+        
+        let configuration = UISwipeActionsConfiguration(actions: [editAction, replacementAction, deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        
+        return configuration
     }
 }
 
-// MARK: - PlayersDataModelDelegate
+// MARK: - Navigation
+
+extension MainViewController {
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        guard let playerVC = segue.destination as? PlayerViewController else { return }
+        
+        if segue.identifier == "toNewPlayer" {
+            playerVC.title = "New player"
+        } else if segue.identifier == "toEditPlayer" {
+            playerVC.title = "Edit player"
+            if let editingPlayer = sender as? Player {
+                playerVC.editingPlayer = editingPlayer
+            }
+        }
+    }
+}
+
+// MARK: - Players data model delegate
 
 extension MainViewController: PlayersDataModelDelegate {
     
-    func dataDidChanged() {
+    func dataDidChange() {
         tableView.reloadData()
         updateTableViewVisibility()
+    }
+    
+    func willChangeContent() {
+        tableView.beginUpdates()
+    }
+    
+    func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int) {
+        switch type {
+        case .insert:
+            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+        case .delete:
+            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
+        default:
+            return
+        }
+    }
+    
+    func didChangeObject(type: NSFetchedResultsChangeType, indexPath: IndexPath?, newIndexPath: IndexPath?) {
+        switch type {
+        case .insert:
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+                updateTableViewVisibility()
+            }
+
+        case .delete:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+                updateTableViewVisibility()
+            }
+
+        case .update:
+            if let indexPath = indexPath {
+                let cell = tableView.cellForRow(at: indexPath) as! PlayerCell
+                if let player = playersDataModel.getPlayer(at: indexPath) {
+                    cell.configure(player)
+                }
+            }
+
+        case .move:
+            if let indexPath = indexPath {
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            if let indexPath = newIndexPath {
+                tableView.insertRows(at: [indexPath], with: .automatic)
+            }
+        @unknown default:
+            fatalError(debugDescription)
+        }
+    }
+    
+    func didChangeContent() {
+        tableView.endUpdates()
     }
 }

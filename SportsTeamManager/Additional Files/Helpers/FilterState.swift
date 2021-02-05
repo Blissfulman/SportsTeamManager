@@ -2,7 +2,7 @@
 //  FilterState.swift
 //  SportsTeamManager
 //
-//  Created by User on 27.01.2021.
+//  Created by Evgeny Novgorodov on 27.01.2021.
 //
 
 enum FilterState: String {

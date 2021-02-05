@@ -2,7 +2,7 @@
 //  PlayerViewController.swift
 //  SportsTeamManager
 //
-//  Created by User on 18.01.2021.
+//  Created by Evgeny Novgorodov on 18.01.2021.
 //
 
 import UIKit
@@ -11,32 +11,43 @@ final class PlayerViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var stateSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var photoImageView: UIImageView!
-    @IBOutlet weak var numberTextField: UITextField!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var nationalityTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var teamSelectButton: UIButton!
-    @IBOutlet weak var positionSelectButton: UIButton!
-    @IBOutlet weak var centralStackView: UIStackView!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet private weak var stateSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var photoImageView: UIImageView!
+    @IBOutlet private weak var numberTextField: UITextField!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var nationalityTextField: UITextField!
+    @IBOutlet private weak var ageTextField: UITextField!
+    @IBOutlet private weak var teamSelectButton: UIButton!
+    @IBOutlet private weak var positionSelectButton: UIButton!
+    @IBOutlet private weak var centralStackView: UIStackView!
+    @IBOutlet private weak var pickerView: UIPickerView!
+    @IBOutlet private weak var saveButton: UIButton!
     
     // MARK: - Properties
     
     static let identifier = String(describing: PlayerViewController.self)
     
+    var editingPlayer: Player!
+    
     private var pickerViewContentType: PickerViewContentType = .teams
     private var selectedPhoto = #imageLiteral(resourceName: "some.player")
-    private var selectedTeam: String!
-    private var selectedPosition: String!
+    
     private let imagePickerController = UIImagePickerController()
+    private var selectedTeam: String! {
+        willSet {
+            teamSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
+    private var selectedPosition: String! {
+        willSet {
+            positionSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
     
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
     private lazy var inPlay: Bool = {
         stateSegmentedControl.selectedSegmentIndex == 0 ? true : false
@@ -46,7 +57,7 @@ final class PlayerViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
     }
     
     // MARK: - Lifecycle methods
@@ -68,6 +79,9 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
+        pickerView.selectRow(teams.safeFirstIndex(of: selectedTeam),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -75,6 +89,9 @@ final class PlayerViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
+        pickerView.selectRow(positions.safeFirstIndex(of: selectedPosition),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -87,10 +104,13 @@ final class PlayerViewController: UIViewController {
            let selectedTeam = selectedTeam,
            let selectedPosition = selectedPosition else { return }
         
-        playersDataModel.createPlayer(
+        let playerData: PlayerData = (
             name: name, number: number, nationality: nationality, age: age, team: selectedTeam,
             position: selectedPosition, inPlay: inPlay, photo: selectedPhoto.pngData()
         )
+        editingPlayer == nil
+            ? playersDataModel.createPlayer(playerData)
+            : playersDataModel.updatePlayer(editingPlayer, withPlayerData: playerData)
         
         navigationController?.popViewController(animated: true)
     }
@@ -118,11 +138,14 @@ final class PlayerViewController: UIViewController {
     // MARK: - Setup UI
     
     private func setupUI() {
-        title = "New player"
         imagePickerController.delegate = self
         saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = .savedPhotosAlbum
+        
+        if let player = editingPlayer {
+            fillView(for: player)
+        }
         updateSaveButtonState()
     }
     
@@ -150,6 +173,20 @@ final class PlayerViewController: UIViewController {
     private func hidePickerView() {
         centralStackView.appear()
         pickerView.disappear()
+    }
+    
+    private func fillView(for player: Player) {
+        if let photoData = player.photo, let photo = UIImage(data: photoData) {
+            selectedPhoto = photo
+            photoImageView.image = photo
+        }
+        stateSegmentedControl.selectedSegmentIndex = player.inPlay ? 0 : 1
+        numberTextField.text = String(player.number)
+        nameTextField.text = player.fullName
+        nationalityTextField.text = player.nationality
+        ageTextField.text = String(player.age)
+        selectedTeam = player.team?.name
+        selectedPosition = player.position
     }
 }
 
@@ -194,10 +231,8 @@ extension PlayerViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerViewContentType == .teams {
-            teamSelectButton.setTitle(teams[row], for: .normal)
             selectedTeam = teams[row]
         } else {
-            positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
         hidePickerView()

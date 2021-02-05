@@ -2,7 +2,7 @@
 //  PickerViewContentType.swift
 //  SportsTeamManager
 //
-//  Created by User on 28.01.2021.
+//  Created by Evgeny Novgorodov on 28.01.2021.
 //
 
 enum PickerViewContentType {

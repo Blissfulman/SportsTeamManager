@@ -2,7 +2,7 @@
 //  SearchViewController.swift
 //  SportsTeamManager
 //
-//  Created by User on 27.01.2021.
+//  Created by Evgeny Novgorodov on 27.01.2021.
 //
 
 import UIKit
@@ -11,38 +11,46 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var backEnvironmentView: UIView!
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var ageTextField: UITextField!
-    @IBOutlet weak var ageOperatorSegmentedControl: UISegmentedControl!
-    @IBOutlet weak var teamSelectButton: UIButton!
-    @IBOutlet weak var positionSelectButton: UIButton!
-    @IBOutlet weak var pickerView: UIPickerView!
-    @IBOutlet weak var startSearchButton: UIButton!
+    @IBOutlet private weak var backEnvironmentView: UIView!
+    @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var ageTextField: UITextField!
+    @IBOutlet private weak var ageOperatorSegmentedControl: UISegmentedControl!
+    @IBOutlet private weak var teamSelectButton: UIButton!
+    @IBOutlet private weak var positionSelectButton: UIButton!
+    @IBOutlet private weak var pickerView: UIPickerView!
+    @IBOutlet private weak var startSearchButton: UIButton!
     
     // MARK: - Properties
     
     static let identifier = String(describing: SearchViewController.self)
     
     private var pickerViewContentType: PickerViewContentType = .teams
-    private var selectedTeam: String!
-    private var selectedPosition: String!
+    private var selectedTeam: String! {
+        willSet {
+            teamSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
+    private var selectedPosition: String! {
+        willSet {
+            positionSelectButton.setTitle(newValue, for: .normal)
+        }
+    }
     
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
     
-    private var playersDataModel: PlayersDataModel!
+    private var playersDataModel: PlayersDataModelProtocol!
     
-    private var ageOperator: String {
+    private var ageOperator: AgeOperatorState {
         switch ageOperatorSegmentedControl.selectedSegmentIndex {
         case 0:
-            return "<="
+            return .lessOrEqual
         case 1:
-            return "="
+            return .equal
         default:
-            return ">="
+            return .moreOrEqual
         }
     }
     
@@ -50,7 +58,7 @@ final class SearchViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        playersDataModel = PlayersDataModelImpl.shared
+        playersDataModel = PlayersDataModel.shared
     }
     
     // MARK: - Lifecycle methods
@@ -67,6 +75,9 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .teams
         pickerView.reloadAllComponents()
+        pickerView.selectRow(teams.safeFirstIndex(of: selectedTeam),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -74,6 +85,9 @@ final class SearchViewController: UIViewController {
         view.endEditing(true)
         pickerViewContentType = .positions
         pickerView.reloadAllComponents()
+        pickerView.selectRow(positions.safeFirstIndex(of: selectedPosition),
+                             inComponent: 0,
+                             animated: false)
         showPickerView()
     }
     
@@ -84,18 +98,16 @@ final class SearchViewController: UIViewController {
             int16Age = Int16(age)
         }
         
-        playersDataModel.predicateDidChanged(
-            name: nameTextField.text,
-            age: int16Age,
-            ageOperator: ageOperator,
-            team: selectedTeam,
-            position: selectedPosition
+        let searchData: SearchData = (
+            name: nameTextField.text, age: int16Age, ageOperator: ageOperator,
+            team: selectedTeam, position: selectedPosition
         )
+        playersDataModel.searchDidUpdated(to: searchData)
         dismiss(animated: true)
     }
     
     @IBAction func resetButtonTapped() {
-        playersDataModel.resetPredicate()
+        playersDataModel.resetSearchData()
         dismiss(animated: true)
     }
     
@@ -136,6 +148,10 @@ final class SearchViewController: UIViewController {
         let dismissByTapGR = UITapGestureRecognizer(target: self,
                                                     action: #selector(dismissByTapAction))
         backEnvironmentView.addGestureRecognizer(dismissByTapGR)
+        
+        if let searchData = playersDataModel.getSearchData() {
+            fillView(for: searchData)
+        }
         updateStartSearchButtonState()
     }
     
@@ -167,6 +183,27 @@ final class SearchViewController: UIViewController {
         stackView.appear()
         pickerView.disappear()
     }
+    
+    private func fillView(for searchData: SearchData) {
+        nameTextField.text = searchData.name
+        if let ageData = searchData.age {
+            ageTextField.text = String(ageData)
+        }
+        switch searchData.ageOperator {
+        case .lessOrEqual:
+            ageOperatorSegmentedControl.selectedSegmentIndex = 0
+        case .equal:
+            ageOperatorSegmentedControl.selectedSegmentIndex = 1
+        case .moreOrEqual:
+            ageOperatorSegmentedControl.selectedSegmentIndex = 2
+        }
+        if let selectedTeam = searchData.team {
+            self.selectedTeam = selectedTeam
+        }
+        if let selectedPosition = searchData.position {
+            self.selectedPosition = selectedPosition
+        }
+    }
 }
 
 // MARK: - Picker view data source
@@ -193,10 +230,8 @@ extension SearchViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         if pickerViewContentType == .teams {
-            teamSelectButton.setTitle(teams[row], for: .normal)
             selectedTeam = teams[row]
         } else {
-            positionSelectButton.setTitle(positions[row], for: .normal)
             selectedPosition = positions[row]
         }
         hidePickerView()

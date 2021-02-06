@@ -153,14 +153,14 @@ extension MainViewController {
         
         guard let playerVC = segue.destination as? PlayerViewController else { return }
         
+        let player = sender as? Player
+        playerVC.viewModel = PlayerViewModel(player: player)
+        
         if segue.identifier == "toNewPlayer" {
             playerVC.title = "New player"
         } else if segue.identifier == "toEditPlayer" {
             playerVC.title = "Edit player"
-            if let editingPlayer = sender as? Player {
-                playerVC.editingPlayer = editingPlayer
-            }
-        }
+        } 
     }
 }
 

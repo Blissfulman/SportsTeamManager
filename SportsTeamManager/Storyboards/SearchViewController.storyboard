@@ -56,7 +56,7 @@
                                                             <segment title="&gt;="/>
                                                         </segments>
                                                         <connections>
-                                                            <action selector="ageOperatorValueChanged:" destination="EsR-dr-8fF" eventType="valueChanged" id="RQb-j7-jww"/>
+                                                            <action selector="ageOperatorSegmentedControlValueChanged:" destination="EsR-dr-8fF" eventType="valueChanged" id="RQb-j7-jww"/>
                                                         </connections>
                                                     </segmentedControl>
                                                 </subviews>

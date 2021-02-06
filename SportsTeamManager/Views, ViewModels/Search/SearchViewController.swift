@@ -71,7 +71,7 @@ final class SearchViewController: UIViewController {
         updateStartSearchButtonState()
     }
     
-    @IBAction func ageOperatorValueChanged(_ sender: UISegmentedControl) {
+    @IBAction func ageOperatorSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
     }
     

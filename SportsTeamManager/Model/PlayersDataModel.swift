@@ -8,7 +8,7 @@
 import CoreData
 
 typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
-                        team: String, position: String, inPlay: Bool, photo: Data?)
+                        team: String, position: String, isInPlay: Bool, photo: Data?)
 typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorState,
                         team: String?, position: String?)
 
@@ -115,7 +115,7 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         player.age = playerData.age
         player.team = teamOfPlayer
         player.position = playerData.position
-        player.inPlay = playerData.inPlay
+        player.inPlay = playerData.isInPlay
         player.photo = playerData.photo
         
         dataManager.save(context: context)

@@ -26,11 +26,13 @@ final class PlayerCell: UITableViewCell {
     
     var viewModel: PlayerCellViewModelProtocol! {
         didSet {
-            playerPhotoImageView.image = UIImage(data: viewModel.photo ?? Data())
             playerNumberLabel.text = viewModel.number
             playerFullNameLabel.text = viewModel.name
             playerStateLabel.text = viewModel.state
             playerStateLabel.textColor = viewModel.isInPlay ? Color.inPlay : Color.bench
+            if let photoData = viewModel.photo {
+                playerPhotoImageView.image = UIImage(data: photoData)
+            }
             playerTeamLabel.text = viewModel.team
             playerNationalityLabel.text = viewModel.nationality
             playerPositionLabel.text = viewModel.position
@@ -41,10 +43,10 @@ final class PlayerCell: UITableViewCell {
     // MARK: - Lifecycle methods
     
     override func prepareForReuse() {
-        playerPhotoImageView.image = nil
         playerNumberLabel.text = nil
         playerFullNameLabel.text = nil
         playerStateLabel.text = nil
+        playerPhotoImageView.image = nil
         playerTeamLabel.text = nil
         playerNationalityLabel.text = nil
         playerPositionLabel.text = nil

@@ -28,7 +28,7 @@ final class PlayerCellViewModel: PlayerCellViewModelProtocol {
     // MARK: - Properties
     
     var photo: Data? {
-        player.photo
+        player.photo ?? DataConstants.defaultPhoto
     }
     
     var number: String? {

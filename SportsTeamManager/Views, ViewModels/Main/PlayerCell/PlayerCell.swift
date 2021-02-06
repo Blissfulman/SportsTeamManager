@@ -30,9 +30,7 @@ final class PlayerCell: UITableViewCell {
             playerFullNameLabel.text = viewModel.name
             playerStateLabel.text = viewModel.state
             playerStateLabel.textColor = viewModel.isInPlay ? Color.inPlay : Color.bench
-            if let photoData = viewModel.photo {
-                playerPhotoImageView.image = UIImage(data: photoData)
-            }
+            playerPhotoImageView.image = UIImage(data: viewModel.photo ?? Data())
             playerTeamLabel.text = viewModel.team
             playerNationalityLabel.text = viewModel.nationality
             playerPositionLabel.text = viewModel.position

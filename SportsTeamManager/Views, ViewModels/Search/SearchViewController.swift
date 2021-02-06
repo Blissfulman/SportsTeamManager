@@ -38,6 +38,21 @@ final class SearchViewController: UIViewController {
     
     // MARK: - Actions
     
+    @IBAction func nameTextFieldEditingChanged() {
+        viewModel.name = nameTextField.text
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.age = sender.text
+        sender.text = viewModel.age
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction func ageOperatorSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
+    }
+    
     @IBAction func selectionButtonsTapped(_ sender: UIButton) {
         view.endEditing(true)
         viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
@@ -58,21 +73,6 @@ final class SearchViewController: UIViewController {
     
     @objc private func dismissByTapAction() {
         dismiss(animated: true)
-    }
-    
-    @IBAction func nameTextFieldEditingChanged() {
-        viewModel.name = nameTextField.text
-        updateStartSearchButtonState()
-    }
-    
-    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.age = sender.text
-        sender.text = viewModel.age
-        updateStartSearchButtonState()
-    }
-    
-    @IBAction func ageOperatorSegmentedControlValueChanged(_ sender: UISegmentedControl) {
-        viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

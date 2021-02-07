@@ -101,7 +101,6 @@ extension MainViewController: UITableViewDelegate {
         
         let cellPlayer = viewModel.getPlayer(at: indexPath)
         let isInPlayPlayer = cellPlayer?.inPlay ?? true
-        print(isInPlayPlayer)
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
@@ -111,23 +110,24 @@ extension MainViewController: UITableViewDelegate {
             self.viewModel.removePlayer(at: indexPath)
         }
         
-        let replacementAction = UIContextualAction(style: .destructive,
+        let replacementAction = UIContextualAction(style: .normal,
                                                    title: isInPlayPlayer ? "To bench" : "To play") {
-            [weak self] _, _, _  in
+            [weak self] _, _, completion in
             
             guard let self = self else { return }
             
             self.viewModel.replacePlayer(at: indexPath)
+            completion(true)
         }
         replacementAction.backgroundColor = isInPlayPlayer ? Color.bench : Color.inPlay
         
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
-            [weak self] _, _, _  in
+            [weak self] _, _, completion in
             
             guard let self = self else { return }
             
             self.performSegue(withIdentifier: SegueID.toEditPlayer, sender: cellPlayer)
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            completion(true)
         }
         editAction.backgroundColor = .systemBlue
         
@@ -162,6 +162,7 @@ extension MainViewController {
 extension MainViewController: MainViewModelDelegate {
     
     func dataDidChange(type: NSFetchedResultsChangeType?) {
+        // Если изменение данных не было связано с изменениями отдельных ячеек, то требуется перегрузить всю таблицу
         if type == nil {
             tableView.reloadData()
             updateTableViewVisibility()
@@ -188,12 +189,10 @@ extension MainViewController: MainViewModelDelegate {
         case .insert:
             if let indexPath = newIndexPath {
                 tableView.insertRows(at: [indexPath], with: .automatic)
-                updateTableViewVisibility()
             }
         case .delete:
             if let indexPath = indexPath {
                 tableView.deleteRows(at: [indexPath], with: .automatic)
-                updateTableViewVisibility()
             }
         case .update:
             if let indexPath = indexPath {
@@ -201,7 +200,6 @@ extension MainViewController: MainViewModelDelegate {
                 if let player = viewModel.getPlayer(at: indexPath) {
                     cell.viewModel = PlayerCellViewModel(player: player)
                 }
-                updateTableViewVisibility()
             }
         case .move:
             if let indexPath = indexPath {
@@ -210,10 +208,10 @@ extension MainViewController: MainViewModelDelegate {
             if let indexPath = newIndexPath {
                 tableView.insertRows(at: [indexPath], with: .automatic)
             }
-            updateTableViewVisibility()
         @unknown default:
             fatalError(debugDescription)
         }
+        updateTableViewVisibility()
     }
     
     func didChangeContent() {

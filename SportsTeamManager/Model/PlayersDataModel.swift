@@ -5,7 +5,7 @@
 //  Created by Evgeny Novgorodov on 24.01.2021.
 //
 
-//import Foundation
+import Foundation
 import CoreData.NSFetchedResultsController
 
 typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,

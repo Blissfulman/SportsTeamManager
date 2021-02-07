@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - Protocols
 
-protocol PlayerCellViewModelProtocol {
+protocol PlayerCellViewModelProtocol: AnyObject {
     var photo: Data? { get }
     var number: String? { get }
     var name: String? { get }

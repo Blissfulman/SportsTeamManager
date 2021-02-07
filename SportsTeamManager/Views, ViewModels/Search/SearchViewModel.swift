@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: Protocols
 
-protocol SearchViewModelProtocol {
+protocol SearchViewModelProtocol: AnyObject {
     var name: String? { get set }
     var age: String? { get set }
     var ageOperatorSelectedSegmentIndex: Int { get set }
@@ -115,7 +115,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     private var searchData: SearchData
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
-    private let playersDataModel = PlayersDataModel.shared
+    private let playersDataModel: PlayersDataModelProtocol = PlayersDataModel.shared
     
     // MARK: - Initializers
     

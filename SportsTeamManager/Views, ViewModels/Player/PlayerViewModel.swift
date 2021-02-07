@@ -13,7 +13,7 @@ typealias PlayerDataOptional = (name: String?, number: Int16?, nationality: Stri
 
 // MARK: Protocols
 
-protocol PlayerViewModelProtocol {
+protocol PlayerViewModelProtocol: AnyObject {
     var number: String? { get set }
     var photo: Data? { get set }
     var name: String? { get set }
@@ -137,7 +137,7 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     private var playerData: PlayerDataOptional
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
-    private let playersDataModel = PlayersDataModel.shared
+    private let playersDataModel: PlayersDataModelProtocol = PlayersDataModel.shared
     
     // MARK: - Initializers
     

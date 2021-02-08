@@ -24,34 +24,30 @@ final class PlayerCell: UITableViewCell {
     
     static let identifier = String(describing: PlayerCell.self)
     
+    var viewModel: PlayerCellViewModelProtocol! {
+        didSet {
+            playerNumberLabel.text = viewModel.number
+            playerFullNameLabel.text = viewModel.name
+            playerStateLabel.text = viewModel.state
+            playerStateLabel.textColor = viewModel.isInPlay ? Color.inPlay : Color.bench
+            playerPhotoImageView.image = UIImage(data: viewModel.photo ?? Data())
+            playerTeamLabel.text = viewModel.team
+            playerNationalityLabel.text = viewModel.nationality
+            playerPositionLabel.text = viewModel.position
+            playerAgeLabel.text = viewModel.age
+        }
+    }
+    
     // MARK: - Lifecycle methods
     
     override func prepareForReuse() {
-        playerPhotoImageView.image = nil
         playerNumberLabel.text = nil
         playerFullNameLabel.text = nil
         playerStateLabel.text = nil
+        playerPhotoImageView.image = nil
         playerTeamLabel.text = nil
         playerNationalityLabel.text = nil
         playerPositionLabel.text = nil
         playerAgeLabel.text = nil
-    }
-    
-    // MARK: - Public methods
-    
-    func configure(_ player: Player) {
-        if let photo = UIImage(data: player.photo ?? Data()) {
-            playerPhotoImageView.image = photo
-        }
-        playerNumberLabel.text = "\(player.number)"
-        playerFullNameLabel.text = player.fullName
-        playerStateLabel.text = player.inPlay
-            ? FilterState.inPlay.rawValue
-            : FilterState.bench.rawValue
-        playerStateLabel.textColor = player.inPlay ? Color.inPlay : Color.bench
-        playerTeamLabel.text = player.team?.name
-        playerNationalityLabel.text = player.nationality
-        playerPositionLabel.text = player.position
-        playerAgeLabel.text = "\(player.age)"
     }
 }

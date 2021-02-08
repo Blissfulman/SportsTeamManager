@@ -23,7 +23,6 @@ protocol MainViewModelProtocol: AnyObject {
     var stateSelectedSegmentIndex: Int { get set }
     var isHiddenTableView: Bool { get }
     var numberOfSections: Int { get }
-    var viewModelDidChange: (() -> Void)? { get set }
     
     init()
     
@@ -70,8 +69,6 @@ final class MainViewModel: MainViewModelProtocol {
     var numberOfSections: Int {
         playersDataModel.numberOfSections
     }
-    
-    var viewModelDidChange: (() -> Void)?
     
     private var filterState: FilterState = .all {
         didSet {

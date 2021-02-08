@@ -270,7 +270,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="withDefaultPadTextFieldsEditingChanged" destination="gzH-Fa-C3h" eventType="editingChanged" id="5mH-vT-6ZG"/>
+                                            <action selector="nameTextFieldEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="Qmz-sa-Z1T"/>
                                             <outlet property="delegate" destination="gzH-Fa-C3h" id="QHB-q9-XFo"/>
                                         </connections>
                                     </textField>
@@ -279,7 +279,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                         <connections>
-                                            <action selector="withDefaultPadTextFieldsEditingChanged" destination="gzH-Fa-C3h" eventType="editingChanged" id="wQR-bC-EAD"/>
+                                            <action selector="nationalityTextFieldEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="FUj-Y8-tr2"/>
                                             <outlet property="delegate" destination="gzH-Fa-C3h" id="TSt-Am-JM2"/>
                                         </connections>
                                     </textField>
@@ -288,7 +288,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         <connections>
-                                            <action selector="withNumberPadTextFieldsEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="3LJ-HT-LyQ"/>
+                                            <action selector="ageTextFieldEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="fVU-Xj-eBd"/>
                                             <outlet property="delegate" destination="gzH-Fa-C3h" id="7AU-ml-8xn"/>
                                         </connections>
                                     </textField>
@@ -308,7 +308,7 @@
                                                     <color key="titleColor" name="main"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="teamSelectButtonTapped" destination="gzH-Fa-C3h" eventType="touchUpInside" id="5Np-G4-KC7"/>
+                                                    <action selector="selectionButtonsTapped:" destination="gzH-Fa-C3h" eventType="touchUpInside" id="Dk4-95-Bbw"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SgL-BU-OYg">
@@ -335,7 +335,7 @@
                                                     <color key="titleColor" name="main"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="positionSelectButtonTapped" destination="gzH-Fa-C3h" eventType="touchUpInside" id="cfI-nZ-NoZ"/>
+                                                    <action selector="selectionButtonsTapped:" destination="gzH-Fa-C3h" eventType="touchUpInside" id="egh-kW-ObF"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zVf-f1-nwS">
@@ -398,7 +398,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="next"/>
                                 <connections>
-                                    <action selector="withNumberPadTextFieldsEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="cHX-jM-qgK"/>
+                                    <action selector="numberTextFieldEditingChanged:" destination="gzH-Fa-C3h" eventType="editingChanged" id="aGw-pG-2jR"/>
                                     <outlet property="delegate" destination="gzH-Fa-C3h" id="DUz-2T-KfE"/>
                                 </connections>
                             </textField>
@@ -409,6 +409,9 @@
                                     <segment title="In play"/>
                                     <segment title="Bench"/>
                                 </segments>
+                                <connections>
+                                    <action selector="stateSegmentedControlValueChanged:" destination="gzH-Fa-C3h" eventType="valueChanged" id="wty-U7-4IZ"/>
+                                </connections>
                             </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2Se-6U-hbZ"/>
@@ -473,7 +476,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OHK-JG-jhm"/>
+        <segue reference="2Y5-CT-gNq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="some.player" width="500" height="500"/>

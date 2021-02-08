@@ -5,17 +5,18 @@
 //  Created by Evgeny Novgorodov on 24.01.2021.
 //
 
-import CoreData
+import Foundation
+import CoreData.NSFetchedResultsController
 
 typealias PlayerData = (name: String, number: Int16, nationality: String, age: Int16,
-                        team: String, position: String, inPlay: Bool, photo: Data?)
+                        team: String, position: String, isInPlay: Bool, photo: Data?)
 typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorState,
                         team: String?, position: String?)
 
 // MARK: - Protocols
 
 protocol PlayersDataModelDelegate: AnyObject {
-    func dataDidChange()
+    func dataDidChange(type: NSFetchedResultsChangeType?)
     func willChangeContent()
     func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int)
     func didChangeObject(type: NSFetchedResultsChangeType, indexPath: IndexPath?, newIndexPath: IndexPath?)
@@ -28,14 +29,14 @@ protocol PlayersDataModelProtocol {
     var numberOfSections: Int { get }
     
     func getPlayer(at indexPath: IndexPath) -> Player?
-    func getSectionTitle(for section: Int) -> String?
+    func getTitle(atSection section: Int) -> String?
     func getNumberOfPlayers(atSection section: Int) -> Int
     func removePlayer(at indexPath: IndexPath)
     func createPlayer(_ playerData: PlayerData)
     func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData)
-    func replacePlayer(_ player: Player, isInPlay: Bool)
-    func filterStateDidChanged(to filterState: FilterState)
-    func searchDidUpdated(to searchData: SearchData)
+    func replacePlayer(at indexPath: IndexPath)
+    func filterStateDidChange(to filterState: FilterState)
+    func searchDidUpdate(to searchData: SearchData)
     func resetSearchData()
     func getSearchData() -> SearchData?
     func saveData()
@@ -68,11 +69,13 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     private var filterState: FilterState = .all
     private var searchData: SearchData?
     
+    private let context: NSManagedObjectContext
     private let dataManager = CoreDataManager(modelName: "SportsTeam")
     
     // MARK: - Initializers
     
     private override init() {
+        context = dataManager.getContext()
         super.init()
         updateData()
     }
@@ -83,7 +86,7 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         fetchedResultsController.object(at: indexPath)
     }
     
-    func getSectionTitle(for section: Int) -> String? {
+    func getTitle(atSection section: Int) -> String? {
         sections[safeIndex: section]
     }
     
@@ -93,8 +96,8 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     }
     
     func removePlayer(at indexPath: IndexPath) {
-        if let deletingPlayer = getPlayer(at: indexPath) {
-            dataManager.delete(object: deletingPlayer)
+        if let player = getPlayer(at: indexPath) {
+            dataManager.delete(object: player)
         }
     }
     
@@ -104,7 +107,6 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     }
     
     func updatePlayer(_ player: Player, withPlayerData playerData: PlayerData) {
-        let context = dataManager.getContext()
         let teamOfPlayer = dataManager.createObject(from: Team.self)
         
         teamOfPlayer.name = playerData.team
@@ -115,26 +117,27 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         player.age = playerData.age
         player.team = teamOfPlayer
         player.position = playerData.position
-        player.inPlay = playerData.inPlay
+        player.inPlay = playerData.isInPlay
         player.photo = playerData.photo
         
         dataManager.save(context: context)
-        updateData()
+        updateData(type: .update)
     }
     
-    func replacePlayer(_ player: Player, isInPlay: Bool) {
-        let context = dataManager.getContext()
-        player.inPlay = !isInPlay
-        dataManager.save(context: context)
-        updateData()
+    func replacePlayer(at indexPath: IndexPath) {
+        if let player = getPlayer(at: indexPath) {
+            player.inPlay = !player.inPlay
+            dataManager.save(context: context)
+            updateData(type: .update)
+        }
     }
     
-    func filterStateDidChanged(to filterState: FilterState) {
+    func filterStateDidChange(to filterState: FilterState) {
         self.filterState = filterState
         updateData()
     }
     
-    func searchDidUpdated(to searchData: SearchData) {
+    func searchDidUpdate(to searchData: SearchData) {
         self.searchData = searchData
         updateData()
     }
@@ -149,13 +152,12 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     }
     
     func saveData() {
-        let context = dataManager.getContext()
         dataManager.save(context: context)
     }
     
     // MARK: - Private methods
     
-    private func updateData() {
+    private func updateData(type: NSFetchedResultsChangeType? = nil) {
         let predicate = makeCompoundPredicate()
         
         fetchedResultsController = dataManager.fetchDataWithController(
@@ -163,7 +165,7 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         )
         
         fetchedResultsController.delegate = self
-        delegate?.dataDidChange()
+        delegate?.dataDidChange(type: type)
     }
     
     private func makeCompoundPredicate() -> NSCompoundPredicate {

@@ -55,6 +55,9 @@
                                                             <segment title="="/>
                                                             <segment title="&gt;="/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="ageOperatorSegmentedControlValueChanged:" destination="EsR-dr-8fF" eventType="valueChanged" id="RQb-j7-jww"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                 </subviews>
                                             </stackView>
@@ -74,7 +77,7 @@
                                                             <color key="titleColor" name="main"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="teamSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="Q8l-W7-WbR"/>
+                                                            <action selector="selectionButtonsTapped:" destination="EsR-dr-8fF" eventType="touchUpInside" id="TwW-d7-11I"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qHa-jg-xeQ">
@@ -101,7 +104,7 @@
                                                             <color key="titleColor" name="main"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="positionSelectButtonTapped" destination="EsR-dr-8fF" eventType="touchUpInside" id="mrh-0c-QG0"/>
+                                                            <action selector="selectionButtonsTapped:" destination="EsR-dr-8fF" eventType="touchUpInside" id="dPA-r4-kZD"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uu-PP-ped">

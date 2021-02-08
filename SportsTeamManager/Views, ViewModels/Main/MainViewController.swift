@@ -47,7 +47,7 @@ final class MainViewController: UIViewController {
         
         searchViewController.modalTransitionStyle = .crossDissolve
         searchViewController.modalPresentationStyle = .overCurrentContext
-        searchViewController.viewModel = SearchViewModel(searchData: viewModel.getSearchData())
+        searchViewController.viewModel = viewModel.getSearchViewModel()
         
         present(searchViewController, animated: true, completion: nil)
     }
@@ -86,9 +86,7 @@ extension MainViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if let player = viewModel.getPlayer(at: indexPath) {
-            cell.viewModel = PlayerCellViewModel(player: player)
-        }
+        cell.viewModel = viewModel.getPlayerCellViewModel(at: indexPath)
         return cell
     }
 }
@@ -99,9 +97,6 @@ extension MainViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
-        let cellPlayer = viewModel.getPlayer(at: indexPath)
-        let isInPlayPlayer = cellPlayer?.inPlay ?? true
-        
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, _  in
             
@@ -109,6 +104,8 @@ extension MainViewController: UITableViewDelegate {
             
             self.viewModel.removePlayer(at: indexPath)
         }
+        
+        let isInPlayPlayer = viewModel.getPlayerStatus(at: indexPath)
         
         let replacementAction = UIContextualAction(style: .normal,
                                                    title: isInPlayPlayer ? "To bench" : "To play") {
@@ -126,7 +123,7 @@ extension MainViewController: UITableViewDelegate {
             
             guard let self = self else { return }
             
-            self.performSegue(withIdentifier: SegueID.toEditPlayer, sender: cellPlayer)
+            self.performSegue(withIdentifier: SegueID.toEditPlayer, sender: indexPath)
             completion(true)
         }
         editAction.backgroundColor = .systemBlue
@@ -146,8 +143,7 @@ extension MainViewController {
         
         guard let playerVC = segue.destination as? PlayerViewController else { return }
         
-        let player = sender as? Player
-        playerVC.viewModel = PlayerViewModel(player: player)
+        playerVC.viewModel = viewModel.getPlayerViewModel(at: sender as? IndexPath)
         
         if segue.identifier == SegueID.toNewPlayer {
             playerVC.title = "New player"
@@ -197,9 +193,7 @@ extension MainViewController: MainViewModelDelegate {
         case .update:
             if let indexPath = indexPath {
                 let cell = tableView.cellForRow(at: indexPath) as! PlayerCell
-                if let player = viewModel.getPlayer(at: indexPath) {
-                    cell.viewModel = PlayerCellViewModel(player: player)
-                }
+                cell.viewModel = viewModel.getPlayerCellViewModel(at: indexPath)
             }
         case .move:
             if let indexPath = indexPath {

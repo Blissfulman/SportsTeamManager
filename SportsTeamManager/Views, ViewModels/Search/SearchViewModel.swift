@@ -119,7 +119,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Initializers
     
-    required init(searchData: SearchData?) {
+    required init(searchData: SearchData? = nil) {
         if let searchData = searchData {
             self.searchData = searchData
         } else {

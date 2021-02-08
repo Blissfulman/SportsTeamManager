@@ -26,12 +26,14 @@ protocol MainViewModelProtocol: AnyObject {
     
     init()
     
-    func getSearchData() -> SearchData?
+    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModel?
+    func getSearchViewModel() -> SearchViewModel
+    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModel
     func getTitle(atSection section: Int) -> String?
     func getNumberOfPlayers(atSection section: Int) -> Int
-    func getPlayer(at indexPath: IndexPath) -> Player?
     func removePlayer(at indexPath: IndexPath)
     func replacePlayer(at indexPath: IndexPath)
+    func getPlayerStatus(at indexPath: IndexPath) -> Bool
 }
 
 final class MainViewModel: MainViewModelProtocol {
@@ -85,8 +87,24 @@ final class MainViewModel: MainViewModelProtocol {
     
     // MARK: - Public methods
     
-    func getSearchData() -> SearchData? {
-        playersDataModel.getSearchData()
+    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModel? {
+        guard let player = playersDataModel.getPlayer(at: indexPath) else { return nil }
+        return PlayerCellViewModel(player: player)
+    }
+    
+    func getSearchViewModel() -> SearchViewModel {
+        guard let searchData = playersDataModel.getSearchData() else {
+            return SearchViewModel()
+        }
+        return SearchViewModel(searchData: searchData)
+    }
+    
+    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModel {
+        guard let indexPath = indexPath,
+              let player = playersDataModel.getPlayer(at: indexPath) else {
+            return PlayerViewModel()
+        }
+        return PlayerViewModel(player: player)
     }
     
     func getTitle(atSection section: Int) -> String? {
@@ -97,16 +115,17 @@ final class MainViewModel: MainViewModelProtocol {
         playersDataModel.getNumberOfPlayers(atSection: section)
     }
     
-    func getPlayer(at indexPath: IndexPath) -> Player? {
-        playersDataModel.getPlayer(at: indexPath)
-    }
-    
     func removePlayer(at indexPath: IndexPath) {
         playersDataModel.removePlayer(at: indexPath)
     }
     
     func replacePlayer(at indexPath: IndexPath) {
         playersDataModel.replacePlayer(at: indexPath)
+    }
+    
+    func getPlayerStatus(at indexPath: IndexPath) -> Bool {
+        guard let player = playersDataModel.getPlayer(at: indexPath) else { return true }
+        return player.inPlay
     }
 }
 

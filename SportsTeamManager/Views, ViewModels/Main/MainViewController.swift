@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+import CoreData.NSFetchedResultsController
 
 final class MainViewController: UIViewController {
     
@@ -98,11 +98,10 @@ extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-            [weak self] _, _, _  in
+            [weak self] _, _, completion in
             
-            guard let self = self else { return }
-            
-            self.viewModel.removePlayer(at: indexPath)
+            self?.viewModel.removePlayer(at: indexPath)
+            completion(true)
         }
         
         let isInPlayPlayer = viewModel.getPlayerStatus(at: indexPath)
@@ -111,9 +110,7 @@ extension MainViewController: UITableViewDelegate {
                                                    title: isInPlayPlayer ? "To bench" : "To play") {
             [weak self] _, _, completion in
             
-            guard let self = self else { return }
-            
-            self.viewModel.replacePlayer(at: indexPath)
+            self?.viewModel.replacePlayer(at: indexPath)
             completion(true)
         }
         replacementAction.backgroundColor = isInPlayPlayer ? Color.bench : Color.inPlay
@@ -121,9 +118,7 @@ extension MainViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal, title: "Edit") {
             [weak self] _, _, completion in
             
-            guard let self = self else { return }
-            
-            self.performSegue(withIdentifier: SegueID.toEditPlayer, sender: indexPath)
+            self?.performSegue(withIdentifier: SegueID.toEditPlayer, sender: indexPath)
             completion(true)
         }
         editAction.backgroundColor = .systemBlue
@@ -158,7 +153,7 @@ extension MainViewController {
 extension MainViewController: MainViewModelDelegate {
     
     func dataDidChange(type: NSFetchedResultsChangeType?) {
-        // Если изменение данных не было связано с изменениями отдельных ячеек, то требуется перегрузить всю таблицу
+        // Если изменение данных не было связано с изменениями отдельных ячеек, то требуется перезагрузить всю таблицу
         if type == nil {
             tableView.reloadData()
             updateTableViewVisibility()

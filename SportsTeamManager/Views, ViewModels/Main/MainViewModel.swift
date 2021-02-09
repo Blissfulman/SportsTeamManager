@@ -26,9 +26,9 @@ protocol MainViewModelProtocol: AnyObject {
     
     init()
     
-    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModel?
-    func getSearchViewModel() -> SearchViewModel
-    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModel
+    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModelProtocol?
+    func getSearchViewModel() -> SearchViewModelProtocol
+    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModelProtocol
     func getTitle(atSection section: Int) -> String?
     func getNumberOfPlayers(atSection section: Int) -> Int
     func removePlayer(at indexPath: IndexPath)
@@ -87,19 +87,19 @@ final class MainViewModel: MainViewModelProtocol {
     
     // MARK: - Public methods
     
-    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModel? {
+    func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModelProtocol? {
         guard let player = playersDataModel.getPlayer(at: indexPath) else { return nil }
         return PlayerCellViewModel(player: player)
     }
     
-    func getSearchViewModel() -> SearchViewModel {
+    func getSearchViewModel() -> SearchViewModelProtocol {
         guard let searchData = playersDataModel.getSearchData() else {
             return SearchViewModel()
         }
         return SearchViewModel(searchData: searchData)
     }
     
-    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModel {
+    func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModelProtocol {
         guard let indexPath = indexPath,
               let player = playersDataModel.getPlayer(at: indexPath) else {
             return PlayerViewModel()

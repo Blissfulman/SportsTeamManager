@@ -7,10 +7,6 @@
 
 import Foundation
 
-// Для удобства отслеживания введённых данных используются опциональные свойства там, где данные могут быть не введены
-typealias PlayerDataOptional = (name: String?, number: Int16?, nationality: String?, age: Int16?,
-                                team: String?, position: String?, isInPlay: Bool, photo: Data?)
-
 // MARK: Protocols
 
 protocol PlayerViewModelProtocol: AnyObject {
@@ -36,6 +32,12 @@ protocol PlayerViewModelProtocol: AnyObject {
 }
 
 final class PlayerViewModel: PlayerViewModelProtocol {
+    
+    // MARK: Nested types
+    
+    // Для удобства отслеживания введённых данных используются опциональные свойства там, где данные могут быть не введены
+    typealias PlayerDataOptional = (name: String?, number: Int16?, nationality: String?, age: Int16?,
+                                    team: String?, position: String?, isInPlay: Bool, photo: Data?)
     
     // MARK: - Properties
     

@@ -167,9 +167,9 @@ extension MainViewController: MainViewModelDelegate {
     func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int) {
         switch type {
         case .insert:
-            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .automatic)
+            tableView.insertSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
         case .delete:
-            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .automatic)
+            tableView.deleteSections(NSIndexSet(index: sectionIndex) as IndexSet, with: .fade)
         default:
             return
         }
@@ -179,11 +179,11 @@ extension MainViewController: MainViewModelDelegate {
         switch type {
         case .insert:
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [indexPath], with: .fade)
             }
         case .delete:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         case .update:
             if let indexPath = indexPath {
@@ -192,10 +192,10 @@ extension MainViewController: MainViewModelDelegate {
             }
         case .move:
             if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                tableView.deleteRows(at: [indexPath], with: .fade)
             }
             if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .automatic)
+                tableView.insertRows(at: [indexPath], with: .fade)
             }
         @unknown default:
             fatalError(debugDescription)

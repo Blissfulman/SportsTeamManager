@@ -36,45 +36,6 @@ final class SearchViewController: UIViewController {
         setupUI()
     }
     
-    // MARK: - Actions
-    
-    @IBAction func nameTextFieldEditingChanged() {
-        viewModel.name = nameTextField.text
-        updateStartSearchButtonState()
-    }
-    
-    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.age = sender.text
-        sender.text = viewModel.age
-        updateStartSearchButtonState()
-    }
-    
-    @IBAction func ageOperatorSegmentedControlValueChanged(_ sender: UISegmentedControl) {
-        viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
-    }
-    
-    @IBAction func selectionButtonsTapped(_ sender: UIButton) {
-        view.endEditing(true)
-        viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
-        pickerView.reloadAllComponents()
-        pickerView.selectRow(viewModel.pickerViewSelectedIndex, inComponent: 0, animated: false)
-        showPickerView()
-    }
-    
-    @IBAction func startSearchButtonTapped() {
-        viewModel.startSearch()
-        dismiss(animated: true)
-    }
-    
-    @IBAction func resetButtonTapped() {
-        viewModel.resetSearchData()
-        dismiss(animated: true)
-    }
-    
-    @objc private func dismissByTapAction() {
-        dismiss(animated: true)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
@@ -83,6 +44,45 @@ final class SearchViewController: UIViewController {
         if !pickerView.isHidden {
             hidePickerView()
         }
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction private func nameTextFieldEditingChanged() {
+        viewModel.name = nameTextField.text
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction private func ageTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.age = sender.text
+        sender.text = viewModel.age
+        updateStartSearchButtonState()
+    }
+    
+    @IBAction private func ageOperatorSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        viewModel.ageOperatorSelectedSegmentIndex = sender.selectedSegmentIndex
+    }
+    
+    @IBAction private func selectionButtonsTapped(_ sender: UIButton) {
+        view.endEditing(true)
+        viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
+        pickerView.reloadAllComponents()
+        pickerView.selectRow(viewModel.pickerViewSelectedIndex, inComponent: 0, animated: false)
+        showPickerView()
+    }
+    
+    @IBAction private func startSearchButtonTapped() {
+        viewModel.startSearch()
+        dismiss(animated: true)
+    }
+    
+    @IBAction private func resetButtonTapped() {
+        viewModel.resetSearchData()
+        dismiss(animated: true)
+    }
+    
+    @objc private func dismissByTapAction() {
+        dismiss(animated: true)
     }
     
     // MARK: - Setup UI

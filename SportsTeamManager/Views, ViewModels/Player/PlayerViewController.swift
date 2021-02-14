@@ -39,52 +39,6 @@ final class PlayerViewController: UIViewController {
         setupUI()
     }
     
-    // MARK: Actions
-    
-    @IBAction func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
-        viewModel.stateSelectedSegmentIndex = sender.selectedSegmentIndex
-    }
-    
-    @IBAction func uploadPhotoButtonTapped() {
-        view.endEditing(true)
-        present(imagePickerController, animated: true)
-    }
-    
-    @IBAction func numberTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.number = sender.text
-        sender.text = viewModel.number
-        updateSaveButtonState()
-    }
-    
-    @IBAction func nameTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.name = nameTextField.text
-        updateSaveButtonState()
-    }
-    
-    @IBAction func nationalityTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.nationality = nationalityTextField.text
-        updateSaveButtonState()
-    }
-    
-    @IBAction func ageTextFieldEditingChanged(_ sender: UITextField) {
-        viewModel.age = sender.text
-        sender.text = viewModel.age
-        updateSaveButtonState()
-    }
-    
-    @IBAction func selectionButtonsTapped(_ sender: UIButton) {
-        view.endEditing(true)
-        viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
-        pickerView.reloadAllComponents()
-        pickerView.selectRow(viewModel.pickerViewSelectedIndex, inComponent: 0, animated: false)
-        showPickerView()
-    }
-    
-    @IBAction func saveButtonTapped() {
-        viewModel.save()
-        navigationController?.popViewController(animated: true)
-    }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
@@ -93,6 +47,52 @@ final class PlayerViewController: UIViewController {
         if !pickerView.isHidden {
             hidePickerView()
         }
+    }
+    
+    // MARK: Actions
+    
+    @IBAction private func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+        viewModel.stateSelectedSegmentIndex = sender.selectedSegmentIndex
+    }
+    
+    @IBAction private func uploadPhotoButtonTapped() {
+        view.endEditing(true)
+        present(imagePickerController, animated: true)
+    }
+    
+    @IBAction private func numberTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.number = sender.text
+        sender.text = viewModel.number
+        updateSaveButtonState()
+    }
+    
+    @IBAction private func nameTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.name = nameTextField.text
+        updateSaveButtonState()
+    }
+    
+    @IBAction private func nationalityTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.nationality = nationalityTextField.text
+        updateSaveButtonState()
+    }
+    
+    @IBAction private func ageTextFieldEditingChanged(_ sender: UITextField) {
+        viewModel.age = sender.text
+        sender.text = viewModel.age
+        updateSaveButtonState()
+    }
+    
+    @IBAction private func selectionButtonsTapped(_ sender: UIButton) {
+        view.endEditing(true)
+        viewModel.pickerViewContentType = sender == teamSelectButton ? .teams : .positions
+        pickerView.reloadAllComponents()
+        pickerView.selectRow(viewModel.pickerViewSelectedIndex, inComponent: 0, animated: false)
+        showPickerView()
+    }
+    
+    @IBAction private func saveButtonTapped() {
+        viewModel.save()
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Setup UI

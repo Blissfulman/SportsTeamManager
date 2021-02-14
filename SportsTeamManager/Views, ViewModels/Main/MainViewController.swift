@@ -38,7 +38,7 @@ final class MainViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func searchBarButtonTapped(_ sender: UIBarButtonItem) {
+    @IBAction private func searchBarButtonTapped(_ sender: UIBarButtonItem) {
         
         let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
         
@@ -52,7 +52,7 @@ final class MainViewController: UIViewController {
         present(searchViewController, animated: true, completion: nil)
     }
     
-    @IBAction func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
+    @IBAction private func stateSegmentedControlValueChanged(_ sender: UISegmentedControl) {
         viewModel.stateSelectedSegmentIndex = sender.selectedSegmentIndex
     }
     

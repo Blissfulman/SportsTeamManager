@@ -59,7 +59,7 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
         sections.count
     }
     
-    private var fetchedResultsController: NSFetchedResultsController<Player>!
+    private var fetchedResultsController: NSFetchedResultsController<Player>
     
     private var sections: [String] {
         guard let fetchedSections = fetchedResultsController.sections else { return [] }
@@ -76,7 +76,11 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     
     private override init() {
         context = dataManager.getContext()
+        fetchedResultsController = dataManager.fetchDataWithController(
+            for: Player.self, sectionNameKeyPath: #keyPath(Player.position)
+        )
         super.init()
+        fetchedResultsController.delegate = self
         updateData()
     }
     
@@ -158,13 +162,13 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
     // MARK: - Private methods
     
     private func updateData(type: NSFetchedResultsChangeType? = nil) {
-        let predicate = makeCompoundPredicate()
+        fetchedResultsController.fetchRequest.predicate = makeCompoundPredicate()
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error.localizedDescription)
+        }
         
-        fetchedResultsController = dataManager.fetchDataWithController(
-            for: Player.self, sectionNameKeyPath: #keyPath(Player.position), predicate: predicate
-        )
-        
-        fetchedResultsController.delegate = self
         delegate?.dataDidChange(type: type)
     }
     

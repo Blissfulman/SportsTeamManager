@@ -11,6 +11,6 @@ extension Array {
     /// В случае отсутствия искомого элемента, или если переданный параметр равен nil, вернётся 0.
     func safeFirstIndex(of element: Element?) -> Int where Element == String {
         guard let element = element else { return 0 }
-        return self.firstIndex(of: element) ?? 0
+        return firstIndex(of: element) ?? 0
     }
 }

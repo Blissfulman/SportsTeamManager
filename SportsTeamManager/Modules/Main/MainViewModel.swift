@@ -65,35 +65,35 @@ final class MainViewModel: MainViewModelProtocol {
     }
     
     var isHiddenTableView: Bool {
-        playersDataModel.isEmptyData
+        playersDataManager.isEmptyData
     }
     
     var numberOfSections: Int {
-        playersDataModel.numberOfSections
+        playersDataManager.numberOfSections
     }
     
     private var filterState: FilterState = .all {
         didSet {
-            playersDataModel.filterStateDidChange(to: filterState)
+            playersDataManager.filterStateDidChange(to: filterState)
         }
     }
-    private var playersDataModel: PlayersDataModelProtocol = PlayersDataModel.shared
+    private var playersDataManager: PlayersDataManagerProtocol = PlayersDataManager.shared
     
     // MARK: - Initializers
     
     init() {
-        playersDataModel.delegate = self
+        playersDataManager.delegate = self
     }
     
     // MARK: - Public methods
     
     func getPlayerCellViewModel(at indexPath: IndexPath) -> PlayerCellViewModelProtocol? {
-        guard let player = playersDataModel.getPlayer(at: indexPath) else { return nil }
+        guard let player = playersDataManager.getPlayer(at: indexPath) else { return nil }
         return PlayerCellViewModel(player: player)
     }
     
     func getSearchViewModel() -> SearchViewModelProtocol {
-        guard let searchData = playersDataModel.getSearchData() else {
+        guard let searchData = playersDataManager.getSearchData() else {
             return SearchViewModel()
         }
         return SearchViewModel(searchData: searchData)
@@ -101,35 +101,35 @@ final class MainViewModel: MainViewModelProtocol {
     
     func getPlayerViewModel(at indexPath: IndexPath?) -> PlayerViewModelProtocol {
         guard let indexPath = indexPath,
-              let player = playersDataModel.getPlayer(at: indexPath) else {
+              let player = playersDataManager.getPlayer(at: indexPath) else {
             return PlayerViewModel()
         }
         return PlayerViewModel(player: player)
     }
     
     func getTitle(atSection section: Int) -> String? {
-        playersDataModel.getTitle(atSection: section)
+        playersDataManager.getTitle(atSection: section)
     }
     
     func getNumberOfPlayers(atSection section: Int) -> Int {
-        playersDataModel.getNumberOfPlayers(atSection: section)
+        playersDataManager.getNumberOfPlayers(atSection: section)
     }
     
     func removePlayer(at indexPath: IndexPath) {
-        playersDataModel.removePlayer(at: indexPath)
+        playersDataManager.removePlayer(at: indexPath)
     }
     
     func replacePlayer(at indexPath: IndexPath) {
-        playersDataModel.replacePlayer(at: indexPath)
+        playersDataManager.replacePlayer(at: indexPath)
     }
     
     func getPlayerStatus(at indexPath: IndexPath) -> Bool {
-        guard let player = playersDataModel.getPlayer(at: indexPath) else { return true }
+        guard let player = playersDataManager.getPlayer(at: indexPath) else { return true }
         return player.inPlay
     }
 }
 
-extension MainViewModel: PlayersDataModelDelegate {
+extension MainViewModel: PlayersDataManagerDelegate {
     
     func dataDidChange(type: NSFetchedResultsChangeType?) {
         delegate?.dataDidChange(type: type)

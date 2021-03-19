@@ -139,7 +139,7 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     private var playerData: PlayerDataOptional
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
-    private let playersDataModel: PlayersDataModelProtocol = PlayersDataModel.shared
+    private let playersDataManager: PlayersDataManagerProtocol = PlayersDataManager.shared
     
     // MARK: - Initializers
     
@@ -170,8 +170,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
         
         // Если player = nil, то происходит создание нового игрока, иначе - редактирование игрока
         player == nil
-            ? playersDataModel.createPlayer(playerData)
-            : playersDataModel.updatePlayer(player!, withPlayerData: playerData)
+            ? playersDataManager.createPlayer(playerData)
+            : playersDataManager.updatePlayer(player!, withPlayerData: playerData)
     }
     
     func pickerViewTitle(forRow row: Int) -> String? {

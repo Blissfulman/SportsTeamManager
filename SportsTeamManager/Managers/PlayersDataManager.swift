@@ -1,5 +1,5 @@
 //
-//  PlayersDataModel.swift
+//  PlayersDataManager.swift
 //  SportsTeamManager
 //
 //  Created by Evgeny Novgorodov on 24.01.2021.
@@ -15,7 +15,7 @@ typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorStat
 
 // MARK: - Protocols
 
-protocol PlayersDataModelDelegate: AnyObject {
+protocol PlayersDataManagerDelegate: class {
     func dataDidChange(type: NSFetchedResultsChangeType?)
     func willChangeContent()
     func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int)
@@ -23,8 +23,8 @@ protocol PlayersDataModelDelegate: AnyObject {
     func didChangeContent()
 }
 
-protocol PlayersDataModelProtocol {
-    var delegate: PlayersDataModelDelegate? { get set }
+protocol PlayersDataManagerProtocol {
+    var delegate: PlayersDataManagerDelegate? { get set }
     var isEmptyData: Bool { get }
     var numberOfSections: Int { get }
     
@@ -42,13 +42,13 @@ protocol PlayersDataModelProtocol {
     func saveData()
 }
 
-final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
+final class PlayersDataManager: NSObject, PlayersDataManagerProtocol {
     
     // MARK: - Properties
     
-    static let shared = PlayersDataModel()
+    static let shared = PlayersDataManager()
     
-    weak var delegate: PlayersDataModelDelegate?
+    weak var delegate: PlayersDataManagerDelegate?
     
     var isEmptyData: Bool {
         guard let objectsCount = fetchedResultsController.fetchedObjects?.count else { return true }
@@ -208,7 +208,7 @@ final class PlayersDataModel: NSObject, PlayersDataModelProtocol {
 
 // MARK: - Fetched results controller delegate
 
-extension PlayersDataModel: NSFetchedResultsControllerDelegate {
+extension PlayersDataManager: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         delegate?.willChangeContent()

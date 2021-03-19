@@ -115,7 +115,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     private var searchData: SearchData
     private let teams = DataConstants.teams
     private let positions = DataConstants.positions
-    private let playersDataModel: PlayersDataModelProtocol = PlayersDataModel.shared
+    private let playersDataManager: PlayersDataManagerProtocol = PlayersDataManager.shared
     
     // MARK: - Initializers
     
@@ -131,11 +131,11 @@ final class SearchViewModel: SearchViewModelProtocol {
     // MARK: - Public methods
     
     func startSearch() {
-        playersDataModel.searchDidUpdate(to: searchData)
+        playersDataManager.searchDidUpdate(to: searchData)
     }
     
     func resetSearchData() {
-        playersDataModel.resetSearchData()
+        playersDataManager.resetSearchData()
     }
     
     func pickerViewTitle(forRow row: Int) -> String? {

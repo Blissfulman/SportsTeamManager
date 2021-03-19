@@ -26,8 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        let playersDataModel = PlayersDataModel.shared
-        playersDataModel.saveData()
+        let playersDataManager = PlayersDataManager.shared
+        playersDataManager.saveData()
     }
 }
 

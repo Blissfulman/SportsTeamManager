@@ -9,6 +9,10 @@ import UIKit
 
 final class SearchViewController: UIViewController {
     
+    // MARK: - Static properties
+    
+    static let identifier = String(describing: SearchViewController.self)
+    
     // MARK: - Outlets
     
     @IBOutlet private weak var backEnvironmentView: UIView!
@@ -23,8 +27,6 @@ final class SearchViewController: UIViewController {
     @IBOutlet private weak var startSearchButton: UIButton!
     
     // MARK: - Properties
-    
-    static let identifier = String(describing: SearchViewController.self)
     
     var viewModel: SearchViewModelProtocol!
     

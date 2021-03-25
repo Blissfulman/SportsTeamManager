@@ -9,6 +9,10 @@ import UIKit
 
 final class PlayerCell: UITableViewCell {
     
+    // MARK: - Static properties
+    
+    static let identifier = String(describing: PlayerCell.self)
+    
     // MARK: - Outlets
     
     @IBOutlet private weak var playerNumberLabel: UILabel!
@@ -21,8 +25,6 @@ final class PlayerCell: UITableViewCell {
     @IBOutlet private weak var playerAgeLabel: UILabel!
     
     // MARK: - Properties
-    
-    static let identifier = String(describing: PlayerCell.self)
     
     var viewModel: PlayerCellViewModelProtocol! {
         didSet {

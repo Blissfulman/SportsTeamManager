@@ -9,6 +9,10 @@ import UIKit
 
 final class PlayerViewController: UIViewController {
     
+    // MARK: - Static properties
+    
+    static let identifier = String(describing: PlayerViewController.self)
+    
     // MARK: - Outlets
     
     @IBOutlet private weak var stateSegmentedControl: UISegmentedControl!
@@ -24,8 +28,6 @@ final class PlayerViewController: UIViewController {
     @IBOutlet private weak var saveButton: UIButton!
     
     // MARK: - Properties
-    
-    static let identifier = String(describing: PlayerViewController.self)
     
     var viewModel: PlayerViewModelProtocol!
     

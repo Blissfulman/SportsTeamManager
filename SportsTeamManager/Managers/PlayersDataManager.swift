@@ -44,9 +44,11 @@ protocol PlayersDataManagerProtocol {
 
 final class PlayersDataManager: NSObject, PlayersDataManagerProtocol {
     
-    // MARK: - Properties
+    // MARK: - Static properties
     
     static let shared = PlayersDataManager()
+    
+    // MARK: - Properties
     
     weak var delegate: PlayersDataManagerDelegate?
     
@@ -214,13 +216,18 @@ extension PlayersDataManager: NSFetchedResultsControllerDelegate {
         delegate?.willChangeContent()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
-        
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange sectionInfo: NSFetchedResultsSectionInfo,
+                    atSectionIndex sectionIndex: Int,
+                    for type: NSFetchedResultsChangeType) {
         delegate?.didChangeSection(type: type, sectionIndex: sectionIndex)
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
-        
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at indexPath: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath: IndexPath?) {
         delegate?.didChangeObject(type: type, indexPath: indexPath, newIndexPath: newIndexPath)
     }
     

@@ -17,13 +17,15 @@ final class MainViewController: UIViewController {
         static let toEditPlayer = "toEditPlayer"
     }
     
+    // MARK: - Static properties
+    
+    static let identifier = String(describing: MainViewController.self)
+    
     // MARK: - Outlets
     
     @IBOutlet private weak var tableView: UITableView!
     
     // MARK: - Properties
-    
-    static let identifier = String(describing: MainViewController.self)
     
     private let viewModel: MainViewModelProtocol = MainViewModel()
     

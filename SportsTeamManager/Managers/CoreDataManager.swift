@@ -12,11 +12,9 @@ final class CoreDataManager {
     // MARK: - Properties
     
     lazy var persistentContainer: NSPersistentContainer = {
-        
         let container = NSPersistentContainer(name: modelName)
         
         container.loadPersistentStores { storeDescription, error in
-            
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }

@@ -12,20 +12,24 @@ extension UIView {
     func appear(fromValue: CGFloat = 0, toValue: CGFloat = 1, duration: Double = 0.4) {
         isHidden = false
         alpha = fromValue
-        UIView.animate(withDuration: duration, animations: { [weak self] in
-            self?.alpha = toValue
-        }) { [weak self] _ in
-            self?.alpha = toValue
+        UIView.animate(withDuration: duration) {
+            self.alpha = toValue
+        } completion: { isEnded in
+            if isEnded {
+                self.alpha = toValue
+            }
         }
     }
     
     func disappear(fromValue: CGFloat = 1, toValue: CGFloat = 0, duration: Double = 0.4) {
         alpha = fromValue
-        UIView.animate(withDuration: duration, animations: { [weak self] in
-            self?.alpha = toValue
-        }) { [weak self] _ in
-            self?.alpha = toValue
-            self?.isHidden = true
+        UIView.animate(withDuration: duration) {
+            self.alpha = toValue
+        } completion: { isEnded in
+            if isEnded {
+                self.alpha = toValue
+                self.isHidden = true
+            }
         }
     }
 }

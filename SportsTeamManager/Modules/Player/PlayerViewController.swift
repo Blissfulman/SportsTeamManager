@@ -105,10 +105,10 @@ final class PlayerViewController: UIViewController {
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = .savedPhotosAlbum
         
-        viewModel.buttonTitleNeedUpdating = { title, contentType in
+        viewModel.buttonTitleNeedUpdating = { [unowned self] title, contentType in
             contentType == .teams
-                ? self.teamSelectButton.setTitle(title, for: .normal)
-                : self.positionSelectButton.setTitle(title, for: .normal)
+                ? teamSelectButton.setTitle(title, for: .normal)
+                : positionSelectButton.setTitle(title, for: .normal)
         }
         
         fillView()

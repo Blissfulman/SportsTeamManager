@@ -41,7 +41,6 @@ final class MainViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction private func searchBarButtonTapped(_ sender: UIBarButtonItem) {
-        
         let storyboard = UIStoryboard(name: SearchViewController.identifier, bundle: nil)
         
         guard let searchViewController = storyboard.instantiateInitialViewController()
@@ -82,7 +81,6 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: PlayerCell.identifier, for: indexPath) as? PlayerCell else {
             return UITableViewCell()
@@ -137,7 +135,6 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let playerVC = segue.destination as? PlayerViewController else { return }
         
         playerVC.viewModel = viewModel.getPlayerViewModel(at: sender as? IndexPath)

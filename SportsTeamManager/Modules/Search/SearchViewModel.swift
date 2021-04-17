@@ -36,7 +36,8 @@ final class SearchViewModel: SearchViewModelProtocol {
     var name: String? {
         get {
             searchData.name
-        } set {
+        }
+        set {
             searchData.name = newValue
         }
     }
@@ -45,7 +46,8 @@ final class SearchViewModel: SearchViewModelProtocol {
         get {
             guard let int16Age = searchData.age else { return nil }
             return String(int16Age)
-        } set {
+        }
+        set {
             if let stringAge = newValue?.toNumberTextFieldFiltered() {
                 searchData.age = Int16(stringAge)
             }
@@ -62,7 +64,8 @@ final class SearchViewModel: SearchViewModelProtocol {
             case .moreOrEqual:
                 return 2
             }
-        } set {
+        }
+        set {
             switch newValue {
             case 0:
                 searchData.ageOperator = .lessOrEqual
@@ -119,7 +122,7 @@ final class SearchViewModel: SearchViewModelProtocol {
     
     // MARK: - Initializers
     
-    required init(searchData: SearchData? = nil) {
+    init(searchData: SearchData? = nil) {
         if let searchData = searchData {
             self.searchData = searchData
         } else {

@@ -100,17 +100,20 @@ final class SearchViewController: UIViewController {
                                                     action: #selector(dismissByTapAction))
         backEnvironmentView.addGestureRecognizer(dismissByTapGR)
         
-        viewModel.buttonTitleNeedUpdating = { [unowned self] title, contentType in
-            contentType == .teams
-                ? teamSelectButton.setTitle(title, for: .normal)
-                : positionSelectButton.setTitle(title, for: .normal)
-        }
-        
+        setupViewModelBindings()
         fillView()
         updateStartSearchButtonState()
     }
     
     // MARK: - Private methods
+    
+    private func setupViewModelBindings() {
+        viewModel.buttonTitleNeedUpdating = { [unowned self] title, contentType in
+            contentType == .teams
+                ? teamSelectButton.setTitle(title, for: .normal)
+                : positionSelectButton.setTitle(title, for: .normal)
+        }
+    }
     
     private func updateStartSearchButtonState() {
         startSearchButton.isEnabled = viewModel.isEnabledStartSearchButton
@@ -171,7 +174,6 @@ extension SearchViewController: UIPickerViewDelegate {
 extension SearchViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         if textField == nameTextField {
             ageTextField.becomeFirstResponder()
         } else {

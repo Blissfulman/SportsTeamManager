@@ -175,7 +175,6 @@ final class PlayersDataManager: NSObject, PlayersDataManagerProtocol {
     }
     
     private func makeCompoundPredicate() -> NSCompoundPredicate {
-        
         var predicates = [NSPredicate]()
         
         if let name = searchData?.name, !name.isEmpty {

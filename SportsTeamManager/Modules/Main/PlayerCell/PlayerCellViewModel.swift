@@ -67,7 +67,7 @@ final class PlayerCellViewModel: PlayerCellViewModelProtocol {
     
     // MARK: - Initializers
     
-    required init(player: Player) {
+    init(player: Player) {
         self.player = player
     }
 }

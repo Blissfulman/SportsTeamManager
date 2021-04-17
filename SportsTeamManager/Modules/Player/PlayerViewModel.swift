@@ -45,7 +45,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
         get {
             guard let int16Number = playerData.number else { return nil }
             return String(int16Number)
-        } set {
+        }
+        set {
             if let stringNumber = newValue?.toNumberTextFieldFiltered() {
                 playerData.number = Int16(stringNumber)
             }
@@ -55,7 +56,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     var photo: Data? {
         get {
             playerData.photo ?? DataConstants.defaultPhoto
-        } set {
+        }
+        set {
             playerData.photo = newValue
         }
     }
@@ -63,7 +65,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     var name: String? {
         get {
             playerData.name
-        } set {
+        }
+        set {
             if let name = newValue {
                 playerData.name = name
             }
@@ -73,7 +76,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     var nationality: String? {
         get {
             playerData.nationality
-        } set {
+        }
+        set {
             if let nationality = newValue {
                 playerData.nationality = nationality
             }
@@ -84,7 +88,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
         get {
             guard let int16Age = playerData.age else { return nil }
             return String(int16Age)
-        } set {
+        }
+        set {
             if let stringAge = newValue?.toNumberTextFieldFiltered() {
                 playerData.age = Int16(stringAge)
             }
@@ -94,7 +99,8 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     var stateSelectedSegmentIndex: Int {
         get {
             playerData.isInPlay ? 0 : 1
-        } set {
+        }
+        set {
             playerData.isInPlay = newValue == 0 ? true : false
         }
     }
@@ -143,7 +149,7 @@ final class PlayerViewModel: PlayerViewModelProtocol {
     
     // MARK: - Initializers
     
-    required init(player: Player? = nil) {
+    init(player: Player? = nil) {
         // Если player был передан, значит открывается вью редактирования игрока, иначе - вью создания нового
         self.player = player
         self.playerData = (

@@ -37,7 +37,6 @@ final class PlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
@@ -45,7 +44,6 @@ final class PlayerViewController: UIViewController {
         super.touchesBegan(touches, with: event)
         
         view.endEditing(true)
-        
         if !pickerView.isHidden {
             hidePickerView()
         }
@@ -105,17 +103,20 @@ final class PlayerViewController: UIViewController {
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = .savedPhotosAlbum
         
-        viewModel.buttonTitleNeedUpdating = { [unowned self] title, contentType in
-            contentType == .teams
-                ? teamSelectButton.setTitle(title, for: .normal)
-                : positionSelectButton.setTitle(title, for: .normal)
-        }
-        
+        setupViewModelBindings()
         fillView()
         updateSaveButtonState()
     }
     
     // MARK: - Private methods
+    
+    private func setupViewModelBindings() {
+        viewModel.buttonTitleNeedUpdating = { [unowned self] title, contentType in
+            contentType == .teams
+                ? teamSelectButton.setTitle(title, for: .normal)
+                : positionSelectButton.setTitle(title, for: .normal)
+        }
+    }
     
     private func updateSaveButtonState() {
         saveButton.isEnabled = viewModel.isEnabledSaveButton
@@ -148,7 +149,8 @@ final class PlayerViewController: UIViewController {
 
 extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         defer {
             imagePickerController.dismiss(animated: true)

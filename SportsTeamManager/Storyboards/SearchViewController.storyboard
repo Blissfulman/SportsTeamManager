@@ -137,7 +137,7 @@
                                     <constraint firstItem="6ea-PK-eyg" firstAttribute="centerX" secondItem="aPb-dy-x8U" secondAttribute="centerX" id="v7o-Ki-Gco"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkB-nN-1KM">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FkB-nN-1KM" customClass="MainFilledButton" customModule="SportsTeamManager" customModuleProvider="target">
                                 <rect key="frame" x="132" y="526.5" width="150" height="39"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>

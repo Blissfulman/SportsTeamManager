@@ -25,7 +25,7 @@ final class PlayerViewController: UIViewController {
     @IBOutlet private weak var positionSelectButton: UIButton!
     @IBOutlet private weak var centralStackView: UIStackView!
     @IBOutlet private weak var pickerView: UIPickerView!
-    @IBOutlet private weak var saveButton: UIButton!
+    @IBOutlet private weak var saveButton: MainFilledButton!
     
     // MARK: - Properties
     
@@ -99,7 +99,6 @@ final class PlayerViewController: UIViewController {
     
     private func setupUI() {
         imagePickerController.delegate = self
-        saveButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         imagePickerController.allowsEditing = true
         imagePickerController.sourceType = .savedPhotosAlbum
         
@@ -120,7 +119,6 @@ final class PlayerViewController: UIViewController {
     
     private func updateSaveButtonState() {
         saveButton.isEnabled = viewModel.isEnabledSaveButton
-        saveButton.backgroundColor = saveButton.isEnabled ? Color.main : Color.disabled
     }
     
     private func showPickerView() {
@@ -151,7 +149,6 @@ extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
         defer {
             imagePickerController.dismiss(animated: true)
         }
@@ -196,7 +193,6 @@ extension PlayerViewController: UIPickerViewDelegate {
 extension PlayerViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
         switch textField {
         case numberTextField:
             nameTextField.becomeFirstResponder()

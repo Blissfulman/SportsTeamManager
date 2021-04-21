@@ -24,7 +24,7 @@ final class SearchViewController: UIViewController {
     @IBOutlet private weak var teamSelectButton: UIButton!
     @IBOutlet private weak var positionSelectButton: UIButton!
     @IBOutlet private weak var pickerView: UIPickerView!
-    @IBOutlet private weak var startSearchButton: UIButton!
+    @IBOutlet private weak var startSearchButton: MainFilledButton!
     
     // MARK: - Properties
     
@@ -34,13 +34,11 @@ final class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        
         view.endEditing(true)
         
         if !pickerView.isHidden {
@@ -94,7 +92,6 @@ final class SearchViewController: UIViewController {
         contentView.layer.shadowRadius = UIConstants.shadowRadius
         contentView.layer.shadowOpacity = UIConstants.shadowOpacity
         contentView.layer.shadowColor = Color.shadow.cgColor
-        startSearchButton.layer.cornerRadius = UIConstants.buttonCornerRadius
         
         let dismissByTapGR = UITapGestureRecognizer(target: self,
                                                     action: #selector(dismissByTapAction))
@@ -117,9 +114,6 @@ final class SearchViewController: UIViewController {
     
     private func updateStartSearchButtonState() {
         startSearchButton.isEnabled = viewModel.isEnabledStartSearchButton
-        startSearchButton.backgroundColor = startSearchButton.isEnabled
-            ? Color.main
-            : Color.disabled
     }
     
     private func showPickerView() {

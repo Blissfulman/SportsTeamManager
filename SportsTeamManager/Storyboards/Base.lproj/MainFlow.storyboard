@@ -376,7 +376,7 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBg-Nd-vgV">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" highlighted="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBg-Nd-vgV" customClass="MainFilledButton" customModule="SportsTeamManager" customModuleProvider="target">
                                 <rect key="frame" x="107" y="805" width="200" height="41"/>
                                 <color key="backgroundColor" name="main"/>
                                 <constraints>

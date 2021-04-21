@@ -26,6 +26,7 @@
 		CE4883F525B5649700BCB7F9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */; };
 		CE48840725B602E300BCB7F9 /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48840625B602E300BCB7F9 /* PlayerCell.swift */; };
 		CE48840F25B60C0300BCB7F9 /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */; };
+		CE89544626305AA80082D200 /* MainFilledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE89544526305AA80082D200 /* MainFilledButton.swift */; };
 		CE9E159D25C5C9FF003D8E93 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE9E159C25C5C9FF003D8E93 /* String+Extension.swift */; };
 		CEA8725F25C16A4000AE4BD2 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA8725E25C16A4000AE4BD2 /* FilterState.swift */; };
 		CEBF6F1825C93131009374A0 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBF6F1725C93131009374A0 /* Array+Extension.swift */; };
@@ -57,6 +58,7 @@
 		CE4883F425B5649700BCB7F9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		CE48840625B602E300BCB7F9 /* PlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
 		CE48840E25B60C0300BCB7F9 /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		CE89544526305AA80082D200 /* MainFilledButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainFilledButton.swift; sourceTree = "<group>"; };
 		CE9E159C25C5C9FF003D8E93 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		CEA8725E25C16A4000AE4BD2 /* FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterState.swift; sourceTree = "<group>"; };
 		CEBF6F1725C93131009374A0 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -216,10 +218,19 @@
 		CE48842725BB077D00BCB7F9 /* Additional Files */ = {
 			isa = PBXGroup;
 			children = (
+				CE89544426305A8F0082D200 /* Views */,
 				CE1AF83825C2B3410050114F /* Helpers */,
 				CE1AF83A25C2B3970050114F /* Extensions */,
 			);
 			path = "Additional Files";
+			sourceTree = "<group>";
+		};
+		CE89544426305A8F0082D200 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE89544526305AA80082D200 /* MainFilledButton.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		CEEC84AF25CBC17600B87791 /* Storyboards */ = {
@@ -311,6 +322,7 @@
 				CEEC84BD25CCFD4100B87791 /* PlayerCellViewModel.swift in Sources */,
 				CEE04A4D25BDCF48004ACB57 /* PlayersDataManager.swift in Sources */,
 				CEEC84C125CD0A2E00B87791 /* SearchViewModel.swift in Sources */,
+				CE89544626305AA80082D200 /* MainFilledButton.swift in Sources */,
 				CE4883D325B4ACE700BCB7F9 /* AppDelegate.swift in Sources */,
 				CEBF6F1825C93131009374A0 /* Array+Extension.swift in Sources */,
 				CE2BCBAC25CD7C2100C08E6A /* PlayerViewModel.swift in Sources */,

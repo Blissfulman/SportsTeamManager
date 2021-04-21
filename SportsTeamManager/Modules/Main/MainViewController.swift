@@ -33,7 +33,6 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         viewModel.delegate = self
         updateTableViewVisibility()
     }
@@ -49,7 +48,6 @@ final class MainViewController: UIViewController {
         searchViewController.modalTransitionStyle = .crossDissolve
         searchViewController.modalPresentationStyle = .overCurrentContext
         searchViewController.viewModel = viewModel.getSearchViewModel()
-        
         present(searchViewController, animated: true, completion: nil)
     }
     
@@ -95,7 +93,8 @@ extension MainViewController: UITableViewDataSource {
 
 extension MainViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
             [weak self] _, _, completion in

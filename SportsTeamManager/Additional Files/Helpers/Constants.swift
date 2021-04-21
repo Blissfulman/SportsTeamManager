@@ -8,6 +8,7 @@
 import UIKit
 
 enum Color {
+    static let white = UIColor.white
     static let main = UIColor(named: "main")
     static let mainLight = UIColor(named: "mainLight")
     static let disabled = UIColor(named: "disabled")

@@ -17,6 +17,7 @@ final class MainFilledButton: UIButton {
     }
     
     override func layoutSubviews() {
+        super.layoutSubviews()
         backgroundColor = isEnabled ? Color.main : Color.disabled
     }
 }

@@ -80,7 +80,8 @@ extension MainViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: PlayerCell.identifier, for: indexPath) as? PlayerCell else {
+            withIdentifier: PlayerCell.identifier, for: indexPath
+        ) as? PlayerCell else {
             return UITableViewCell()
         }
         
@@ -93,30 +94,29 @@ extension MainViewController: UITableViewDataSource {
 
 extension MainViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
         
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
-            [weak self] _, _, completion in
-            
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] _, _, completion in
             self?.viewModel.removePlayer(at: indexPath)
             completion(true)
         }
         
         let isInPlayPlayer = viewModel.getPlayerStatus(at: indexPath)
         
-        let replacementAction = UIContextualAction(style: .normal,
-                                                   title: isInPlayPlayer ? "To bench" : "To play") {
-            [weak self] _, _, completion in
+        let replacementAction = UIContextualAction(
+            style: .normal,
+            title: isInPlayPlayer ? "To bench" : "To play"
+        ) { [weak self] _, _, completion in
             
             self?.viewModel.replacePlayer(at: indexPath)
             completion(true)
         }
         replacementAction.backgroundColor = isInPlayPlayer ? Color.bench : Color.inPlay
         
-        let editAction = UIContextualAction(style: .normal, title: "Edit") {
-            [weak self] _, _, completion in
-            
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { [weak self] _, _, completion in
             self?.performSegue(withIdentifier: SegueID.toEditPlayer, sender: indexPath)
             completion(true)
         }
@@ -146,7 +146,7 @@ extension MainViewController {
     }
 }
 
-// MARK: - Main view model delegate
+// MARK: - MainViewModelDelegate
 
 extension MainViewController: MainViewModelDelegate {
     

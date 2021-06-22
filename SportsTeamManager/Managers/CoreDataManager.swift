@@ -49,8 +49,10 @@ final class CoreDataManager {
     
     func createObject<T: NSManagedObject> (from entity: T.Type) -> T {
         let context = getContext()
-        let object = NSEntityDescription.insertNewObject(forEntityName: String(describing: entity),
-                                                         into: context) as! T
+        let object = NSEntityDescription.insertNewObject(
+            forEntityName: String(describing: entity),
+            into: context
+        ) as! T
         return object
     }
     
@@ -79,10 +81,12 @@ final class CoreDataManager {
         request.predicate = predicate
         request.sortDescriptors = [sortDescriptor]
         
-        let controller = NSFetchedResultsController(fetchRequest: request,
-                                                    managedObjectContext: context,
-                                                    sectionNameKeyPath: sectionNameKeyPath,
-                                                    cacheName: nil)
+        let controller = NSFetchedResultsController(
+            fetchRequest: request,
+            managedObjectContext: context,
+            sectionNameKeyPath: sectionNameKeyPath,
+            cacheName: nil
+        )
         do {
             try controller.performFetch()
         } catch {

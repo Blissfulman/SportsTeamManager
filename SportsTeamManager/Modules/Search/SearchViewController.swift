@@ -24,7 +24,7 @@ final class SearchViewController: UIViewController {
     @IBOutlet private weak var teamSelectButton: UIButton!
     @IBOutlet private weak var positionSelectButton: UIButton!
     @IBOutlet private weak var pickerView: UIPickerView!
-    @IBOutlet private weak var startSearchButton: MainFilledButton!
+    @IBOutlet private weak var startSearchButton: UIButton!
     
     // MARK: - Properties
     
@@ -93,8 +93,7 @@ final class SearchViewController: UIViewController {
         contentView.layer.shadowOpacity = UIConstants.shadowOpacity
         contentView.layer.shadowColor = Color.shadow.cgColor
         
-        let dismissByTapGR = UITapGestureRecognizer(target: self,
-                                                    action: #selector(dismissByTapAction))
+        let dismissByTapGR = UITapGestureRecognizer(target: self, action: #selector(dismissByTapAction))
         backEnvironmentView.addGestureRecognizer(dismissByTapGR)
         
         setupViewModelBindings()

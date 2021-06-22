@@ -25,7 +25,7 @@ final class PlayerViewController: UIViewController {
     @IBOutlet private weak var positionSelectButton: UIButton!
     @IBOutlet private weak var centralStackView: UIStackView!
     @IBOutlet private weak var pickerView: UIPickerView!
-    @IBOutlet private weak var saveButton: MainFilledButton!
+    @IBOutlet private weak var saveButton: UIButton!
     
     // MARK: - Properties
     
@@ -147,8 +147,10 @@ final class PlayerViewController: UIViewController {
 
 extension PlayerViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
         defer {
             imagePickerController.dismiss(animated: true)
         }

@@ -15,7 +15,7 @@ typealias SearchData = (name: String?, age: Int16?, ageOperator: AgeOperatorStat
 
 // MARK: - Protocols
 
-protocol PlayersDataManagerDelegate: class {
+protocol PlayersDataManagerDelegate: AnyObject {
     func dataDidChange(type: NSFetchedResultsChangeType?)
     func willChangeContent()
     func didChangeSection(type: NSFetchedResultsChangeType, sectionIndex: Int)
@@ -215,18 +215,22 @@ extension PlayersDataManager: NSFetchedResultsControllerDelegate {
         delegate?.willChangeContent()
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange sectionInfo: NSFetchedResultsSectionInfo,
-                    atSectionIndex sectionIndex: Int,
-                    for type: NSFetchedResultsChangeType) {
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange sectionInfo: NSFetchedResultsSectionInfo,
+        atSectionIndex sectionIndex: Int,
+        for type: NSFetchedResultsChangeType
+    ) {
         delegate?.didChangeSection(type: type, sectionIndex: sectionIndex)
     }
     
-    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                    didChange anObject: Any,
-                    at indexPath: IndexPath?,
-                    for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?) {
+    func controller(
+        _ controller: NSFetchedResultsController<NSFetchRequestResult>,
+        didChange anObject: Any,
+        at indexPath: IndexPath?,
+        for type: NSFetchedResultsChangeType,
+        newIndexPath: IndexPath?
+    ) {
         delegate?.didChangeObject(type: type, indexPath: indexPath, newIndexPath: newIndexPath)
     }
     

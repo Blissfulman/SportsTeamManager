@@ -176,25 +176,21 @@ extension MainViewController: MainViewModelDelegate {
     func didChangeObject(type: NSFetchedResultsChangeType, indexPath: IndexPath?, newIndexPath: IndexPath?) {
         switch type {
         case .insert:
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .fade)
-            }
+            guard let newIndexPath = newIndexPath else { return }
+            tableView?.insertRows(at: [newIndexPath], with: .fade)
         case .delete:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
+            guard let indexPath = indexPath else { return }
+            tableView?.deleteRows(at: [indexPath], with: .fade)
         case .update:
-            if let indexPath = indexPath {
-                let cell = tableView.cellForRow(at: indexPath) as! PlayerCell
-                cell.viewModel = viewModel.getPlayerCellViewModel(at: indexPath)
-            }
+            guard let indexPath = indexPath else { return }
+            tableView?.reloadRows(at: [indexPath], with: .fade)
         case .move:
-            if let indexPath = indexPath {
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-            if let indexPath = newIndexPath {
-                tableView.insertRows(at: [indexPath], with: .fade)
-            }
+            guard
+                let indexPath = indexPath,
+                let newIndexPath = newIndexPath
+            else { return }
+            tableView?.deleteRows(at: [indexPath], with: .fade)
+            tableView?.insertRows(at: [newIndexPath], with: .fade)
         @unknown default:
             fatalError(debugDescription)
         }
